@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Arsip Digital RSPD</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f6fa;
+      color: #222;
+      margin: 0;
+      padding: 30px;
+    }
+h1 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #174a7e;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  margin: 10px 0 18px;
+  padding-bottom: 18px;
+  position: relative;
+}
+
+/* Aksen garis biru dan kuning */
+h1::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: #f2c300;
+  border-radius: 3px;
+  margin: 14px auto 0;
+  box-shadow: 30px 0 0 #174a7e;
+}    }
+.subtitle {
+  color: #5b6573;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: -10px;
+  margin-bottom: 25px;
+}
+    input, select {
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+.summary {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  background-color: #174a7e;
+  border-left: 5px solid #f2c300;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+}
+
+.summary-card h3 {
+  margin: 0 0 10px;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.summary-card p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+}
+#resetButton {
+  background-color: #f2c300;
+  color: #174a7e;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+#searchInput,
+#categoryFilter {
+  border: 1px solid #174a7e;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #174a7e;
+}
+
+#searchInput:focus,
+#categoryFilter:focus {
+  outline: 2px solid #f2c300;
+  outline-offset: 2px;
+}
+#documentList li {
+  background-color: #ffffff;
+  border-left: 8px solid #174a7e;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  list-style: none;
+}
+#documentList li a {
+  color: #174a7e;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#documentList li a:hover {
+  color: #d6a900;
+  text-decoration: underline;
+}
+#documentList li {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#documentList li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .summary {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .summary-card {
+    width: auto;
+    min-width: 0;
+  }
+
+  #searchInput,
+  #categoryFilter {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+#resetButton {
+  transition: background-color 0.2s ease,
+              transform 0.2s ease;
+}
+
+#resetButton:hover {
+  background-color: #174a7e;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+.dashboard-footer {
+  text-align: center;
+  margin-top: 35px;
+  padding: 20px;
+  color: #174a7e;
+  font-size: 14px;
+  border-top: 2px solid #f2c300;
+}
+
+.dashboard-footer p {
+  margin: 5px 0;
+}
+.section-title {
+  color: #174a7e;
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-left: 5px solid #f2c300;
+  padding-left: 12px;
+}
+.result-count {
+  color: #5b6573;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+  
+/* ===== Penyegaran visual: profesional, bersih, biru-kuning ===== */
+:root {
+  --rspd-navy: #123b68;
+  --rspd-blue: #1f5f9d;
+  --rspd-yellow: #f2c300;
+  --rspd-ink: #203047;
+  --rspd-muted: #68778b;
+  --rspd-line: #dce5ef;
+  --rspd-surface: #ffffff;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at top left, rgba(31,95,157,.11), transparent 34%),
+    linear-gradient(135deg, #f4f7fb 0%, #edf3f9 100%);
+  color: var(--rspd-ink);
+  padding: clamp(16px, 3.5vw, 42px);
+}
+h1 {
+  color: var(--rspd-navy);
+  font-size: clamp(25px, 3vw, 36px);
+  letter-spacing: .4px;
+  margin-top: 4px;
+}
+.subtitle {
+  color: var(--rspd-muted);
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 30px;
+}
+.summary {
+  gap: 16px;
+  margin: 26px 0;
+}
+.summary-card {
+  flex: 1 1 190px;
+  min-height: 112px;
+  border-radius: 16px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, var(--rspd-navy), var(--rspd-blue));
+  box-shadow: 0 10px 24px rgba(18,59,104,.14);
+  border: 1px solid rgba(255,255,255,.2);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(18,59,104,.2);
+}
+input, select, textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 14px;
+  margin: 7px 0 12px;
+  border: 1px solid #ccd8e5;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--rspd-ink);
+  font: inherit;
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--rspd-blue);
+  box-shadow: 0 0 0 3px rgba(31,95,157,.13);
+}
+button, input[type="submit"] {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 18px;
+  background: var(--rspd-blue);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+button:hover, input[type="submit"]:hover {
+  background: var(--rspd-navy);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(18,59,104,.16);
+}
+button:focus-visible, input[type="submit"]:focus-visible {
+  outline: 3px solid rgba(242,195,0,.8);
+  outline-offset: 3px;
+}
+.archive-item, .document-card, .card, .form-container, .search-container {
+  border: 1px solid var(--rspd-line);
+  border-radius: 16px;
+  background: var(--rspd-surface);
+  box-shadow: 0 6px 20px rgba(28,55,90,.06);
+}
+.archive-item, .document-card {
+  padding: 18px 20px;
+  margin: 12px 0;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.archive-item:hover, .document-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(28,55,90,.11);
+}
+a {
+  color: var(--rspd-blue);
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--rspd-navy); }
+hr { border: 0; border-top: 1px solid var(--rspd-line); margin: 24px 0; }
+label { color: #40536a; font-weight: 600; }
+@media (max-width: 640px) {
+  body { padding: 16px; }
+  .summary { gap: 12px; }
+  .summary-card { flex-basis: 100%; }
+  button { max-width: 100%; }
+}
+
+  </style>
+</head><body>
+
+<h1>ARSIP DIGITAL RSPD</h1><p class="subtitle">
+  Sistem Pengelolaan Arsip Digital Bersama
+  <br>
+  Direktorat Rehabilitasi Sosial Penyandang Disabilitas
+</p>
+<div class="summary">
+  <div class="summary-card">
+    <h3>Total Dokumen</h3>
+    <p id="totalDocuments">0</p>
+  </div>
+
+  <div class="summary-card">
+    <h3>Kategori Arsip</h3>
+    <p id="totalCategories">5</p>
+  </div>
+</div>
+  <p>Direktorat Rehabilitasi Sosial Penyandang Disabilitas</p>
+
+  <hr>
+
+  <h2>Selamat Datang</h2>
+  <p>Dashboard penyimpanan dokumen bersama.</p>
+
+<h2>Pencarian Dokumen</h2>
+
+<input
+  type="text"
+  id="searchInput"
+  placeholder="Ketik nama dokumen yang dicari..."
+>
+
+<button type="button" id="resetButton">
+  Reset Pencarian
+</button>
+
+<br>
+
+<label for="categoryFilter">Pilih Kategori:</label>
+
+<select id="categoryFilter">
+  <option value="semua">Semua Kategori</option>
+  <option value="Surat">Surat</option>
+<option value="Naskah">Naskah</option>
+<option value="Paparan">Paparan</option>
+<option value="Dokumentasi">Dokumentasi</option>
+  <option value="Laporan">Laporan</option>
+</select>
+
+<h2>Daftar Dokumen</h2>
+
+<h2 class="section-title">Tambah Arsip Baru</h2>
+
+<form id="archiveForm">
+  <label for="archiveTitle">Nama Dokumen</label>
+  <input
+    type="text"
+    id="archiveTitle"
+    placeholder="Masukkan nama dokumen"
+    required
+  >
+
+  <label for="archiveCategory">Kategori Arsip</label>
+  <select id="archiveCategory" required>
+    <option value="">Pilih Kategori</option>
+    <option value="Naskah">Naskah</option>
+    <option value="Surat">Surat</option>
+    <option value="Laporan">Laporan</option>
+    <option value="Paparan">Paparan</option>
+    <option value="Dokumentasi">Dokumentasi</option>
+  </select>
+
+  <label for="archiveDate">Tanggal Dokumen</label>
+  <input
+    type="date"
+    id="archiveDate"
+    required
+  >
+
+  <label for="archiveLink">Link Google Drive</label>
+  <input
+    type="url"
+    id="archiveLink"
+    placeholder="Tempel link Google Drive"
+    required
+  >
+
+  <button type="submit">Tambah Arsip</button>
+</form>
+<h2 class="section-title">Daftar Arsip</h2>
+<p id="resultCount" class="result-count"></p>
+<p id="noResults" style="display: none;">
+  Dokumen tidak ditemukan.
+</p>
+<ul id="documentList">
+  <li>
+    <strong>Dokumen Naskah</strong><br>
+    Kategori: Laporan<br>
+    Tahun: 2026<br>
+    <a href="https://drive.google.com/file/d/1IWqL9YEqteLBxXgwrpPyh7n79MzhW0k7/view?usp=drive_link"
+       target="_blank">
+      Buka Dokumen
+    </a>
+  </li>
+<li>
+  <strong>Dokumen Surat </strong><br>
+  Kategori: Surat<br>
+  Tahun: 2026<br>
+  <a href="https://drive.google.com/file/d/17L_Pt1J1iyPGTMI0zOuXQGpsyGqxXIHR/view?usp=drive_link" target="_blank">
+    Buka Dokumen
+  </a>
+</li>
+<li>
+  <strong>Dokumen Paparan</strong><br>
+  Kategori: Paparan<br>
+  Tahun: 2026<br>
+  <a href="https://drive.google.com/file/d/1QAxyaiSJ8ljuIUbse0IXU5QT5PPrrSft/view?usp=drive_link" target="_blank">
+    Buka Dokumen
+  </a>
+</li>
+<li>
+  <strong>Dokumen Dokumentasi</strong><br>
+  Kategori: Dokumentasi<br>
+  Tahun: 2026<br>
+  <a href="https://drive.google.com/file/d/1B-VxwRDjygnA3xIY29MbEpYSpMofOD61/view?usp=drive_link" target="_blank">
+    Buka Dokumen
+  </a>
+</li>
+<li>
+  <strong>Dokumen Laporan</strong><br>
+  Kategori: Naskah<br>
+  Tahun: 2026<br>
+  <a href="https://docs.google.com/document/d/1Dn60yrk-toAV4r_tl9ng55YPG_RrSp_X/edit?usp=drive_link&ouid=107720354014072673763&rtpof=true&sd=true" target="_blank">
+    Buka Dokumen
+  </a>
+</li>
+</ul>
+<footer class="dashboard-footer">
+  <p>Dashboard Arsip Digital RSPD</p>
+  <p>Sistem Pengelolaan Arsip Digital Bersama</p>
+</footer>
+<script>
+const searchInput = document.getElementById("searchInput");
+const documentList = document.getElementById("documentList");
+const categoryFilter = document.getElementById("categoryFilter");
+const resultCount = document.getElementById("resultCount");
+const noResults = document.getElementById("noResults");
+const resetButton = document.getElementById("resetButton");
+const archiveForm = document.getElementById("archiveForm");
+
+const STORAGE_KEY = "arsipDigitalRSPD";
+
+function getSavedArchives() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveArchives(archives) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(archives));
+}
+
+function createArchiveItem(archive) {
+  const item = document.createElement("li");
+
+  const link = document.createElement("a");
+  link.href = archive.link;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = archive.title;
+
+  item.appendChild(link);
+  item.appendChild(document.createElement("br"));
+  item.appendChild(document.createTextNode("Kategori: " + archive.category));
+  item.appendChild(document.createElement("br"));
+  item.appendChild(document.createTextNode("Tanggal: " + archive.date));
+
+  return item;
+}
+
+function loadSavedArchives() {
+  const savedArchives = getSavedArchives();
+
+  for (let i = 0; i < savedArchives.length; i++) {
+    documentList.appendChild(createArchiveItem(savedArchives[i]));
+  }
+}
+
+function updateSummary() {
+  const documents = documentList.getElementsByTagName("li");
+  const categories = new Set();
+
+  document.getElementById("totalDocuments").textContent = documents.length;
+
+  for (let i = 0; i < documents.length; i++) {
+    const text = documents[i].textContent;
+    const match = text.match(/Kategori:\s*([^\n]+)/);
+    if (match) {
+      categories.add(match[1].trim());
+    }
+  }
+
+  document.getElementById("totalCategories").textContent = categories.size;
+}
+
+function filterDocuments() {
+  const documents = documentList.getElementsByTagName("li");
+  const keyword = searchInput.value.trim().toLowerCase();
+  const category = categoryFilter.value.toLowerCase();
+  let visibleCount = 0;
+
+  for (let i = 0; i < documents.length; i++) {
+    const text = documents[i].textContent.toLowerCase();
+    const matchesKeyword = text.includes(keyword);
+    const matchesCategory =
+      category === "semua" || text.includes("kategori: " + category);
+
+    if (matchesKeyword && matchesCategory) {
+      documents[i].style.display = "";
+      visibleCount++;
+    } else {
+      documents[i].style.display = "none";
+    }
+  }
+
+  resultCount.textContent =
+    "Menampilkan " + visibleCount + " dari " + documents.length + " dokumen";
+  noResults.style.display = visibleCount === 0 ? "block" : "none";
+}
+
+searchInput.addEventListener("input", filterDocuments);
+categoryFilter.addEventListener("change", filterDocuments);
+
+resetButton.addEventListener("click", function () {
+  searchInput.value = "";
+  categoryFilter.value = "semua";
+  filterDocuments();
+});
+
+archiveForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const title = document.getElementById("archiveTitle").value.trim();
+  const category = document.getElementById("archiveCategory").value;
+  const date = document.getElementById("archiveDate").value;
+  const link = document.getElementById("archiveLink").value.trim();
+
+  if (!title || !category || !date || !link) {
+    alert("Mohon lengkapi semua data arsip.");
+    return;
+  }
+
+  const newArchive = { title, category, date, link };
+  const savedArchives = getSavedArchives();
+  savedArchives.push(newArchive);
+
+  try {
+    saveArchives(savedArchives);
+  } catch (error) {
+    alert("Arsip belum tersimpan. Penyimpanan browser mungkin penuh atau dibatasi.");
+    return;
+  }
+
+  documentList.appendChild(createArchiveItem(newArchive));
+  archiveForm.reset();
+  updateSummary();
+  filterDocuments();
+  alert("Arsip berhasil ditambahkan dan disimpan pada browser ini.");
+});
+
+// Muat arsip tersimpan satu kali saat dashboard dibuka.
+loadSavedArchives();
+updateSummary();
+filterDocuments();
+</script>
+</body>
+</html>
