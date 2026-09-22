@@ -1390,29 +1390,31 @@ button:hover{
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyM9bFlzf78SHvHeu-iTDCpJsN-W4Qfv8Ywl3zE3hE1wMH9vmNEMVC-E0bg1tRJtNd7dg/exec";
 
+
+/* =========================
+   ELEMENT
+========================= */
+
 const searchInput =
-document.getElementById("searchInput");
+  document.getElementById("searchInput");
 
 const documentList =
-document.getElementById("documentList");
+  document.getElementById("documentList");
 
 const categoryFilter =
-document.getElementById("categoryFilter");
+  document.getElementById("categoryFilter");
 
 const resultCount =
-document.getElementById("resultCount");
+  document.getElementById("resultCount");
 
 const noResults =
-document.getElementById("noResults");
+  document.getElementById("noResults");
 
 const resetButton =
-document.getElementById("resetButton");
-
-const archiveForm =
-document.getElementById("archiveForm");
+  document.getElementById("resetButton");
 
 const loadingStatus =
-document.getElementById("loadingStatus");
+  document.getElementById("loadingStatus");
 
 let driveArchives = [];
 
@@ -1421,29 +1423,29 @@ let driveArchives = [];
    CREATE DOCUMENT ITEM
 ========================= */
 
-function createArchiveItem(archive){
+function createArchiveItem(archive) {
 
   const item =
-  document.createElement("li");
+    document.createElement("li");
 
   const link =
-  document.createElement("a");
+    document.createElement("a");
 
   link.href =
-  archive.url ||
-  archive.link ||
-  "#";
+    archive.url ||
+    archive.link ||
+    "#";
 
   link.target =
-  "_blank";
+    "_blank";
 
   link.rel =
-  "noopener noreferrer";
+    "noopener noreferrer";
 
   link.textContent =
-  archive.judul ||
-  archive.title ||
-  "Tanpa judul";
+    archive.judul ||
+    archive.title ||
+    "Tanpa judul";
 
   item.appendChild(link);
 
@@ -1452,14 +1454,15 @@ function createArchiveItem(archive){
   );
 
   const shownCategory =
-  archive.kategori ||
-  archive.category ||
-  archive.folder ||
-  "—";
+    archive.kategori ||
+    archive.category ||
+    archive.folder ||
+    "—";
 
   item.appendChild(
     document.createTextNode(
-      "Kategori: " + shownCategory
+      "Kategori: " +
+      shownCategory
     )
   );
 
@@ -1479,31 +1482,10 @@ function createArchiveItem(archive){
 
 
 /* =========================
-   RENDER ARCHIVES
-========================= */
-
-function renderArchives(){
-
-  documentList.replaceChildren();
-
-  driveArchives.forEach(
-    archive =>
-    documentList.appendChild(
-      createArchiveItem(archive)
-    )
-  );
-
-  updateSummary();
-
-  filterDocuments();
-}
-
-
-/* =========================
    UPDATE SUMMARY
 ========================= */
 
-function updateSummary(){
+function updateSummary() {
 
   const categories = [
     "Naskah",
@@ -1513,91 +1495,104 @@ function updateSummary(){
     "Dokumentasi"
   ];
 
-  const normalize =
-  value =>
-  String(value || "")
-    .replace(/^\d+[_ -]*/,"")
-    .trim()
-    .toLowerCase();
+  const counts = {
+    Naskah: 0,
+    Surat: 0,
+    Laporan: 0,
+    Paparan: 0,
+    Dokumentasi: 0
+  };
 
-  const counts =
-  Object.fromEntries(
-    categories.map(
-      category =>
-      [category,0]
-    )
-  );
+  driveArchives.forEach(function(archive) {
 
-  driveArchives.forEach(
-    archive => {
-
-      const folder =
-      normalize(
+    const kategori =
+      String(
         archive.kategori ||
         archive.category ||
-        archive.folder
-      );
+        ""
+      )
+      .trim()
+      .toLowerCase();
 
-      const matched =
-      categories.find(
-        category =>
-        normalize(category) === folder
-      );
+    categories.forEach(function(category) {
 
-      if(matched){
-        counts[matched]++;
+      if (
+        kategori ===
+        category.toLowerCase()
+      ) {
+        counts[category]++;
       }
 
-    }
-  );
+    });
+
+  });
+
 
   document.getElementById(
     "totalDocuments"
   ).textContent =
-  driveArchives.length;
+    driveArchives.length;
+
 
   document.getElementById(
     "totalCategories"
   ).textContent =
-  categories.length;
+    categories.length;
+
 
   const summary =
-  document.getElementById(
-    "categorySummary"
-  );
+    document.getElementById(
+      "categorySummary"
+    );
 
   summary.replaceChildren();
 
-  categories.forEach(
-    category => {
 
-      const card =
+  categories.forEach(function(category) {
+
+    const card =
       document.createElement("div");
 
-      card.className =
+    card.className =
       "category-summary-card";
 
-      const label =
+
+    const label =
       document.createElement("span");
 
-      label.textContent =
+    label.textContent =
       category;
 
-      const number =
+
+    const number =
       document.createElement("strong");
 
-      number.textContent =
+    number.textContent =
       counts[category];
 
-      card.append(
-        label,
-        number
-      );
 
-      summary.appendChild(card);
+    card.append(
+      label,
+      number
+    );
 
-    }
-  );
+    summary.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   RENDER ARCHIVES
+========================= */
+
+function renderArchives() {
+
+  updateSummary();
+
+  filterDocuments();
+
 }
 
 
@@ -1612,9 +1607,12 @@ function filterDocuments() {
       .trim()
       .toLowerCase();
 
+
   const selectedCategory =
     categoryFilter.value
+      .trim()
       .toLowerCase();
+
 
   const filtered =
     driveArchives.filter(function(archive) {
@@ -1626,11 +1624,13 @@ function filterDocuments() {
           ""
         ).toLowerCase();
 
+
       const folder =
         String(
           archive.folder ||
           ""
         ).toLowerCase();
+
 
       const kategori =
         String(
@@ -1638,6 +1638,7 @@ function filterDocuments() {
           archive.category ||
           ""
         ).toLowerCase();
+
 
       const jenis =
         String(
@@ -1674,11 +1675,9 @@ function filterDocuments() {
     });
 
 
-  // Bersihkan daftar
   documentList.replaceChildren();
 
 
-  // Tampilkan hasil
   filtered.forEach(function(archive) {
 
     documentList.appendChild(
@@ -1739,98 +1738,110 @@ function loadDriveArchives() {
   const callbackName =
     "receiveDriveArchives";
 
-  // Hapus script JSONP lama jika ada
+
   const oldScript =
-    document.getElementById("driveJsonpScript");
+    document.getElementById(
+      "driveJsonpScript"
+    );
+
 
   if (oldScript) {
     oldScript.remove();
   }
 
-  // Pastikan callback tersedia secara GLOBAL
-  window[callbackName] = function(data) {
 
-    console.log(
-      "Respons Apps Script:",
-      data
-    );
+  window[callbackName] =
+    function(data) {
 
-    // Pastikan data valid
-    if (!data) {
-
-      loadingStatus.textContent =
-        "Apps Script tidak mengirim data.";
-
-      return;
-    }
-
-    // Jika Apps Script mengirim error
-    if (data.status === "error") {
-
-      loadingStatus.textContent =
-        "Apps Script mengalami kesalahan: " +
-        (
-          data.message ||
-          data.pesan ||
-          "Tidak diketahui"
-        );
-
-      return;
-    }
-
-    // Ambil daftar file
-    if (!Array.isArray(data.files)) {
-
-      loadingStatus.textContent =
-        "Respons Apps Script tidak memiliki daftar file.";
-
-      console.error(
-        "Format respons:",
+      console.log(
+        "RESPONS APPS SCRIPT:",
         data
       );
 
-      return;
-    }
 
-    // SIMPAN DATA ARSIP
-    driveArchives =
-      data.files;
+      if (!data) {
 
-    console.log(
-      "Jumlah arsip:",
-      driveArchives.length
-    );
+        loadingStatus.textContent =
+          "Apps Script tidak mengirim data.";
 
-    // Update status
-    loadingStatus.textContent =
-      "Arsip berhasil dimuat: " +
-      driveArchives.length +
-      " dokumen.";
+        return;
 
-    // Tampilkan data
-    renderArchives();
-
-    // Hapus callback setelah selesai
-    setTimeout(function(){
-
-      try {
-        delete window[callbackName];
-      } catch(e) {}
-
-    }, 1000);
-
-  };
+      }
 
 
-  // Buat elemen script JSONP
+      if (data.status === "error") {
+
+        loadingStatus.textContent =
+          "Apps Script mengalami kesalahan: " +
+          (
+            data.message ||
+            data.pesan ||
+            "Tidak diketahui"
+          );
+
+        return;
+
+      }
+
+
+      if (
+        !Array.isArray(data.files)
+      ) {
+
+        loadingStatus.textContent =
+          "Format data arsip tidak valid.";
+
+        console.error(
+          "Data Apps Script:",
+          data
+        );
+
+        return;
+
+      }
+
+
+      driveArchives =
+        data.files;
+
+
+      console.log(
+        "JUMLAH ARSIP:",
+        driveArchives.length
+      );
+
+
+      loadingStatus.textContent =
+        "Arsip berhasil dimuat: " +
+        driveArchives.length +
+        " dokumen.";
+
+
+      renderArchives();
+
+
+      setTimeout(function() {
+
+        try {
+          delete window[callbackName];
+        } catch (e) {}
+
+      }, 1000);
+
+    };
+
+
   const script =
     document.createElement("script");
+
 
   script.id =
     "driveJsonpScript";
 
+
   script.type =
     "text/javascript";
+
 
   script.src =
     API_URL +
@@ -1840,22 +1851,20 @@ function loadDriveArchives() {
     Date.now();
 
 
-  // Jika gagal
   script.onerror =
-    function(error) {
+    function() {
 
       console.error(
-        "JSONP gagal:",
-        error
+        "JSONP gagal."
       );
 
+
       loadingStatus.textContent =
-        "Arsip gagal dimuat dari Google Drive. Periksa koneksi Apps Script.";
+        "Arsip gagal dimuat dari Google Drive.";
 
     };
 
 
-  // Tambahkan ke halaman
   document.head.appendChild(script);
 
 }
@@ -1870,20 +1879,22 @@ searchInput.addEventListener(
   filterDocuments
 );
 
+
 categoryFilter.addEventListener(
   "change",
   filterDocuments
 );
 
+
 resetButton.addEventListener(
   "click",
-  function(){
+  function() {
 
     searchInput.value =
-    "";
+      "";
 
     categoryFilter.value =
-    "semua";
+      "semua";
 
     filterDocuments();
 
@@ -1896,86 +1907,117 @@ resetButton.addEventListener(
 ========================= */
 
 document
-.getElementById("searchButton")
-.addEventListener(
-  "click",
-  function(){
+  .getElementById("searchButton")
+  .addEventListener(
+    "click",
+    function() {
 
-    searchInput.dispatchEvent(
-      new Event("input")
-    );
+      filterDocuments();
 
-  }
-);
+    }
+  );
 
 
 /* =========================
-   ARCHIVE FORM
-========================= */
-
-/* =========================
-   UPLOAD ARSIP
+   UPLOAD ELEMENT
 ========================= */
 
 const uploadForm =
-  document.getElementById("uploadForm");
+  document.getElementById(
+    "uploadForm"
+  );
 
 const uploadCategory =
-  document.getElementById("uploadCategory");
+  document.getElementById(
+    "uploadCategory"
+  );
 
 const uploadFileInput =
-  document.getElementById("uploadFile");
+  document.getElementById(
+    "uploadFile"
+  );
 
 const selectedFileBox =
-  document.getElementById("selectedFileBox");
+  document.getElementById(
+    "selectedFileBox"
+  );
 
 const selectedFileName =
-  document.getElementById("selectedFileName");
+  document.getElementById(
+    "selectedFileName"
+  );
 
 const selectedFileSize =
-  document.getElementById("selectedFileSize");
+  document.getElementById(
+    "selectedFileSize"
+  );
 
 const uploadButton =
-  document.getElementById("uploadButton");
+  document.getElementById(
+    "uploadButton"
+  );
 
 const cancelUpload =
-  document.getElementById("cancelUpload");
+  document.getElementById(
+    "cancelUpload"
+  );
 
 const uploadProgressBox =
-  document.getElementById("uploadProgressBox");
+  document.getElementById(
+    "uploadProgressBox"
+  );
 
 const uploadProgress =
-  document.getElementById("uploadProgress");
+  document.getElementById(
+    "uploadProgress"
+  );
 
 const uploadPercent =
-  document.getElementById("uploadPercent");
+  document.getElementById(
+    "uploadPercent"
+  );
 
 const uploadStatus =
-  document.getElementById("uploadStatus");
+  document.getElementById(
+    "uploadStatus"
+  );
 
 const uploadMessage =
-  document.getElementById("uploadMessage");
+  document.getElementById(
+    "uploadMessage"
+  );
 
 
 /* =========================
-   FORMAT UKURAN FILE
+   FORMAT FILE SIZE
 ========================= */
 
-function formatFileSize(bytes){
+function formatFileSize(bytes) {
 
-  if(bytes < 1024){
+  if (bytes < 1024) {
+
     return bytes + " B";
+
   }
 
-  if(bytes < 1024 * 1024){
+
+  if (
+    bytes <
+    1024 * 1024
+  ) {
+
     return (
       bytes / 1024
     ).toFixed(1) + " KB";
+
   }
 
+
   return (
-    bytes / (1024 * 1024)
+    bytes /
+    (1024 * 1024)
   ).toFixed(2) + " MB";
+
 }
 
 
@@ -1985,27 +2027,34 @@ function formatFileSize(bytes){
 
 uploadFileInput.addEventListener(
   "change",
-  function(){
+  function() {
 
     const file =
       this.files[0];
 
-    if(!file){
+
+    if (!file) {
 
       selectedFileBox.style.display =
         "none";
 
       return;
+
     }
+
 
     selectedFileBox.style.display =
       "block";
 
+
     selectedFileName.textContent =
       file.name;
 
+
     selectedFileSize.textContent =
-      formatFileSize(file.size);
+      formatFileSize(
+        file.size
+      );
 
   }
 );
@@ -2015,30 +2064,38 @@ uploadFileInput.addEventListener(
    RESET UPLOAD
 ========================= */
 
-function resetUpload(){
+function resetUpload() {
 
   uploadForm.reset();
+
 
   selectedFileBox.style.display =
     "none";
 
+
   uploadProgressBox.style.display =
     "none";
+
 
   uploadProgress.style.width =
     "0%";
 
+
   uploadPercent.textContent =
     "0%";
+
 
   uploadStatus.textContent =
     "Menyiapkan upload...";
 
+
   uploadButton.disabled =
     false;
 
+
   uploadButton.textContent =
     "📤 Unggah Arsip";
+
 
   cancelUpload.style.display =
     "none";
@@ -2047,21 +2104,23 @@ function resetUpload(){
 
 
 /* =========================
-   PESAN
+   PESAN UPLOAD
 ========================= */
 
 function showUploadMessage(
   message,
   success
-){
+) {
 
   uploadMessage.style.display =
     "block";
 
+
   uploadMessage.textContent =
     message;
 
-  if(success){
+
+  if (success) {
 
     uploadMessage.style.background =
       "#eaf8f1";
@@ -2072,7 +2131,7 @@ function showUploadMessage(
     uploadMessage.style.border =
       "1px solid #bce6d1";
 
-  }else{
+  } else {
 
     uploadMessage.style.background =
       "#fff1f1";
@@ -2092,29 +2151,33 @@ function showUploadMessage(
    BACA FILE
 ========================= */
 
-function readFileAsBase64(file){
+function readFileAsBase64(file) {
 
   return new Promise(
-    (resolve,reject) => {
+    function(resolve, reject) {
 
       const reader =
         new FileReader();
 
+
       reader.onload =
-        function(){
+        function() {
 
           const result =
             reader.result;
 
+
           const base64 =
             result.split(",")[1];
+
 
           resolve(base64);
 
         };
 
+
       reader.onerror =
-        function(){
+        function() {
 
           reject(
             new Error(
@@ -2123,6 +2186,7 @@ function readFileAsBase64(file){
           );
 
         };
+
 
       reader.readAsDataURL(file);
 
@@ -2138,18 +2202,20 @@ function readFileAsBase64(file){
 
 uploadForm.addEventListener(
   "submit",
-  async function(event){
+  async function(event) {
 
     event.preventDefault();
 
+
     const category =
       uploadCategory.value;
+
 
     const file =
       uploadFileInput.files[0];
 
 
-    if(!category){
+    if (!category) {
 
       showUploadMessage(
         "Silakan pilih kategori arsip.",
@@ -2157,10 +2223,11 @@ uploadForm.addEventListener(
       );
 
       return;
+
     }
 
 
-    if(!file){
+    if (!file) {
 
       showUploadMessage(
         "Silakan pilih file arsip.",
@@ -2168,97 +2235,98 @@ uploadForm.addEventListener(
       );
 
       return;
+
     }
 
 
-    /*
-     * Batas 2 MB mengikuti fungsi
-     * uploadFile() yang sudah ada
-     * di Apps Script.
-     */
+    if (
+      file.size >
+      5 * 1024 * 1024
+    ) {
 
-    if(
-  file.size >
-  5 * 1024 * 1024
-){
-  showUploadMessage(
-    "Ukuran file maksimal 5 MB.",
-    false
-  );
+      showUploadMessage(
+        "Ukuran file maksimal 5 MB.",
+        false
+      );
 
-  return;
-}
+      return;
+
+    }
 
 
     uploadButton.disabled =
       true;
 
+
     cancelUpload.style.display =
       "inline-block";
+
 
     uploadProgressBox.style.display =
       "block";
 
+
     uploadProgress.style.width =
       "10%";
+
 
     uploadPercent.textContent =
       "10%";
 
+
     uploadStatus.textContent =
       "Membaca file...";
+
 
     uploadMessage.style.display =
       "none";
 
 
-    try{
+    try {
 
       const base64 =
-        await readFileAsBase64(file);
+        await readFileAsBase64(
+          file
+        );
 
 
       uploadProgress.style.width =
         "35%";
 
+
       uploadPercent.textContent =
         "35%";
+
 
       uploadStatus.textContent =
         "Mengirim file...";
 
 
-      /*
-       * Apps Script Web App tidak selalu
-       * dapat menerima POST langsung dari
-       * browser karena kebijakan CORS.
-       *
-       * Untuk saat ini kita gunakan endpoint
-       * Apps Script yang sama.
-       */
-
       const response =
         await fetch(
           API_URL,
           {
-            method:"POST",
+            method: "POST",
 
-            headers:{
+            headers: {
               "Content-Type":
                 "text/plain;charset=utf-8"
             },
 
-            body:JSON.stringify({
+            body: JSON.stringify({
 
-              kategori:category,
+              kategori:
+                category,
 
-              namaFile:file.name,
+              namaFile:
+                file.name,
 
               mimeType:
                 file.type ||
                 "application/octet-stream",
 
-              fileBase64:base64
+              fileBase64:
+                base64
 
             })
 
@@ -2269,8 +2337,10 @@ uploadForm.addEventListener(
       uploadProgress.style.width =
         "75%";
 
+
       uploadPercent.textContent =
         "75%";
+
 
       uploadStatus.textContent =
         "Memproses respons...";
@@ -2280,18 +2350,22 @@ uploadForm.addEventListener(
         await response.json();
 
 
-      if(
-        result.status === "success"
-      ){
+      if (
+        result.status ===
+        "success"
+      ) {
 
         uploadProgress.style.width =
           "100%";
 
+
         uploadPercent.textContent =
           "100%";
 
+
         uploadStatus.textContent =
           "Upload selesai.";
+
 
         showUploadMessage(
           "✅ File berhasil diunggah ke Google Drive.",
@@ -2299,13 +2373,8 @@ uploadForm.addEventListener(
         );
 
 
-        /*
-         * Muat ulang daftar arsip
-         * setelah upload.
-         */
-
         setTimeout(
-          function(){
+          function() {
 
             resetUpload();
 
@@ -2316,7 +2385,7 @@ uploadForm.addEventListener(
         );
 
 
-      }else{
+      } else {
 
         throw new Error(
           result.pesan ||
@@ -2327,16 +2396,19 @@ uploadForm.addEventListener(
       }
 
 
-    }catch(error){
+    } catch (error) {
 
       uploadProgress.style.width =
         "0%";
 
+
       uploadPercent.textContent =
         "0%";
 
+
       uploadStatus.textContent =
         "Upload gagal.";
+
 
       showUploadMessage(
         "❌ " +
@@ -2347,8 +2419,10 @@ uploadForm.addEventListener(
         false
       );
 
+
       uploadButton.disabled =
         false;
+
 
       cancelUpload.style.display =
         "none";
@@ -2360,12 +2434,12 @@ uploadForm.addEventListener(
 
 
 /* =========================
-   BATAL
+   BATAL UPLOAD
 ========================= */
 
 cancelUpload.addEventListener(
   "click",
-  function(){
+  function() {
 
     resetUpload();
 
@@ -2375,40 +2449,39 @@ cancelUpload.addEventListener(
   }
 );
 
-  }
-);
-
 
 /* =========================
    FAVORITES
 ========================= */
 
-(function(){
+(function() {
 
   const key =
-  "rspdFavoriteLinks";
+    "rspdFavoriteLinks";
+
 
   const list =
-  document.getElementById(
-    "favoriteList"
-  );
+    document.getElementById(
+      "favoriteList"
+    );
+
 
   const btn =
-  document.getElementById(
-    "addFavorite"
-  );
+    document.getElementById(
+      "addFavorite"
+    );
 
 
-  function read(){
+  function read() {
 
-    try{
+    try {
 
       return JSON.parse(
         localStorage.getItem(key) ||
         "[]"
       );
 
-    }catch(e){
+    } catch (e) {
 
       return [];
 
@@ -2417,87 +2490,117 @@ cancelUpload.addEventListener(
   }
 
 
-  function render(){
+  function render() {
 
     const items =
-    read();
+      read();
+
 
     list.replaceChildren();
 
-    if(!items.length){
+
+    if (!items.length) {
 
       const li =
-      document.createElement("li");
+        document.createElement(
+          "li"
+        );
+
 
       li.className =
-      "favorite-note";
+        "favorite-note";
+
 
       li.textContent =
-      "Belum ada tautan favorit yang ditambahkan.";
+        "Belum ada tautan favorit yang ditambahkan.";
+
 
       list.appendChild(li);
 
+
       return;
+
     }
 
 
     items.forEach(
-      (it,i) => {
+      function(it, i) {
 
         const li =
-        document.createElement("li");
+          document.createElement(
+            "li"
+          );
+
 
         const a =
-        document.createElement("a");
+          document.createElement(
+            "a"
+          );
+
 
         a.href =
-        it.url;
+          it.url;
+
 
         a.target =
-        "_blank";
+          "_blank";
+
 
         a.rel =
-        "noopener noreferrer";
+          "noopener noreferrer";
+
 
         a.textContent =
-        it.title;
+          it.title;
+
 
         li.appendChild(a);
 
 
         const rm =
-        document.createElement("button");
+          document.createElement(
+            "button"
+          );
+
 
         rm.type =
-        "button";
+          "button";
+
 
         rm.textContent =
-        " Hapus";
+          " Hapus";
+
 
         rm.style.marginLeft =
-        "8px";
+          "8px";
+
 
         rm.style.padding =
-        "5px 9px";
+          "5px 9px";
+
 
         rm.addEventListener(
           "click",
-          () => {
+          function() {
 
             const arr =
-            read();
+              read();
 
-            arr.splice(i,1);
+
+            arr.splice(i, 1);
+
 
             localStorage.setItem(
               key,
               JSON.stringify(arr)
             );
 
+
             render();
 
           }
         );
+
 
         li.appendChild(rm);
 
@@ -2511,52 +2614,66 @@ cancelUpload.addEventListener(
 
   btn.addEventListener(
     "click",
-    () => {
+    function() {
 
       const title =
-      prompt(
-        "Nama tautan favorit:"
-      );
+        prompt(
+          "Nama tautan favorit:"
+        );
 
-      if(!title) return;
+
+      if (!title) return;
+
 
       const url =
-      prompt(
-        "Tempel URL dokumen Google Drive:"
-      );
+        prompt(
+          "Tempel URL dokumen Google Drive:"
+        );
 
-      if(!url) return;
 
-      try{
+      if (!url) return;
+
+
+      try {
 
         const parsed =
-        new URL(url);
+          new URL(url);
 
-        if(
-          !["http:","https:"]
-          .includes(
+
+        if (
+          ![
+            "http:",
+            "https:"
+          ].includes(
             parsed.protocol
           )
-        ){
-          throw Error();
+        ) {
+
+          throw new Error();
+
         }
 
+
         const arr =
-        read();
+          read();
+
 
         arr.push({
-          title:title,
-          url:parsed.href
+          title: title,
+          url: parsed.href
         });
+
 
         localStorage.setItem(
           key,
           JSON.stringify(arr)
         );
 
+
         render();
 
-      }catch(e){
+
+      } catch (e) {
 
         alert(
           "URL tidak valid. Silakan masukkan tautan http/https."
