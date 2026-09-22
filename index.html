@@ -1472,11 +1472,20 @@ function createArchiveItem(archive) {
 
   item.appendChild(
     document.createTextNode(
-      "Jenis file: " +
-      (archive.jenis || "—")
+      "Subkategori: " +
+      (archive.subkategori || archive.folder || "—")
     )
   );
+    item.appendChild(
+  document.createElement("br")
+);
 
+item.appendChild(
+  document.createTextNode(
+    "Jenis file: " +
+    (archive.jenis || "—")
+  )
+);
   return item;
 }
 
