@@ -1475,11 +1475,13 @@ function createArchiveItem(archive) {
   );
 
   item.appendChild(
-    document.createTextNode(
-      "Subkategori: " +
-      (archive.subkategori || archive.folder || "—")
+  document.createTextNode(
+    "Subkategori: " +
+    tampilkanNamaSubkategori(
+      archive.subkategori || archive.folder || "—"
     )
-  );
+  )
+);
     item.appendChild(
   document.createElement("br")
 );
@@ -1957,7 +1959,13 @@ function loadDriveArchives() {
 /* =========================
    SEARCH EVENTS
 ========================= */
-function updateSubcategoryOptions() {
+function tampilkanNamaSubkategori(nama) {
+
+  return String(nama || "")
+    .replace(/^\d+_/, "");
+
+}
+  function updateSubcategoryOptions() {
 
   const selectedCategory =
     categoryFilter.value
@@ -2023,7 +2031,9 @@ function updateSubcategoryOptions() {
         subkategori.toLowerCase();
 
       option.textContent =
-        subkategori;
+  tampilkanNamaSubkategori(
+    subkategori
+  );
 
       subcategoryFilter.appendChild(
         option
