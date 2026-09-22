@@ -1121,7 +1121,18 @@ button:hover{
           </option>
 
         </select>
+<label for="uploadSubcategory">
+  Subkategori Arsip
+</label>
 
+<select
+  id="uploadSubcategory"
+  required
+>
+  <option value="">
+    Pilih subkategori
+  </option>
+</select>
       </div>
 
 
@@ -2122,6 +2133,90 @@ const uploadFileInput =
     "uploadFile"
   );
 
+  const uploadSubcategory =
+  document.getElementById(
+    "uploadSubcategory"
+  );
+  const uploadSubcategoryMap = {
+
+  Naskah: [
+    "01_Peraturan",
+    "02_Naskah Dinas",
+    "03_Pedoman",
+    "04_Petunjuk Pelaksanaan",
+    "05_Petunjuk Teknis",
+    "99_Lainnya"
+  ],
+
+  Surat: [
+    "01_Surat Tugas",
+    "02_Surat Keputusan",
+    "03_Surat Pengumuman",
+    "04_Nota Dinas",
+    "05_Surat Edaran",
+    "06_Surat Undangan",
+    "07_Surat Permohonan",
+    "99_Lainnya"
+  ],
+
+  Laporan: [
+    "01_Laporan Perjalanan Dinas",
+    "02_Laporan Kegiatan",
+    "03_Laporan Keuangan",
+    "04_Laporan Kinerja",
+    "05_BAST",
+    "99_Lainnya"
+  ],
+
+  Paparan: [
+    "01_Bahan Paparan",
+    "02_Summary",
+    "99_Lainnya"
+  ],
+
+  Dokumentasi: [
+    "01_Foto",
+    "02_Video",
+    "99_Lainnya"
+  ]
+uploadCategory.addEventListener(
+  "change",
+  function() {
+
+    const category =
+      uploadCategory.value;
+
+    const subcategories =
+      uploadSubcategoryMap[category] || [];
+
+    uploadSubcategory.innerHTML =
+      '<option value="">Pilih subkategori</option>';
+
+    subcategories.forEach(
+      function(subkategori) {
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          subkategori;
+
+        option.textContent =
+          tampilkanNamaSubkategori(
+            subkategori
+          );
+
+        uploadSubcategory.appendChild(
+          option
+        );
+
+      }
+    );
+
+  }
+);
+
+};
 const selectedFileBox =
   document.getElementById(
     "selectedFileBox"
@@ -2394,7 +2489,9 @@ uploadForm.addEventListener(
 
     const category =
       uploadCategory.value;
-
+    
+const subcategory =
+  uploadSubcategory.value;
 
     const file =
       uploadFileInput.files[0];
@@ -2410,6 +2507,15 @@ uploadForm.addEventListener(
       return;
 
     }
+    if (!subcategory) {
+
+  showUploadMessage(
+    "Silakan pilih subkategori arsip.",
+    false
+  );
+
+  return;
+}
 
 
     if (!file) {
@@ -2499,22 +2605,12 @@ uploadForm.addEventListener(
             },
 
             body: JSON.stringify({
-
-              kategori:
-                category,
-
-              namaFile:
-                file.name,
-
-              mimeType:
-                file.type ||
-                "application/octet-stream",
-
-              fileBase64:
-                base64
-
-            })
-
+  kategori: category,
+  subkategori: subcategory,
+  namaFile: file.name,
+  mimeType: file.type || "application/octet-stream",
+  fileBase64: base64
+})
           }
         );
 
