@@ -1738,17 +1738,14 @@ function loadDriveArchives() {
   const callbackName =
     "receiveDriveArchives";
 
-
   const oldScript =
     document.getElementById(
       "driveJsonpScript"
     );
 
-
   if (oldScript) {
     oldScript.remove();
   }
-
 
   window[callbackName] =
     function(data) {
@@ -1758,16 +1755,13 @@ function loadDriveArchives() {
         data
       );
 
-
       if (!data) {
 
         loadingStatus.textContent =
           "Apps Script tidak mengirim data.";
 
         return;
-
       }
-
 
       if (data.status === "error") {
 
@@ -1780,12 +1774,11 @@ function loadDriveArchives() {
           );
 
         return;
-
       }
 
-
       if (
-        !Array.isArray(data.files)
+        !data.data ||
+        !Array.isArray(data.data)
       ) {
 
         loadingStatus.textContent =
@@ -1797,59 +1790,124 @@ function loadDriveArchives() {
         );
 
         return;
-
       }
 
+      const arsipGabungan = [];
+
+      data.data.forEach(
+        function(kategoriData) {
+
+          const kategori =
+            kategoriData.kategori || "";
+
+          const subkategoriList =
+            Array.isArray(
+              kategoriData.subkategori
+            )
+              ? kategoriData.subkategori
+              : [];
+
+          subkategoriList.forEach(
+            function(subkategoriData) {
+
+              const subkategori =
+                subkategoriData.nama || "";
+
+              const files =
+                Array.isArray(
+                  subkategoriData.files
+                )
+                  ? subkategoriData.files
+                  : [];
+
+              files.forEach(
+                function(file) {
+
+                  arsipGabungan.push({
+
+                    id:
+                      file.id || "",
+
+                    judul:
+                      file.judul || "",
+
+                    url:
+                      file.url || "",
+
+                    jenis:
+                      file.jenis || "",
+
+                    kategori:
+                      kategori,
+
+                    subkategori:
+                      subkategori,
+
+                    folder:
+                      subkategori
+
+                  });
+
+                }
+              );
+
+            }
+          );
+
+        }
+      );
 
       driveArchives =
-        data.files;
-
+        arsipGabungan;
 
       console.log(
         "JUMLAH ARSIP:",
         driveArchives.length
       );
 
-
       loadingStatus.textContent =
         "Arsip berhasil dimuat: " +
         driveArchives.length +
         " dokumen.";
 
-
       renderArchives();
 
+      setTimeout(
+        function() {
 
-      setTimeout(function() {
+          try {
 
-        try {
-          delete window[callbackName];
-        } catch (e) {}
+            delete window[
+              callbackName
+            ];
 
-      }, 1000);
+          } catch (e) {}
+
+        },
+        1000
+      );
 
     };
 
 
   const script =
-    document.createElement("script");
-
+    document.createElement(
+      "script"
+    );
 
   script.id =
     "driveJsonpScript";
 
-
   script.type =
     "text/javascript";
 
-
   script.src =
     API_URL +
-    "?callback=" +
+    "?page=branch" +
+    "&callback=" +
     callbackName +
     "&t=" +
     Date.now();
-
 
   script.onerror =
     function() {
@@ -1858,14 +1916,14 @@ function loadDriveArchives() {
         "JSONP gagal."
       );
 
-
       loadingStatus.textContent =
         "Arsip gagal dimuat dari Google Drive.";
 
     };
 
-
-  document.head.appendChild(script);
+  document.head.appendChild(
+    script
+  );
 
 }
 
