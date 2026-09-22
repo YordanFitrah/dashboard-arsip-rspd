@@ -1605,95 +1605,128 @@ function updateSummary(){
    FILTER DOCUMENTS
 ========================= */
 
-function filterDocuments(){
-
-  const items =
-  documentList.getElementsByTagName("li");
+function filterDocuments() {
 
   const keyword =
-  searchInput.value
-    .trim()
-    .toLowerCase();
-
-  const category =
-  categoryFilter.value
-    .toLowerCase();
-
-  const searchActive =
-    keyword.length > 0 ||
-    category !== "semua";
-
-  documentList.classList.toggle(
-    "search-active",
-    searchActive
-  );
-
-  resultCount.classList.toggle(
-    "search-active",
-    searchActive
-  );
-
-  noResults.classList.toggle(
-    "search-active",
-    searchActive
-  );
-
-  let visibleCount = 0;
-
-  for(
-    let i=0;
-    i<items.length;
-    i++
-  ){
-
-    const text =
-    items[i].textContent.toLowerCase();
-
-    const rawCategory =
-    text
-      .split("kategori:")[1]
-      ?.split("jenis file:")[0]
-      ?.trim() || "";
-
-    const normalizedCategory =
-    rawCategory
-      .replace(/^\d+[_ -]*/,"")
+    searchInput.value
       .trim()
       .toLowerCase();
 
-    const matchesKeyword =
-    text.includes(keyword);
+  const selectedCategory =
+    categoryFilter.value
+      .toLowerCase();
 
-    const matchesCategory =
-    category === "semua" ||
-    normalizedCategory === category;
+  const filtered =
+    driveArchives.filter(function(archive) {
 
-    items[i].style.display =
-    matchesKeyword &&
-    matchesCategory
-      ? ""
-      : "none";
+      const title =
+        String(
+          archive.judul ||
+          archive.title ||
+          ""
+        ).toLowerCase();
 
-    if(
-      matchesKeyword &&
-      matchesCategory
-    ){
-      visibleCount++;
-    }
+      const folder =
+        String(
+          archive.folder ||
+          ""
+        ).toLowerCase();
 
-  }
+      const kategori =
+        String(
+          archive.kategori ||
+          archive.category ||
+          ""
+        ).toLowerCase();
+
+      const jenis =
+        String(
+          archive.jenis ||
+          ""
+        ).toLowerCase();
+
+
+      const text =
+        title +
+        " " +
+        folder +
+        " " +
+        kategori +
+        " " +
+        jenis;
+
+
+      const cocokKata =
+        !keyword ||
+        text.includes(keyword);
+
+
+      const cocokKategori =
+        selectedCategory === "semua" ||
+        kategori === selectedCategory;
+
+
+      return (
+        cocokKata &&
+        cocokKategori
+      );
+
+    });
+
+
+  // Bersihkan daftar
+  documentList.replaceChildren();
+
+
+  // Tampilkan hasil
+  filtered.forEach(function(archive) {
+
+    documentList.appendChild(
+      createArchiveItem(archive)
+    );
+
+  });
+
+
+  const sedangMencari =
+    keyword.length > 0 ||
+    selectedCategory !== "semua";
+
+
+  documentList.classList.toggle(
+    "search-active",
+    sedangMencari
+  );
+
+
+  resultCount.classList.toggle(
+    "search-active",
+    sedangMencari
+  );
+
+
+  noResults.classList.toggle(
+    "search-active",
+    sedangMencari
+  );
+
 
   resultCount.textContent =
-  "Menampilkan " +
-  visibleCount +
-  " dari " +
-  items.length +
-  " dokumen";
+    "Menampilkan " +
+    filtered.length +
+    " dari " +
+    driveArchives.length +
+    " dokumen";
+
 
   noResults.style.display =
-  visibleCount === 0
-    ? "block"
-    : "none";
+    (
+      sedangMencari &&
+      filtered.length === 0
+    )
+      ? "block"
+      : "none";
+
 }
 
 
@@ -1701,96 +1734,130 @@ function filterDocuments(){
    LOAD GOOGLE DRIVE
 ========================= */
 
-function loadDriveArchives(){
+function loadDriveArchives() {
 
   const callbackName =
-  "receiveDriveArchives";
+    "receiveDriveArchives";
 
+  // Hapus script JSONP lama jika ada
   const oldScript =
-  document.getElementById(
-    "driveJsonpScript"
-  );
+    document.getElementById("driveJsonpScript");
 
-  if(oldScript){
+  if (oldScript) {
     oldScript.remove();
   }
 
-  window[callbackName] =
-  function(data){
+  // Pastikan callback tersedia secara GLOBAL
+  window[callbackName] = function(data) {
 
-    const archives =
-    Array.isArray(data)
-      ? data
-      : Array.isArray(data?.files)
-        ? data.files
-        : Array.isArray(data?.archives)
-          ? data.archives
-          : Array.isArray(data?.data)
-            ? data.data
-            : null;
+    console.log(
+      "Respons Apps Script:",
+      data
+    );
 
-    if(!archives){
+    // Pastikan data valid
+    if (!data) {
 
       loadingStatus.textContent =
-      "Format respons Apps Script tidak dikenali. Pastikan respons berupa array atau objek dengan properti files.";
+        "Apps Script tidak mengirim data.";
 
       return;
     }
 
-    if(
-      data &&
-      !Array.isArray(data) &&
-      data.status === "error"
-    ){
+    // Jika Apps Script mengirim error
+    if (data.status === "error") {
 
       loadingStatus.textContent =
-      "Apps Script melaporkan kesalahan: " +
-      (
-        data.message ||
-        "akses Google Drive gagal."
+        "Apps Script mengalami kesalahan: " +
+        (
+          data.message ||
+          data.pesan ||
+          "Tidak diketahui"
+        );
+
+      return;
+    }
+
+    // Ambil daftar file
+    if (!Array.isArray(data.files)) {
+
+      loadingStatus.textContent =
+        "Respons Apps Script tidak memiliki daftar file.";
+
+      console.error(
+        "Format respons:",
+        data
       );
 
       return;
     }
 
+    // SIMPAN DATA ARSIP
     driveArchives =
-    archives;
+      data.files;
 
+    console.log(
+      "Jumlah arsip:",
+      driveArchives.length
+    );
+
+    // Update status
     loadingStatus.textContent =
-    "Arsip berhasil dimuat: " +
-    driveArchives.length +
-    " dokumen dari Google Drive.";
+      "Arsip berhasil dimuat: " +
+      driveArchives.length +
+      " dokumen.";
 
+    // Tampilkan data
     renderArchives();
 
-    delete window[callbackName];
+    // Hapus callback setelah selesai
+    setTimeout(function(){
+
+      try {
+        delete window[callbackName];
+      } catch(e) {}
+
+    }, 1000);
 
   };
 
+
+  // Buat elemen script JSONP
   const script =
-  document.createElement("script");
+    document.createElement("script");
 
   script.id =
-  "driveJsonpScript";
+    "driveJsonpScript";
+
+  script.type =
+    "text/javascript";
 
   script.src =
-  API_URL +
-  "?callback=" +
-  callbackName +
-  "&t=" +
-  Date.now();
+    API_URL +
+    "?callback=" +
+    callbackName +
+    "&t=" +
+    Date.now();
 
+
+  // Jika gagal
   script.onerror =
-  function(){
+    function(error) {
 
-    loadingStatus.textContent =
-    "Arsip gagal dimuat. Periksa koneksi atau pengaturan Apps Script.";
+      console.error(
+        "JSONP gagal:",
+        error
+      );
 
-  };
+      loadingStatus.textContent =
+        "Arsip gagal dimuat dari Google Drive. Periksa koneksi Apps Script.";
 
-  document.body.appendChild(
-    script
-  );
+    };
+
+
+  // Tambahkan ke halaman
+  document.head.appendChild(script);
+
 }
 
 
