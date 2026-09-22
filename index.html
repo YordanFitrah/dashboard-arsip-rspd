@@ -1068,42 +1068,27 @@ button:hover{
 <section class="panel" id="unggah">
 
   <h2 class="section-heading">
-    Tambah Arsip Baru
+    📤 Tambah Arsip Baru
   </h2>
 
   <p class="form-intro">
-    Formulir ini digunakan untuk mencatat informasi arsip.
-    Untuk saat ini formulir belum mengunggah dokumen
-    secara langsung ke Google Drive.
+    Unggah dokumen langsung ke Google Drive.
+    Pilih kategori arsip terlebih dahulu, kemudian pilih file
+    yang akan disimpan.
   </p>
 
-  <form id="archiveForm">
+  <form id="uploadForm">
 
     <div class="form-grid">
 
       <div class="field">
 
-        <label for="archiveTitle">
-          Nama Dokumen
-        </label>
-
-        <input
-          type="text"
-          id="archiveTitle"
-          placeholder="Masukkan nama dokumen"
-          required
-        >
-
-      </div>
-
-      <div class="field">
-
-        <label for="archiveCategory">
+        <label for="uploadCategory">
           Kategori Arsip
         </label>
 
         <select
-          id="archiveCategory"
+          id="uploadCategory"
           required
         >
 
@@ -1112,53 +1097,39 @@ button:hover{
           </option>
 
           <option value="Naskah">
-            Naskah
+            📘 Naskah
           </option>
 
           <option value="Surat">
-            Surat
+            ✉️ Surat
           </option>
 
           <option value="Laporan">
-            Laporan
+            📑 Laporan
           </option>
 
           <option value="Paparan">
-            Paparan
+            📊 Paparan
           </option>
 
           <option value="Dokumentasi">
-            Dokumentasi
+            📷 Dokumentasi
           </option>
 
         </select>
 
       </div>
 
-      <div class="field">
-
-        <label for="archiveDate">
-          Tanggal Dokumen
-        </label>
-
-        <input
-          type="date"
-          id="archiveDate"
-          required
-        >
-
-      </div>
 
       <div class="field">
 
-        <label for="archiveLink">
-          Link Google Drive
+        <label for="uploadFile">
+          File Arsip
         </label>
 
         <input
-          type="url"
-          id="archiveLink"
-          placeholder="Tempel tautan Google Drive"
+          type="file"
+          id="uploadFile"
           required
         >
 
@@ -1166,20 +1137,147 @@ button:hover{
 
     </div>
 
+
+    <!-- Nama file -->
+
+    <div
+      id="selectedFileBox"
+      style="
+        display:none;
+        margin-top:18px;
+        padding:15px;
+        border-radius:12px;
+        background:#f3f8fd;
+        border:1px solid #d9e7f5;
+      "
+    >
+
+      <div
+        style="
+          font-size:12px;
+          color:#68778b;
+          margin-bottom:5px;
+        "
+      >
+        FILE YANG DIPILIH
+      </div>
+
+      <strong
+        id="selectedFileName"
+        style="
+          color:#123b68;
+          word-break:break-word;
+        "
+      ></strong>
+
+      <div
+        id="selectedFileSize"
+        style="
+          font-size:12px;
+          color:#68778b;
+          margin-top:4px;
+        "
+      ></div>
+
+    </div>
+
+
+    <!-- Progress -->
+
+    <div
+      id="uploadProgressBox"
+      style="
+        display:none;
+        margin-top:18px;
+      "
+    >
+
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:7px;
+          font-size:13px;
+        "
+      >
+
+        <span id="uploadStatus">
+          Menyiapkan upload...
+        </span>
+
+        <strong id="uploadPercent">
+          0%
+        </strong>
+
+      </div>
+
+      <div
+        style="
+          height:9px;
+          background:#e5edf6;
+          border-radius:10px;
+          overflow:hidden;
+        "
+      >
+
+        <div
+          id="uploadProgress"
+          style="
+            width:0%;
+            height:100%;
+            background:linear-gradient(
+              90deg,
+              #123b68,
+              #19a6b5
+            );
+            transition:width .25s ease;
+          "
+        ></div>
+
+      </div>
+
+    </div>
+
+
     <div class="form-actions">
 
-      <button type="submit">
-        ＋ Tambah Arsip
+      <button
+        type="submit"
+        id="uploadButton"
+      >
+        📤 Unggah Arsip
       </button>
 
-      <span class="form-note">
-        Untuk saat ini, unggah/simpan file melalui
-        folder Google Drive yang sesuai.
-      </span>
+      <button
+        type="button"
+        id="cancelUpload"
+        style="
+          display:none;
+          background:#fff;
+          color:#123b68;
+          border:1px solid #cbd8e7;
+        "
+      >
+        Batal
+      </button>
 
     </div>
 
   </form>
+
+
+  <!-- Pesan hasil -->
+
+  <div
+    id="uploadMessage"
+    style="
+      display:none;
+      margin-top:18px;
+      padding:15px;
+      border-radius:12px;
+      line-height:1.5;
+    "
+  ></div>
 
 </section>
 
@@ -1748,15 +1846,467 @@ document
    ARCHIVE FORM
 ========================= */
 
-archiveForm.addEventListener(
+/* =========================
+   UPLOAD ARSIP
+========================= */
+
+const uploadForm =
+  document.getElementById("uploadForm");
+
+const uploadCategory =
+  document.getElementById("uploadCategory");
+
+const uploadFileInput =
+  document.getElementById("uploadFile");
+
+const selectedFileBox =
+  document.getElementById("selectedFileBox");
+
+const selectedFileName =
+  document.getElementById("selectedFileName");
+
+const selectedFileSize =
+  document.getElementById("selectedFileSize");
+
+const uploadButton =
+  document.getElementById("uploadButton");
+
+const cancelUpload =
+  document.getElementById("cancelUpload");
+
+const uploadProgressBox =
+  document.getElementById("uploadProgressBox");
+
+const uploadProgress =
+  document.getElementById("uploadProgress");
+
+const uploadPercent =
+  document.getElementById("uploadPercent");
+
+const uploadStatus =
+  document.getElementById("uploadStatus");
+
+const uploadMessage =
+  document.getElementById("uploadMessage");
+
+
+/* =========================
+   FORMAT UKURAN FILE
+========================= */
+
+function formatFileSize(bytes){
+
+  if(bytes < 1024){
+    return bytes + " B";
+  }
+
+  if(bytes < 1024 * 1024){
+    return (
+      bytes / 1024
+    ).toFixed(1) + " KB";
+  }
+
+  return (
+    bytes / (1024 * 1024)
+  ).toFixed(2) + " MB";
+}
+
+
+/* =========================
+   PILIH FILE
+========================= */
+
+uploadFileInput.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+    if(!file){
+
+      selectedFileBox.style.display =
+        "none";
+
+      return;
+    }
+
+    selectedFileBox.style.display =
+      "block";
+
+    selectedFileName.textContent =
+      file.name;
+
+    selectedFileSize.textContent =
+      formatFileSize(file.size);
+
+  }
+);
+
+
+/* =========================
+   RESET UPLOAD
+========================= */
+
+function resetUpload(){
+
+  uploadForm.reset();
+
+  selectedFileBox.style.display =
+    "none";
+
+  uploadProgressBox.style.display =
+    "none";
+
+  uploadProgress.style.width =
+    "0%";
+
+  uploadPercent.textContent =
+    "0%";
+
+  uploadStatus.textContent =
+    "Menyiapkan upload...";
+
+  uploadButton.disabled =
+    false;
+
+  uploadButton.textContent =
+    "📤 Unggah Arsip";
+
+  cancelUpload.style.display =
+    "none";
+
+}
+
+
+/* =========================
+   PESAN
+========================= */
+
+function showUploadMessage(
+  message,
+  success
+){
+
+  uploadMessage.style.display =
+    "block";
+
+  uploadMessage.textContent =
+    message;
+
+  if(success){
+
+    uploadMessage.style.background =
+      "#eaf8f1";
+
+    uploadMessage.style.color =
+      "#176b45";
+
+    uploadMessage.style.border =
+      "1px solid #bce6d1";
+
+  }else{
+
+    uploadMessage.style.background =
+      "#fff1f1";
+
+    uploadMessage.style.color =
+      "#a83232";
+
+    uploadMessage.style.border =
+      "1px solid #efc0c0";
+
+  }
+
+}
+
+
+/* =========================
+   BACA FILE
+========================= */
+
+function readFileAsBase64(file){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        function(){
+
+          const result =
+            reader.result;
+
+          const base64 =
+            result.split(",")[1];
+
+          resolve(base64);
+
+        };
+
+      reader.onerror =
+        function(){
+
+          reject(
+            new Error(
+              "File tidak dapat dibaca."
+            )
+          );
+
+        };
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   UPLOAD
+========================= */
+
+uploadForm.addEventListener(
   "submit",
-  function(event){
+  async function(event){
 
     event.preventDefault();
 
-    alert(
-      "Fitur tambah langsung ke Google Drive belum diaktifkan. Untuk saat ini, tambahkan dokumen melalui folder Google Drive."
-    );
+    const category =
+      uploadCategory.value;
+
+    const file =
+      uploadFileInput.files[0];
+
+
+    if(!category){
+
+      showUploadMessage(
+        "Silakan pilih kategori arsip.",
+        false
+      );
+
+      return;
+    }
+
+
+    if(!file){
+
+      showUploadMessage(
+        "Silakan pilih file arsip.",
+        false
+      );
+
+      return;
+    }
+
+
+    /*
+     * Batas 2 MB mengikuti fungsi
+     * uploadFile() yang sudah ada
+     * di Apps Script.
+     */
+
+    if(
+  file.size >
+  5 * 1024 * 1024
+){
+  showUploadMessage(
+    "Ukuran file maksimal 5 MB.",
+    false
+  );
+
+  return;
+}
+
+
+    uploadButton.disabled =
+      true;
+
+    cancelUpload.style.display =
+      "inline-block";
+
+    uploadProgressBox.style.display =
+      "block";
+
+    uploadProgress.style.width =
+      "10%";
+
+    uploadPercent.textContent =
+      "10%";
+
+    uploadStatus.textContent =
+      "Membaca file...";
+
+    uploadMessage.style.display =
+      "none";
+
+
+    try{
+
+      const base64 =
+        await readFileAsBase64(file);
+
+
+      uploadProgress.style.width =
+        "35%";
+
+      uploadPercent.textContent =
+        "35%";
+
+      uploadStatus.textContent =
+        "Mengirim file...";
+
+
+      /*
+       * Apps Script Web App tidak selalu
+       * dapat menerima POST langsung dari
+       * browser karena kebijakan CORS.
+       *
+       * Untuk saat ini kita gunakan endpoint
+       * Apps Script yang sama.
+       */
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method:"POST",
+
+            headers:{
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+
+            body:JSON.stringify({
+
+              kategori:category,
+
+              namaFile:file.name,
+
+              mimeType:
+                file.type ||
+                "application/octet-stream",
+
+              fileBase64:base64
+
+            })
+
+          }
+        );
+
+
+      uploadProgress.style.width =
+        "75%";
+
+      uploadPercent.textContent =
+        "75%";
+
+      uploadStatus.textContent =
+        "Memproses respons...";
+
+
+      const result =
+        await response.json();
+
+
+      if(
+        result.status === "success"
+      ){
+
+        uploadProgress.style.width =
+          "100%";
+
+        uploadPercent.textContent =
+          "100%";
+
+        uploadStatus.textContent =
+          "Upload selesai.";
+
+        showUploadMessage(
+          "✅ File berhasil diunggah ke Google Drive.",
+          true
+        );
+
+
+        /*
+         * Muat ulang daftar arsip
+         * setelah upload.
+         */
+
+        setTimeout(
+          function(){
+
+            resetUpload();
+
+            loadDriveArchives();
+
+          },
+          1500
+        );
+
+
+      }else{
+
+        throw new Error(
+          result.pesan ||
+          result.message ||
+          "Upload gagal."
+        );
+
+      }
+
+
+    }catch(error){
+
+      uploadProgress.style.width =
+        "0%";
+
+      uploadPercent.textContent =
+        "0%";
+
+      uploadStatus.textContent =
+        "Upload gagal.";
+
+      showUploadMessage(
+        "❌ " +
+        (
+          error.message ||
+          "Terjadi kesalahan saat upload."
+        ),
+        false
+      );
+
+      uploadButton.disabled =
+        false;
+
+      cancelUpload.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+/* =========================
+   BATAL
+========================= */
+
+cancelUpload.addEventListener(
+  "click",
+  function(){
+
+    resetUpload();
+
+    uploadMessage.style.display =
+      "none";
+
+  }
+);
 
   }
 );
