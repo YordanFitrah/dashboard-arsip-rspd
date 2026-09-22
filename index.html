@@ -1022,7 +1022,11 @@ button:hover{
       </option>
 
     </select>
-
+<select id="subcategoryFilter">
+  <option value="semua">
+    Semua Subkategori
+  </option>
+</select>
     <button
       type="button"
       id="searchButton"
@@ -1621,7 +1625,10 @@ function filterDocuments() {
     categoryFilter.value
       .trim()
       .toLowerCase();
-
+const selectedSubcategory =
+  subcategoryFilter.value
+    .trim()
+    .toLowerCase();
 
   const filtered =
     driveArchives.filter(function(archive) {
@@ -1674,12 +1681,21 @@ function filterDocuments() {
       const cocokKategori =
         selectedCategory === "semua" ||
         kategori === selectedCategory;
+const subkategori =
+  String(
+    archive.subkategori ||
+    ""
+  ).toLowerCase();
 
+const cocokSubkategori =
+  selectedSubcategory === "semua" ||
+  subkategori === selectedSubcategory;
 
       return (
-        cocokKata &&
-        cocokKategori
-      );
+  cocokKata &&
+  cocokKategori &&
+  cocokSubkategori
+);
 
     });
 
@@ -1697,8 +1713,9 @@ function filterDocuments() {
 
 
   const sedangMencari =
-    keyword.length > 0 ||
-    selectedCategory !== "semua";
+  keyword.length > 0 ||
+  selectedCategory !== "semua" ||
+  selectedSubcategory !== "semua";
 
 
   documentList.classList.toggle(
@@ -1940,7 +1957,82 @@ function loadDriveArchives() {
 /* =========================
    SEARCH EVENTS
 ========================= */
+function updateSubcategoryOptions() {
 
+  const selectedCategory =
+    categoryFilter.value
+      .trim()
+      .toLowerCase();
+
+  const subcategoryFilter =
+    document.getElementById(
+      "subcategoryFilter"
+    );
+
+  const subcategories = [];
+
+  driveArchives.forEach(
+    function(archive) {
+
+      const kategori =
+        String(
+          archive.kategori ||
+          archive.category ||
+          ""
+        )
+        .trim()
+        .toLowerCase();
+
+      const subkategori =
+        String(
+          archive.subkategori ||
+          ""
+        )
+        .trim();
+
+      if (
+        subkategori &&
+        (
+          selectedCategory === "semua" ||
+          kategori === selectedCategory
+        ) &&
+        !subcategories.includes(
+          subkategori
+        )
+      ) {
+        subcategories.push(
+          subkategori
+        );
+      }
+
+    }
+  );
+
+  subcategories.sort();
+
+  subcategoryFilter.innerHTML =
+    '<option value="semua">Semua Subkategori</option>';
+
+  subcategories.forEach(
+    function(subkategori) {
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        subkategori.toLowerCase();
+
+      option.textContent =
+        subkategori;
+
+      subcategoryFilter.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
 searchInput.addEventListener(
   "input",
   filterDocuments
@@ -1948,6 +2040,19 @@ searchInput.addEventListener(
 
 
 categoryFilter.addEventListener(
+  "change",
+  function() {
+
+    updateSubcategoryOptions();
+
+    subcategoryFilter.value =
+      "semua";
+
+    filterDocuments();
+
+  }
+);
+  subcategoryFilter.addEventListener(
   "change",
   filterDocuments
 );
@@ -1962,7 +2067,10 @@ resetButton.addEventListener(
 
     categoryFilter.value =
       "semua";
+subcategoryFilter.value =
+  "semua";
 
+updateSubcategoryOptions();
     filterDocuments();
 
   }
