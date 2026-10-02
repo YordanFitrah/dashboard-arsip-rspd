@@ -396,8 +396,15 @@ upForm.addEventListener("submit",async e=>{
     const raw=await response.text();
     let result;try{result=JSON.parse(raw);}catch(_){throw new Error("Respons server tidak dapat dibaca. Periksa konfigurasi layanan Apps Script.");}
     if(!response.ok||result.status!=="success")throw new Error(result.pesan||result.message||"Unggah gagal.");
-    uploadMessage("success","Berhasil! Dokumen telah disimpan ke Google Drive. Silakan muat ulang daftar arsip untuk melihat dokumen terbaru.");
+    uploadMessage("success","Berhasil! Dokumen tersimpan. Memperbarui daftar arsip dan statistik...");
     upForm.reset();upSubcategory.innerHTML='<option value="">Pilih kategori terlebih dahulu</option>';upSubcategory.disabled=true;
+    load(true);
+    const statusEl=document.getElementById("loadStatus");
+    const selesaiRefresh=()=>{
+      if(statusEl)statusEl.textContent="Data arsip dan statistik telah diperbarui.";
+    };
+    // Beri waktu singkat untuk callback pemuatan data menyelesaikan render.
+    setTimeout(selesaiRefresh,1200);
   }catch(err){uploadMessage("error","Belum berhasil mengunggah: "+(err.message||err)+". Jika berlanjut, minta administrator memeriksa layanan Apps Script.");}
   finally{upButton.disabled=false;upButton.textContent="Unggah Arsip";}
 });
