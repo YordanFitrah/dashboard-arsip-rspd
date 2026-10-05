@@ -289,7 +289,228 @@ table{border-collapse:collapse;width:100%;min-width:600px;margin-top:14px}th{tex
     right: -210px;
   }
 }
+/* =========================================
+   REDESIGN BERANDA - TAHAP 2
+   Kartu Layanan
+   ========================================= */
 
+.home-menu {
+  gap: 16px;
+}
+
+/* KARTU UTAMA */
+.home-tile {
+  position: relative;
+  min-height: 96px;
+  padding: 20px 22px;
+  border: 1px solid #e0e8f2;
+  border-radius: 16px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 5px 16px rgba(20,55,95,.055);
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  overflow: hidden;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+/* GARIS AKSEN DI SISI KIRI */
+.home-tile::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  transition: background .25s ease;
+}
+
+/* EFEK HOVER */
+.home-tile:hover {
+  transform: translateY(-4px);
+  border-color: #b9d3ef;
+  box-shadow: 0 12px 28px rgba(20,55,95,.12);
+  background: #ffffff;
+}
+
+.home-tile:hover::before {
+  background: #1769d2;
+}
+
+/* KARTU UTAMA / ARSIP */
+.home-tile.primary {
+  border-color: #bcd7f5;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f5f9ff 100%
+  );
+}
+
+.home-tile.primary::before {
+  background: #1769d2;
+}
+
+/* ICON */
+.home-tile .tile-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  background: #eaf3ff;
+  color: #1769d2;
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.home-tile:hover .tile-icon {
+  transform: scale(1.08);
+}
+
+/* WARNA ICON BERDASARKAN URUTAN KARTU */
+
+/* Arsip */
+.home-tile:nth-child(1) .tile-icon {
+  background: #eaf3ff;
+  color: #1769d2;
+}
+
+/* Persuratan */
+.home-tile:nth-child(2) .tile-icon {
+  background: #e8f8f2;
+  color: #14966b;
+}
+
+/* ATENSI */
+.home-tile:nth-child(3) .tile-icon {
+  background: #fff5dc;
+  color: #d49100;
+}
+
+/* Bebas Pasung */
+.home-tile:nth-child(4) .tile-icon {
+  background: #f0ecff;
+  color: #7056d8;
+}
+
+/* DTSEN */
+.home-tile:nth-child(5) .tile-icon {
+  background: #e8f8fa;
+  color: #168b9c;
+}
+
+/* LKS */
+.home-tile:nth-child(6) .tile-icon {
+  background: #fff0ed;
+  color: #df674f;
+}
+
+/* TEKS KARTU */
+.home-tile > span:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.home-tile b {
+  display: block;
+  color: #18385f;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.home-tile small {
+  display: block;
+  margin-top: 6px;
+  color: #7a8da5;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+/* PANAH */
+.home-tile > i {
+  width: 28px;
+  min-width: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #8ba4bf;
+  font-size: 18px;
+  font-style: normal;
+
+  transition:
+    transform .25s ease,
+    color .25s ease;
+}
+
+.home-tile:hover > i {
+  transform: translateX(5px);
+  color: #1769d2;
+}
+
+/* SECTION JUDUL */
+.home-section-title {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.home-section-title .eyebrow {
+  color: #1769d2;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.home-section-title h2 {
+  margin-top: 5px;
+  color: #18385f;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.home-section-title p {
+  margin-top: 5px;
+  color: #8192a8;
+  font-size: 11px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .home-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .home-tile {
+    min-height: 88px;
+    padding: 17px;
+  }
+
+  .home-tile .tile-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+}
 </style></head><body>
 <aside class="sidebar"><div class="brand">RSPD INTEGRATED<br>INFORMATION DASHBOARD<small>Direktorat Rehabilitasi Sosial Penyandang Disabilitas</small></div><nav class="nav">
 <div class="nav-label">MENU UTAMA</div>
