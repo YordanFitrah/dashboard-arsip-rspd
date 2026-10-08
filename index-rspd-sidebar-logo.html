@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DASHBOARD TERINTEGRASI DIREKTORAT RSPD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#102f55;--blue:#1769d2;--pale:#eaf3ff;--bg:#f3f7fd;--ink:#172b4d;--muted:#64748b;--line:#e3eaf2;--yellow:#f5b82e;--teal:#16a6a1;--violet:#8066d8;--coral:#f07865;--green:#15966b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 90% 8%,#e5efff 0,transparent 22%),radial-gradient(circle at 8% 48%,#e9f8f6 0,transparent 18%),var(--bg);color:var(--ink);font:14px Inter,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:auto -100px -160px auto;width:360px;height:360px;border:1px solid #1769d21c;border-radius:50%;box-shadow:0 0 0 28px #1769d20a,0 0 0 58px #1769d208;pointer-events:none;z-index:-1}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes softPulse{0%,100%{box-shadow:0 0 0 0 #f5b82e00}50%{box-shadow:0 0 0 6px #f5b82e22}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+@keyframes clickPop{0%{transform:scale(1)}45%{transform:scale(.96)}100%{transform:scale(1)}}
+
+.sidebar{position:fixed;inset:0 auto 0 0;width:240px;background:var(--navy);color:white;padding:24px 16px}
+.brand{font-weight:800;font-size:13px;line-height:1.5;padding:8px 10px 26px;border-bottom:1px solid #ffffff25}.brand small{display:block;color:#b8cbe0;font-size:10px;font-weight:400}
+.nav-label{font-size:10px;letter-spacing:1px;color:#9fb4cb;margin:25px 10px 9px}.nav a{display:block;padding:11px 12px;margin:4px 0;color:#dce8f5;text-decoration:none;border-radius:8px;font-size:12px}.nav a{transition:background .22s ease,transform .22s ease,padding-left .22s ease}.nav a:hover,.nav a.active{background:linear-gradient(100deg,#ffffff25,#ffffff0d);color:white;transform:translateX(4px);padding-left:15px}.nav a.active{border-left:3px solid var(--yellow);box-shadow:0 5px 18px #071d372b}
+.main{margin-left:240px}.topbar{height:70px;background:white;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:0 32px;color:var(--muted);font-size:12px}.topbar input{padding:10px 12px;border:1px solid var(--line);border-radius:8px;width:230px}
+.content{max-width:1400px;margin:auto;padding:28px 32px}.heading{display:flex;justify-content:space-between;gap:16px;margin-bottom:20px}.eyebrow{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:1px}.heading h1{font-size:24px;color:var(--navy);margin:7px 0}.heading p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}
+.welcome{background:linear-gradient(110deg,#102f55,#1769a9,#2185b4);background-size:180% 180%;animation:shimmer 9s ease infinite,riseIn .6s both;padding:25px 27px;color:white;border-radius:16px;margin-bottom:18px;position:relative;overflow:hidden;box-shadow:0 12px 28px #123d6b26}.welcome:after{content:"";position:absolute;right:7%;top:-75px;width:190px;height:190px;border:24px solid #ffffff16;border-radius:50%;box-shadow:0 0 0 20px #ffffff09}.welcome:before{content:"✦";position:absolute;right:19%;bottom:14px;color:#f5b82e;font-size:25px;opacity:.85}.welcome h2{font-size:18px;margin:0 0 7px}.welcome p{font-size:12px;color:#dceafa;margin:0;line-height:1.6}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}.kpi,.panel{background:#ffffffed;border:1px solid var(--line);border-radius:14px;box-shadow:0 7px 22px #102f550b;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.kpi{padding:17px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;animation:riseIn .55s both}.kpi:after{content:"";position:absolute;right:-18px;top:-22px;width:75px;height:75px;border-radius:50%;background:#1769d20a}.kpi:nth-child(2){animation-delay:.07s}.kpi:nth-child(3){animation-delay:.14s}.kpi:nth-child(4){animation-delay:.21s}.kpi:hover,.panel:hover{transform:translateY(-4px);box-shadow:0 14px 30px #102f5520;border-color:#c6d9f2}.ico{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#eaf3ff,#dceaff);display:grid;place-items:center;font-size:18px;color:var(--blue);transition:transform .25s ease}.kpi:nth-child(2) .ico{background:linear-gradient(145deg,#e7f8f1,#d3f1e4);color:var(--green)}.kpi:nth-child(3) .ico{background:linear-gradient(145deg,#fff5df,#ffebbd);color:#b77b00}.kpi:nth-child(4) .ico{background:linear-gradient(145deg,#f1edff,#e3dcff);color:var(--violet)}.kpi:hover .ico{transform:rotate(-8deg) scale(1.1)}.kpi small{display:block;color:var(--muted);font-size:11px}.kpi strong{display:block;font-size:24px;color:var(--navy);margin-top:4px}
+.columns{display:grid;grid-template-columns:1.1fr .9fr;gap:15px;margin-bottom:18px}.panel{padding:19px}.panel h3{font-size:13px;color:var(--navy);margin:0 0 17px}.cat{display:grid;grid-template-columns:100px 1fr 25px;gap:10px;align-items:center;margin:14px 0;font-size:11px}.track{height:8px;background:#edf2f7;border-radius:9px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--blue),#54a2f4);border-radius:10px;transition:width .8s cubic-bezier(.2,.8,.2,1)}.cat:nth-child(2) .fill{background:linear-gradient(90deg,#15966b,#54c89a)}.cat:nth-child(3) .fill{background:linear-gradient(90deg,#d99b20,#f5cb62)}.cat:nth-child(4) .fill{background:linear-gradient(90deg,#8066d8,#b19ef0)}.cat:nth-child(5) .fill{background:linear-gradient(90deg,#169da8,#62cbd0)}.cat b{text-align:right;color:var(--navy)}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick a{padding:13px;border:1px solid var(--line);border-radius:11px;text-decoration:none;color:var(--navy);font-size:11px;font-weight:700;background:linear-gradient(135deg,#fff,#f8fbff);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}.quick a:hover{transform:translateY(-3px);border-color:#9fc2ed;box-shadow:0 9px 18px #1769d218;background:linear-gradient(135deg,#fff,#edf5ff)}.quick a span{display:block;color:var(--muted);font-size:10px;font-weight:400;margin-top:4px}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools input,.tools select{padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:11px;transition:border-color .2s,box-shadow .2s}.tools input:focus,.tools select:focus,.topbar input:focus{outline:none;border-color:#6da4e5;box-shadow:0 0 0 3px #1769d21a}.tools input{flex:1;min-width:200px}.tools button{background:linear-gradient(110deg,var(--blue),#3987e5);color:white;border:0;border-radius:8px;padding:9px 14px;cursor:pointer;box-shadow:0 4px 10px #1769d225;transition:transform .15s,filter .2s,box-shadow .2s}.tools button:hover{filter:brightness(1.08);box-shadow:0 7px 15px #1769d238;transform:translateY(-2px)}.tools button:active,.quick a:active,.nav a:active{animation:clickPop .22s ease}
+table{border-collapse:collapse;width:100%;min-width:600px;margin-top:14px}th{text-align:left;background:#f7f9fc;color:var(--muted);font-size:10px;padding:11px}td{padding:12px;border-bottom:1px solid #edf1f6;font-size:11px}td a{color:var(--blue);font-weight:700;text-decoration:none;transition:color .2s}td a:hover{color:#0b438f;text-decoration:underline}.pill{background:var(--pale);color:var(--blue);padding:5px 8px;border-radius:20px;font-size:10px}.table-wrap{overflow:auto}.status,.footer{font-size:10px;color:var(--muted);margin-top:12px}.footer{text-align:center;padding:25px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}\n@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}}
+@media(max-width:700px){.sidebar{position:static;width:auto;padding:12px}.brand{padding:5px}.nav{display:flex;overflow:auto}.nav-label{display:none}.nav a{white-space:nowrap}.main{margin:0}.content{padding:20px 14px}.topbar{padding:0 14px}.heading{display:block}.kpis{gap:8px}.kpi{padding:10px}.quick{grid-template-columns:1fr}}
+ 
+
+/* ===== BACKGROUND BERANDA — SENADA DENGAN HERO ===== */
+.content{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(23,105,210,.10) 0, rgba(23,105,210,0) 230px),
+    radial-gradient(circle at 12% 82%, rgba(18,168,157,.07) 0, rgba(18,168,157,0) 260px),
+    linear-gradient(135deg,#f7faff 0%,#eef5fd 48%,#f9fbff 100%);
+}
+.content:before,
+.content:after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  border-radius:50%;
+  z-index:0;
+}
+.content:before{
+  width:520px;height:520px;
+  right:-250px;top:110px;
+  border:1px solid rgba(23,105,210,.10);
+  box-shadow:
+    0 0 0 34px rgba(23,105,210,.035),
+    0 0 0 70px rgba(23,105,210,.025),
+    0 0 0 108px rgba(245,195,78,.025);
+}
+.content:after{
+  width:390px;height:390px;
+  left:-240px;bottom:80px;
+  border:1px solid rgba(16,47,85,.10);
+  box-shadow:
+    0 0 0 30px rgba(16,47,85,.025),
+    0 0 0 65px rgba(23,105,210,.025);
+}
+#homePage{
+  position:relative;
+  z-index:1;
+}
+#homePage:before{
+  content:"";
+  position:absolute;
+  width:150px;height:150px;
+  right:2%;top:505px;
+  background-image:radial-gradient(rgba(23,105,210,.22) 1.5px,transparent 1.5px);
+  background-size:12px 12px;
+  opacity:.55;
+  pointer-events:none;
+}
+#homePage:after{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  left:-55px;top:430px;
+  border:2px solid rgba(245,195,78,.18);
+  border-radius:50%;
+  box-shadow:35px 35px 0 -18px rgba(23,105,210,.07);
+  pointer-events:none;
+}
+.home-section-title,
+.home-menu,
+.home-footer{position:relative;z-index:2}
+.home-section-title h2{font-size:24px}
+.home-section-title p{font-size:13px}
+.home-menu{gap:16px}
+.home-tile{
+  min-height:118px;
+  border-radius:17px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.home-tile:hover{transform:translateY(-5px) scale(1.005)}
+@media(max-width:560px){
+  #homePage:before,#homePage:after{display:none}
+  .content:before{right:-330px}
+}
+
+.home-page{max-width:1180px;margin:0 auto;padding:14px 0 28px}
+.home-hero{position:relative;overflow:hidden;border-radius:22px;padding:48px 52px;min-height:320px;color:#fff;background:linear-gradient(120deg,#102f55 0%,#174d83 58%,#1769d2 100%);box-shadow:0 16px 38px #102f5524}
+.home-hero .hero-photo{position:absolute;inset:0 0 0 auto;width:52%;background:url("./assets/gedung-kemensos-hero.webp") center center/cover no-repeat;z-index:0}
+.home-hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(16,47,85,1) 0%,rgba(16,47,85,.98) 31%,rgba(16,47,85,.82) 47%,rgba(16,47,85,.34) 67%,rgba(16,47,85,.04) 86%,rgba(16,47,85,0) 100%),linear-gradient(0deg,rgba(16,47,85,.24),transparent 45%);pointer-events:none}
+.home-hero:after{content:"";position:absolute;width:330px;height:330px;border:1px solid #ffffff38;border-radius:50%;right:-65px;top:-115px;z-index:2;box-shadow:0 0 0 32px #ffffff0b,0 0 0 68px #ffffff09;pointer-events:none}
+.home-hero>*:not(.hero-photo){position:relative;z-index:3}
+.home-hero .eyebrow,.home-hero h1,.home-hero>p,.home-hero .hero-note,.home-hero .hero-date{max-width:62%}
+.home-hero .eyebrow{color:#b9d8ff;letter-spacing:1.5px;font-size:10px;font-weight:800}
+.home-hero h1{font-size:clamp(30px,4vw,48px);line-height:1.12;margin:18px 0 10px;letter-spacing:-1.5px}
+.home-hero h1 span{color:#f5c34e}.home-hero>p{font-size:16px;color:#e1edff;margin:0 0 20px}
+.hero-note{max-width:650px;color:#e0ebf8;font-size:13px;line-height:1.8}.hero-date{margin-top:28px;color:#c5dcf6;font-size:11px}
+.home-section-title{display:flex;align-items:end;justify-content:space-between;margin:34px 2px 16px}.home-section-title .eyebrow{color:#1769d2;font-size:10px;font-weight:800;letter-spacing:1.2px}.home-section-title h2{margin:7px 0 5px;font-size:22px;color:#102f55}.home-section-title p{margin:0;color:#64748b;font-size:12px}
+.home-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.home-tile{display:flex;align-items:center;gap:14px;min-height:112px;padding:18px;border:1px solid #e1e9f3;border-radius:15px;background:#fff;text-decoration:none;color:#172b4d;box-shadow:0 5px 16px #193b5c08;transition:transform .22s,box-shadow .22s,border-color .22s}
+.home-tile:hover{transform:translateY(-4px);border-color:#a9c9ef;box-shadow:0 14px 26px #1769d21a}
+.tile-icon{display:grid;place-items:center;flex:0 0 46px;height:46px;border-radius:13px;background:#eaf3ff;color:#1769d2;font-size:22px}
+.home-tile:nth-child(2) .tile-icon{background:#e8f7f1;color:#15966b}.home-tile:nth-child(3) .tile-icon{background:#fff5dc;color:#b98212}.home-tile:nth-child(4) .tile-icon{background:#f0edff;color:#8066d8}.home-tile:nth-child(5) .tile-icon{background:#e6f7f7;color:#169da8}.home-tile:nth-child(6) .tile-icon{background:#fff0ed;color:#e16c58}
+.home-tile b{display:block;font-size:13px;margin-bottom:5px}.home-tile small{display:block;color:#64748b;font-size:10px;line-height:1.6}.home-tile i{margin-left:auto;color:#8ca2bb;font-style:normal;font-size:18px}
+.upcoming-link{opacity:.82;position:relative}.upcoming-link small{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:10px;background:#fff3cf;color:#8a6410;font-size:9px;font-weight:700}.upcoming-tile{border-style:dashed;background:linear-gradient(135deg,#fff,#fbfcff)}.coming-soon{font-style:normal;font-size:10px;font-weight:700;color:#8a6410;background:#fff3cf;padding:6px 8px;border-radius:9px;white-space:nowrap}.home-tile.primary{border-color:#b8d3f4;background:linear-gradient(135deg,#fff,#f2f7ff)}
+.home-footer{text-align:center;color:#8a9ab0;font-size:10px;margin-top:30px}.home-footer span{color:#f0b52d;margin:0 5px}
+@media(max-width:900px){.home-menu{grid-template-columns:repeat(2,minmax(0,1fr))}.home-hero{padding:36px 30px;min-height:300px}.home-hero .hero-photo{width:58%;opacity:.72}.home-hero .eyebrow,.home-hero h1,.home-hero>p,.home-hero .hero-note,.home-hero .hero-date{max-width:72%}}
+@media(max-width:560px){.home-menu{grid-template-columns:1fr}.home-hero{padding:30px 22px;min-height:340px}.home-hero .hero-photo{width:100%;opacity:.30}.home-hero:before{background:linear-gradient(90deg,rgba(16,47,85,.98),rgba(16,47,85,.82)),linear-gradient(0deg,rgba(16,47,85,.35),transparent)}.home-hero .eyebrow,.home-hero h1,.home-hero>p,.home-hero .hero-note,.home-hero .hero-date{max-width:100%}.home-hero h1{font-size:32px}}
+
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.upload-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.upload-field.full{grid-column:1/-1}
+.upload-field label{font-size:12px;font-weight:700;color:#334155}
+.upload-field input,.upload-field select{width:100%;min-height:42px;padding:10px 11px;border:1px solid #CBD5E1;border-radius:9px;background:#fff;color:#172B4D;font:12px inherit}
+.upload-field small{font-size:10px;color:#64748B;line-height:1.5}
+#archiveUploadForm button{border:0;border-radius:9px;background:#1769D2;color:#fff;padding:11px 17px;font-weight:700;cursor:pointer}
+#archiveUploadForm button:disabled{opacity:.55;cursor:wait}
+.upload-status{display:none;margin-top:14px;padding:12px;border-radius:9px;font-size:11px;line-height:1.6}
+.upload-status.info{display:block;background:#EFF6FF;color:#1D4ED8}
+.upload-status.success{display:block;background:#ECFDF5;color:#047857}
+.upload-status.error{display:block;background:#FEF2F2;color:#B91C1C}
+@media(max-width:640px){.upload-grid{grid-template-columns:1fr}.upload-field.full{grid-column:auto}}
+
+.mail-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}
+.mail-kpi{display:flex;align-items:center;gap:15px;padding:20px;border-radius:15px;border:1px solid #E2E8F0;background:#fff;box-shadow:0 6px 18px #102f5509}
+.mail-kpi.incoming{background:linear-gradient(120deg,#102F55,#1769D2);color:#fff}
+.mail-kpi.outgoing{background:linear-gradient(120deg,#FFF8DF,#fff);border-color:#F2D98A;color:#172B4D}
+.mail-kpi.neutral{background:#F0F7FF;color:#102F55}
+.mail-kpi-icon{font-size:27px}
+.mail-kpis{margin:16px 0 12px}
+.mail-kpi{min-height:104px;position:relative;overflow:hidden;transition:transform .18s,box-shadow .18s}
+.mail-kpi:hover{transform:translateY(-2px);box-shadow:0 10px 24px #102f5514}
+.mail-kpi.incoming{background:linear-gradient(120deg,#12365F,#1769D2);color:#fff}
+.mail-kpi.outgoing{background:linear-gradient(120deg,#FFF9E8,#FFF1C7);border-color:#F3D98F;color:#183252}
+.mail-kpi.neutral{background:linear-gradient(120deg,#F4F8FD,#EAF3FF);border-color:#D8E6F7;color:#102F55}
+.mail-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 18px}
+.mail-insight{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border:1px solid #E5EDF7;border-radius:11px;background:#fff}
+.mail-insight-label{font-size:11px;color:#64748B}
+.mail-insight strong{font-size:16px;color:#1769D2;white-space:nowrap}
+.mail-insight.peak strong{color:#A66A00}
+@media(max-width:680px){.mail-kpis,.mail-insights{grid-template-columns:1fr}.mail-insight{padding:10px 13px}}
+
+.mail-kpi small,.mail-kpi span{display:block;font-size:11px;opacity:.82}
+.mail-kpi strong{display:block;font-size:30px;line-height:1.3}
+.mail-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+.mail-section-head h3{margin:0;color:#102F55;font-size:17px}
+.mail-section-head p{margin:6px 0 0;color:#64748B;font-size:12px}
+.mail-year-tag{background:#EAF3FF;color:#1769D2;border-radius:20px;padding:7px 11px;font-size:10px;font-weight:800}
+.mail-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:#64748B;margin-bottom:16px}
+.mail-legend span{display:flex;align-items:center;gap:7px}
+.mail-dot{display:inline-block;width:10px;height:10px;border-radius:3px}.mail-dot.in{background:#1769D2}.mail-dot.out{background:#F5B82E}
+.mail-monthly-chart{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px;align-items:stretch;min-height:230px;padding:14px 8px 0;border:1px solid #E7EEF7;border-radius:13px;background:linear-gradient(to bottom,transparent 24.8%,#E9EFF7 25%,transparent 25.3%,transparent 49.8%,#E9EFF7 50%,transparent 50.3%,transparent 74.8%,#E9EFF7 75%,transparent 75.3%),#FBFDFF}
+.mail-month-col{height:212px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0}
+.mail-month-total{font-size:10px;font-weight:700;color:#64748B;margin-bottom:5px;min-height:13px}
+.mail-month-bars{height:160px;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:5px;border-bottom:1px solid #CBD8E8;padding-bottom:0}
+.mail-month-bar-wrap{height:100%;width:min(38%,24px);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-width:7px}
+.mail-month-bar-value{font-size:9px;line-height:12px;color:#52657E;font-weight:700;min-height:12px;margin-bottom:3px}
+.mail-month-bar{width:100%;border:0;padding:0;cursor:pointer;min-height:3px;border-radius:6px 6px 2px 2px;transition:filter .15s,transform .15s,box-shadow .15s}
+.mail-month-bar.in{background:linear-gradient(180deg,#3988F2,#1769D2)}.mail-month-bar.out{background:linear-gradient(180deg,#FFD36A,#F2AA18)}
+.mail-month-bar:hover{filter:brightness(.94);transform:scaleX(1.12);box-shadow:0 3px 9px #102f5525}
+.mail-month-label{font-size:10px;color:#52657E;font-weight:600;margin-top:9px;white-space:nowrap}
+.mail-month-actions{display:none}
+.mail-tools{display:grid;grid-template-columns:minmax(180px,1fr) 190px 160px 160px auto;gap:9px;margin-bottom:14px}
+.mail-tools input,.mail-tools select,.mail-field input,.mail-field select{min-width:0;width:100%;padding:11px 12px;border:1px solid #CBD5E1;border-radius:9px;background:#fff;color:#172B4D;font:12px inherit}
+.mail-table-wrap{overflow-x:auto}
+.mail-table{width:100%;border-collapse:collapse;font-size:12px;min-width:660px}
+.mail-table th{text-align:left;background:#F1F6FC;color:#40536A;padding:11px}
+.mail-table td{padding:11px;border-bottom:1px solid #E8EEF5;color:#334155}
+.mail-table a{color:#1769D2;text-decoration:none;font-weight:700}
+.mail-table a:hover{text-decoration:underline}
+.mail-result-count{font-size:11px;color:#64748B;margin-top:12px}
+.mail-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mail-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.mail-field.full{grid-column:1/-1}
+.mail-field label{font-size:12px;font-weight:700;color:#334155}
+.mail-field small{font-size:10px;color:#64748B;line-height:1.5}
+.mail-form-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px}
+.mail-form-actions span{font-size:10px;color:#64748B}
+#mailUploadForm button{background:#1769D2;color:#fff;border:0;border-radius:9px;padding:11px 17px;font-weight:700;cursor:pointer}
+#mailUploadForm button:disabled{opacity:.55;cursor:wait}
+.mail-upload-status{display:none;margin-top:14px;padding:12px;border-radius:9px;font-size:11px;line-height:1.6}
+.mail-upload-status.info{display:block;background:#EFF6FF;color:#1D4ED8}
+.mail-upload-status.success{display:block;background:#ECFDF5;color:#047857}
+.mail-upload-status.error{display:block;background:#FEF2F2;color:#B91C1C}
+@media(max-width:760px){.mail-kpis{grid-template-columns:1fr}.mail-tools{grid-template-columns:1fr 1fr}.mail-monthly-chart{grid-template-columns:repeat(12,48px);overflow-x:auto}.mail-form-grid{grid-template-columns:1fr}.mail-field.full{grid-column:auto}}
+
+.mail-month-col{gap:2px}
+.mail-month-bar{border:0;padding:0;cursor:pointer;transition:filter .15s,transform .15s}
+.mail-month-bar:hover{filter:brightness(.88);transform:scaleX(1.14)}
+.mail-month-actions{display:flex;flex-direction:column;gap:3px;width:100%;margin-top:5px}
+.mail-month-actions button{border:1px solid #DCE6F1;background:#fff;color:#40536A;border-radius:5px;padding:3px 2px;font-size:9px;line-height:1.2;cursor:pointer;white-space:nowrap}
+.mail-month-actions button:hover,.mail-month-actions button.active{background:#EAF3FF;border-color:#1769D2;color:#1769D2;font-weight:800}
+#mailListPanel.mail-highlight{border:1px solid #9CC5F4;box-shadow:0 0 0 3px #1769D20D}
+.mail-selection-note{display:none;margin:0 0 12px;padding:10px 12px;background:#EAF3FF;color:#174A83;border-radius:8px;font-size:11px}
+.mail-selection-note.show{display:block}
+
+/* =========================================================
+   FULL WIDTH DASHBOARD — RSPD
+   Konten memenuhi seluruh area setelah sidebar.
+   ========================================================= */
+.content{
+  max-width:none !important;
+  width:100% !important;
+  margin:0 !important;
+  padding:24px 24px 32px !important;
+}
+
+.home-page{
+  max-width:none !important;
+  width:100% !important;
+  margin:0 !important;
+}
+
+/* Dashboard internal */
+#archiveDashboard,
+#mailDashboard{
+  width:100%;
+}
+
+/* Iframe dashboard: LKS & DTSEN */
+#lksDashboard,
+#dtsenDashboard{
+  width:calc(100% + 64px) !important;
+  margin:-24px -24px 0 !important;
+}
+
+/* Hero dan panel utama memanfaatkan seluruh lebar */
+.home-hero,
+.home-section-title,
+.home-menu,
+.home-footer,
+#archiveDashboard > *,
+#mailDashboard > *{
+  max-width:none;
+}
+
+/* Tetap nyaman pada layar sangat lebar */
+.home-menu{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+@media(max-width:900px){
+  .content{
+    padding:20px 18px 28px !important;
+  }
+  #lksDashboard,
+  #dtsenDashboard{
+    width:calc(100% + 36px) !important;
+    margin:-20px -18px 0 !important;
+  }
+}
+
+@media(max-width:700px){
+  .content{
+    padding:16px 14px 24px !important;
+  }
+  #lksDashboard,
+  #dtsenDashboard{
+    width:calc(100% + 28px) !important;
+    margin:-16px -14px 0 !important;
+  }
+}
+
+
+/* HERO FOTO — komposisi lebih proporsional pada layout full-width */
+.home-hero .hero-photo{
+  width:42% !important;
+  background-position:center center !important;
+  background-size:cover !important;
+}
+
+.home-hero:before{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(16,47,85,1) 0%,
+      rgba(16,47,85,1) 27%,
+      rgba(16,47,85,.97) 36%,
+      rgba(16,47,85,.86) 45%,
+      rgba(16,47,85,.66) 53%,
+      rgba(16,47,85,.40) 62%,
+      rgba(16,47,85,.16) 70%,
+      rgba(16,47,85,.04) 78%,
+      rgba(16,47,85,0) 88%
+    ),
+    linear-gradient(0deg,rgba(16,47,85,.18),transparent 48%) !important;
+}
+
+.home-hero .eyebrow,
+.home-hero h1,
+.home-hero>p,
+.home-hero .hero-note,
+.home-hero .hero-date{
+  max-width:58% !important;
+}
+
+@media(max-width:900px){
+  .home-hero .hero-photo{width:48% !important}
+  .home-hero .eyebrow,
+  .home-hero h1,
+  .home-hero>p,
+  .home-hero .hero-note,
+  .home-hero .hero-date{max-width:62% !important}
+}
+@media(max-width:700px){
+  .home-hero .hero-photo{
+    width:100% !important;
+    opacity:.22;
+  }
+  .home-hero .eyebrow,
+  .home-hero h1,
+  .home-hero>p,
+  .home-hero .hero-note,
+  .home-hero .hero-date{max-width:100% !important}
+  .home-hero:before{
+    background:linear-gradient(90deg,rgba(16,47,85,.98),rgba(16,47,85,.82)) !important;
+  }
+}
+
+
+/* =========================================================
+   HERO FINAL — GRADASI FOTO SANGAT HALUS
+   Hanya mengubah tampilan hero; fungsi dashboard tetap.
+   ========================================================= */
+.home-hero{
+  position:relative;
+  overflow:hidden;
+}
+
+.home-hero .hero-photo{
+  width:54% !important;
+  right:0 !important;
+  left:auto !important;
+  background-position:center center !important;
+  background-size:cover !important;
+
+  /* Membuat sisi kiri foto menghilang perlahan */
+  -webkit-mask-image:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,0,0,.08) 10%,
+    rgba(0,0,0,.30) 20%,
+    rgba(0,0,0,.58) 31%,
+    rgba(0,0,0,.82) 43%,
+    #000 56%,
+    #000 100%
+  );
+  mask-image:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,0,0,.08) 10%,
+    rgba(0,0,0,.30) 20%,
+    rgba(0,0,0,.58) 31%,
+    rgba(0,0,0,.82) 43%,
+    #000 56%,
+    #000 100%
+  );
+}
+
+/* Lapisan biru menyatu dengan foto, tanpa garis batas */
+.home-hero:before{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(16,47,85,1) 0%,
+      rgba(16,47,85,1) 24%,
+      rgba(16,47,85,.99) 32%,
+      rgba(16,47,85,.94) 40%,
+      rgba(16,47,85,.82) 48%,
+      rgba(16,47,85,.64) 56%,
+      rgba(16,47,85,.43) 64%,
+      rgba(16,47,85,.24) 72%,
+      rgba(16,47,85,.09) 81%,
+      rgba(16,47,85,0) 91%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(16,47,85,.20),
+      transparent 52%
+    ) !important;
+}
+
+/* Sedikit blue glow di titik transisi */
+.home-hero:after{
+  right:-65px;
+  top:-115px;
+  opacity:.72;
+}
+
+/* Teks tetap aman di area biru */
+.home-hero .eyebrow,
+.home-hero h1,
+.home-hero>p,
+.home-hero .hero-note,
+.home-hero .hero-date{
+  max-width:58% !important;
+}
+
+@media(max-width:900px){
+  .home-hero .hero-photo{
+    width:58% !important;
+  }
+
+  .home-hero .eyebrow,
+  .home-hero h1,
+  .home-hero>p,
+  .home-hero .hero-note,
+  .home-hero .hero-date{
+    max-width:62% !important;
+  }
+}
+
+@media(max-width:700px){
+  .home-hero .hero-photo{
+    width:100% !important;
+    opacity:.28;
+    -webkit-mask-image:none;
+    mask-image:none;
+  }
+
+  .home-hero .eyebrow,
+  .home-hero h1,
+  .home-hero>p,
+  .home-hero .hero-note,
+  .home-hero .hero-date{
+    max-width:100% !important;
+  }
+
+  .home-hero:before{
+    background:
+      linear-gradient(
+        90deg,
+        rgba(16,47,85,.98),
+        rgba(16,47,85,.80)
+      ) !important;
+  }
+}
+
+
+/* =========================================================
+   RSPD — FULL MOCKUP VISUAL
+   Tidak mengubah JavaScript, routing, API, iframe, atau fungsi.
+   ========================================================= */
+:root{
+  --rspd-navy:#082f5b;
+  --rspd-blue:#1769d2;
+  --rspd-blue2:#2b86e8;
+  --rspd-yellow:#f5b82e;
+  --rspd-bg:#eef5fc;
+}
+
+body{
+  background:
+    radial-gradient(circle at 82% 18%,rgba(23,105,210,.09),transparent 26%),
+    radial-gradient(circle at 18% 78%,rgba(23,105,210,.07),transparent 24%),
+    #eef5fc !important;
+}
+
+/* Sidebar */
+.sidebar{
+  background:linear-gradient(180deg,#082f5b 0%,#0b3768 55%,#07294f 100%) !important;
+  box-shadow:10px 0 35px rgba(8,47,91,.13);
+}
+.sidebar .brand,
+.sidebar .brand h1,
+.sidebar .brand small{
+  color:#fff !important;
+}
+.nav a{
+  border-radius:11px !important;
+  margin:4px 0 !important;
+  transition:.2s ease !important;
+}
+.nav a:hover{
+  background:rgba(255,255,255,.10) !important;
+  transform:translateX(3px);
+}
+.nav a.active{
+  background:linear-gradient(90deg,#1769d2,#2483e8) !important;
+  box-shadow:0 7px 18px rgba(23,105,210,.22);
+  border-left:3px solid var(--rspd-yellow);
+}
+
+/* Topbar */
+.topbar{
+  background:rgba(255,255,255,.84) !important;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(211,224,240,.8) !important;
+}
+
+/* Home */
+.home-page{
+  position:relative;
+  overflow:visible;
+  max-width:none !important;
+  width:100% !important;
+  padding:16px 0 34px !important;
+}
+.home-page:before{
+  content:"";
+  position:absolute;
+  width:420px;height:420px;
+  border:1px solid rgba(23,105,210,.10);
+  border-radius:50%;
+  right:-170px;
+  top:260px;
+  box-shadow:0 0 0 34px rgba(23,105,210,.035),0 0 0 72px rgba(23,105,210,.025);
+  pointer-events:none;
+}
+.home-page:after{
+  content:"";
+  position:absolute;
+  width:280px;height:280px;
+  border:1px solid rgba(245,184,46,.16);
+  border-radius:50%;
+  left:-150px;
+  top:570px;
+  pointer-events:none;
+}
+
+/* Hero */
+.home-hero{
+  min-height:350px !important;
+  padding:48px 52px !important;
+  box-shadow:0 18px 42px rgba(8,47,91,.15) !important;
+}
+.home-hero h1{
+  font-size:clamp(36px,4vw,54px) !important;
+}
+.home-hero h1 span{color:var(--rspd-yellow) !important}
+.home-hero .eyebrow{color:#c8e1ff !important}
+
+/* KPI */
+.mock-kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:18px 0 28px;
+  position:relative;
+  z-index:4;
+}
+.mock-kpi{
+  min-height:108px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px;
+  background:rgba(255,255,255,.95);
+  border:1px solid #dce7f3;
+  border-radius:17px;
+  box-shadow:0 8px 24px rgba(8,47,91,.08);
+  position:relative;
+  overflow:hidden;
+  transition:.2s ease;
+}
+.mock-kpi:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 30px rgba(8,47,91,.13);
+}
+.mock-kpi:after{
+  content:"";
+  position:absolute;
+  right:-35px;top:-35px;
+  width:105px;height:105px;
+  border-radius:50%;
+  background:currentColor;
+  opacity:.045;
+}
+.mock-kpi-icon{
+  width:48px;height:48px;min-width:48px;
+  border-radius:14px;
+  display:grid;place-items:center;
+  font-size:21px;font-weight:800;
+}
+.mock-kpi-icon.blue{background:#e7f1ff;color:#1769d2}
+.mock-kpi-icon.green{background:#e3f8f2;color:#129b8f}
+.mock-kpi-icon.yellow{background:#fff3d6;color:#d89a10}
+.mock-kpi-icon.purple{background:#eeeaff;color:#735ed0}
+.mock-kpi small{
+  display:block;color:#718096;
+  font-size:9px;font-weight:800;
+  letter-spacing:.65px;
+}
+.mock-kpi strong{
+  display:block;color:#0b3768;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:25px;line-height:1.2;
+  margin:3px 0;
+}
+.mock-kpi span{
+  display:block;color:#94a3b8;
+  font-size:9.5px;line-height:1.35;
+}
+
+/* Quick access */
+.home-section-title{
+  margin:6px 2px 15px !important;
+}
+.home-section-title h2{
+  font-size:25px !important;
+  letter-spacing:-.7px;
+}
+.home-section-title .eyebrow{
+  color:#1769d2 !important;
+}
+.home-menu{
+  grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+  gap:13px !important;
+}
+.home-tile{
+  min-height:156px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  padding:19px !important;
+  border:1px solid #dce7f3 !important;
+  border-radius:17px !important;
+  background:rgba(255,255,255,.94) !important;
+  box-shadow:0 7px 20px rgba(8,47,91,.06) !important;
+}
+.home-tile:hover{
+  transform:translateY(-5px) !important;
+  border-color:#a9c9ed !important;
+  box-shadow:0 15px 28px rgba(8,47,91,.12) !important;
+}
+.home-tile .tile-icon{
+  width:46px !important;height:46px !important;
+  min-width:46px !important;
+  border-radius:13px !important;
+  display:grid !important;place-items:center !important;
+  font-size:20px !important;
+}
+.home-tile b{
+  display:block;
+  color:#102f55 !important;
+  font-size:13px !important;
+  margin-top:1px;
+}
+.home-tile small{
+  display:block;
+  color:#718096 !important;
+  font-size:9.8px !important;
+  line-height:1.5 !important;
+  margin-top:5px;
+}
+.home-tile i{
+  position:absolute !important;
+  right:15px !important;
+  bottom:14px !important;
+  font-style:normal !important;
+  color:#1769d2 !important;
+  font-size:17px !important;
+}
+.home-tile:nth-child(1) .tile-icon{background:#e7f1ff;color:#1769d2}
+.home-tile:nth-child(2) .tile-icon{background:#e3f8f2;color:#129b8f}
+.home-tile:nth-child(3) .tile-icon{background:#fff3d6;color:#d89a10}
+.home-tile:nth-child(4) .tile-icon{background:#eeeaff;color:#735ed0}
+.home-tile:nth-child(5) .tile-icon{background:#ffe9ef;color:#dc6075}
+.home-tile:nth-child(6) .tile-icon{background:#e2f8f7;color:#159e9a}
+
+/* Lower analytics */
+.mock-lower-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:14px;
+  margin-top:18px;
+  position:relative;
+  z-index:2;
+}
+.mock-panel{
+  background:rgba(255,255,255,.95);
+  border:1px solid #dce7f3;
+  border-radius:17px;
+  padding:20px;
+  box-shadow:0 7px 20px rgba(8,47,91,.06);
+}
+.mock-panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:18px;
+}
+.mock-panel .eyebrow{
+  color:#1769d2;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+.mock-panel h3{
+  margin:4px 0 0;
+  color:#102f55;
+  font-size:17px;
+}
+.mock-badge{
+  padding:6px 10px;
+  border-radius:20px;
+  background:#eaf3ff;
+  color:#1769d2;
+  font-size:9px;
+  font-weight:700;
+}
+.mock-bars{display:grid;gap:14px}
+.bar-row{
+  display:grid;
+  grid-template-columns:86px 1fr 30px;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  color:#64748b;
+}
+.bar-row>div{
+  height:9px;
+  background:#e9eff6;
+  border-radius:99px;
+  overflow:hidden;
+}
+.bar-row i{
+  display:block;
+  height:100%;
+  border-radius:99px;
+  background:#2b86e8;
+}
+.bar-row i.green{background:#12a89d}
+.bar-row i.yellow{background:#f5b82e}
+.bar-row i.purple{background:#7561d8}
+.bar-row b{
+  text-align:right;
+  color:#102f55;
+  font-size:10px;
+}
+.mock-dot{
+  color:#12a89d;
+  font-size:10px;
+  font-weight:700;
+}
+.overview-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.overview-grid div{
+  padding:14px;
+  border:1px solid #e2eaf3;
+  border-radius:12px;
+  background:#f8fbff;
+}
+.overview-grid b{
+  display:block;
+  color:#1769d2;
+  font-size:22px;
+}
+.overview-grid span{
+  color:#64748b;
+  font-size:9.5px;
+}
+.mock-notice{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:linear-gradient(90deg,#fff7dc,#fffdf5);
+  border-left:3px solid var(--rspd-yellow);
+}
+.mock-notice strong{
+  display:block;color:#9a6c00;font-size:10px;
+}
+.mock-notice span{
+  display:block;color:#64748b;font-size:9.5px;margin-top:3px;
+}
+.home-footer{
+  margin-top:20px !important;
+}
+
+/* Responsive */
+@media(max-width:1250px){
+  .home-menu{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  .mock-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:850px){
+  .mock-lower-grid{grid-template-columns:1fr}
+  .home-hero{padding:40px 34px !important}
+}
+@media(max-width:650px){
+  .mock-kpi-grid{grid-template-columns:1fr}
+  .home-menu{grid-template-columns:1fr !important}
+  .home-hero{min-height:430px !important;padding:30px 24px !important}
+  .home-hero .hero-photo{width:100% !important;opacity:.25}
+  .home-hero .eyebrow,
+  .home-hero h1,
+  .home-hero>p,
+  .home-hero .hero-note,
+  .home-hero .hero-date{max-width:100% !important}
+}
+
+
+/* =========================================================
+   RSPD COLORFUL EDITION
+   Biru tetap dominan, aksen layanan dibuat lebih berwarna.
+   Tidak mengubah fungsi JavaScript / navigasi / API.
+   ========================================================= */
+
+:root{
+  --c-blue:#1769D2;
+  --c-navy:#082F5B;
+  --c-teal:#12A89D;
+  --c-yellow:#F5B82E;
+  --c-purple:#7561D8;
+  --c-coral:#E9785B;
+  --c-cyan:#21A9C7;
+  --c-green:#35A66F;
+}
+
+/* Background lebih hidup */
+body{
+  background:
+    radial-gradient(circle at 8% 12%,rgba(23,105,210,.11),transparent 20%),
+    radial-gradient(circle at 91% 25%,rgba(245,184,46,.09),transparent 18%),
+    radial-gradient(circle at 78% 82%,rgba(117,97,216,.07),transparent 22%),
+    #EEF5FC !important;
+}
+
+/* Topbar aksen */
+.topbar{
+  box-shadow:0 2px 12px rgba(8,47,91,.045);
+}
+.topbar:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-1px;
+  height:2px;
+  background:linear-gradient(90deg,
+    #1769D2 0%,
+    #12A89D 28%,
+    #F5B82E 52%,
+    #7561D8 76%,
+    #E9785B 100%);
+  opacity:.75;
+}
+
+/* KPI lebih colorful */
+.mock-kpi:nth-child(1){
+  border-top:3px solid var(--c-blue);
+  background:linear-gradient(145deg,#fff 0%,#F4F9FF 100%);
+}
+.mock-kpi:nth-child(2){
+  border-top:3px solid var(--c-teal);
+  background:linear-gradient(145deg,#fff 0%,#F1FCF9 100%);
+}
+.mock-kpi:nth-child(3){
+  border-top:3px solid var(--c-yellow);
+  background:linear-gradient(145deg,#fff 0%,#FFFBF0 100%);
+}
+.mock-kpi:nth-child(4){
+  border-top:3px solid var(--c-purple);
+  background:linear-gradient(145deg,#fff 0%,#F8F6FF 100%);
+}
+
+.mock-kpi:nth-child(1) strong{color:#145EBE}
+.mock-kpi:nth-child(2) strong{color:#0C8F86}
+.mock-kpi:nth-child(3) strong{color:#C78B0A}
+.mock-kpi:nth-child(4) strong{color:#6551C5}
+
+/* Quick access: tiap layanan punya identitas warna */
+.home-tile:nth-child(1){
+  border-top:3px solid #1769D2 !important;
+}
+.home-tile:nth-child(2){
+  border-top:3px solid #12A89D !important;
+}
+.home-tile:nth-child(3){
+  border-top:3px solid #F5B82E !important;
+}
+.home-tile:nth-child(4){
+  border-top:3px solid #7561D8 !important;
+}
+.home-tile:nth-child(5){
+  border-top:3px solid #E9785B !important;
+}
+.home-tile:nth-child(6){
+  border-top:3px solid #21A9C7 !important;
+}
+
+/* Icon layanan */
+.home-tile:nth-child(1) .tile-icon{
+  background:#E7F1FF !important;color:#1769D2 !important;
+  box-shadow:0 5px 12px rgba(23,105,210,.12);
+}
+.home-tile:nth-child(2) .tile-icon{
+  background:#E2F8F3 !important;color:#0E978D !important;
+  box-shadow:0 5px 12px rgba(18,168,157,.12);
+}
+.home-tile:nth-child(3) .tile-icon{
+  background:#FFF2CC !important;color:#D69A0C !important;
+  box-shadow:0 5px 12px rgba(245,184,46,.15);
+}
+.home-tile:nth-child(4) .tile-icon{
+  background:#EEE9FF !important;color:#705AD0 !important;
+  box-shadow:0 5px 12px rgba(117,97,216,.12);
+}
+.home-tile:nth-child(5) .tile-icon{
+  background:#FFE8E1 !important;color:#D96448 !important;
+  box-shadow:0 5px 12px rgba(233,120,91,.12);
+}
+.home-tile:nth-child(6) .tile-icon{
+  background:#E1F7FB !important;color:#1795B2 !important;
+  box-shadow:0 5px 12px rgba(33,169,199,.12);
+}
+
+/* Arrow mengikuti warna layanan */
+.home-tile:nth-child(1) i{color:#1769D2 !important}
+.home-tile:nth-child(2) i{color:#12A89D !important}
+.home-tile:nth-child(3) i{color:#D69A0C !important}
+.home-tile:nth-child(4) i{color:#7561D8 !important}
+.home-tile:nth-child(5) i{color:#E9785B !important}
+.home-tile:nth-child(6) i{color:#21A9C7 !important}
+
+/* Hover tiap kartu */
+.home-tile:nth-child(1):hover{background:linear-gradient(145deg,#fff,#F1F7FF) !important}
+.home-tile:nth-child(2):hover{background:linear-gradient(145deg,#fff,#F0FCF9) !important}
+.home-tile:nth-child(3):hover{background:linear-gradient(145deg,#fff,#FFFBF0) !important}
+.home-tile:nth-child(4):hover{background:linear-gradient(145deg,#fff,#F8F6FF) !important}
+.home-tile:nth-child(5):hover{background:linear-gradient(145deg,#fff,#FFF5F1) !important}
+.home-tile:nth-child(6):hover{background:linear-gradient(145deg,#fff,#F0FBFD) !important}
+
+/* Judul quick access punya aksen warna */
+.home-section-title{
+  position:relative;
+}
+.home-section-title:after{
+  content:"";
+  display:block;
+  width:86px;
+  height:4px;
+  border-radius:99px;
+  margin-top:10px;
+  background:linear-gradient(90deg,#1769D2,#12A89D,#F5B82E);
+}
+
+/* Panel bawah */
+.mock-panel:first-child{
+  border-top:3px solid #1769D2;
+}
+.mock-panel:last-child{
+  border-top:3px solid #F5B82E;
+}
+.mock-badge{
+  background:#E7F1FF !important;
+  color:#1769D2 !important;
+}
+.mock-overview .mock-dot{
+  color:#12A89D !important;
+}
+
+/* Progress bar dibuat berlapis warna */
+.bar-row:nth-child(1) i{background:linear-gradient(90deg,#1769D2,#3D91EA)}
+.bar-row:nth-child(2) i{background:linear-gradient(90deg,#12A89D,#41C6BA)}
+.bar-row:nth-child(3) i{background:linear-gradient(90deg,#F5B82E,#FFD76A)}
+.bar-row:nth-child(4) i{background:linear-gradient(90deg,#7561D8,#A092EC)}
+
+/* Informasi bawah lebih menonjol */
+.mock-notice{
+  background:linear-gradient(100deg,#FFF7D9,#FFFDF5) !important;
+  border-left:4px solid #F5B82E !important;
+}
+
+/* Ornamen warna lembut */
+.home-page:before{
+  border-color:rgba(33,169,199,.12) !important;
+  box-shadow:
+    0 0 0 34px rgba(23,105,210,.035),
+    0 0 0 72px rgba(245,184,46,.028) !important;
+}
+.home-page:after{
+  border-color:rgba(233,120,91,.16) !important;
+}
+
+
+/* Efek bayangan tipis pada setiap kartu/panel */
+.mock-kpi,
+.home-tile,
+.mock-panel{
+  box-shadow:
+    0 3px 12px rgba(8,47,91,.07),
+    0 1px 3px rgba(8,47,91,.035) !important;
+  border:1px solid rgba(16,47,85,.055) !important;
+}
+
+/* Hover sedikit terangkat, tetap halus */
+.mock-kpi:hover,
+.home-tile:hover,
+.mock-panel:hover{
+  box-shadow:
+    0 8px 20px rgba(8,47,91,.10),
+    0 2px 5px rgba(8,47,91,.045) !important;
+  transform:translateY(-2px);
+  transition:box-shadow .2s ease, transform .2s ease;
+}
+
+/* Jangan terlalu kuat pada kartu hero/statistik */
+.mock-kpi{
+  box-shadow:
+    0 4px 14px rgba(8,47,91,.075),
+    0 1px 3px rgba(8,47,91,.035) !important;
+}
+
+/* Quick access sedikit lebih berisi */
+.home-tile{
+  box-shadow:
+    0 4px 14px rgba(8,47,91,.075),
+    0 1px 3px rgba(8,47,91,.035) !important;
+}
+
+/* Panel bawah */
+.mock-panel{
+  box-shadow:
+    0 4px 14px rgba(8,47,91,.065),
+    0 1px 3px rgba(8,47,91,.03) !important;
+}
+
+
+/* =========================================================
+   SIDEBAR FINAL — RSPD
+   Visual only; seluruh href/data-page tetap dipertahankan.
+   ========================================================= */
+.sidebar{
+  width:270px !important;
+  padding:0 14px 16px !important;
+  background:
+    radial-gradient(circle at 85% 92%,rgba(23,105,210,.30),transparent 28%),
+    linear-gradient(180deg,#062754 0%,#082F5B 48%,#061F43 100%) !important;
+  box-shadow:8px 0 24px rgba(8,47,91,.10);
+  overflow:hidden;
+  z-index:20;
+}
+.main{margin-left:270px !important}
+.brand{
+  position:relative;
+  padding:18px 12px 18px !important;
+  border-bottom:1px solid rgba(255,255,255,.10) !important;
+  margin-bottom:7px;
+}
+.brand-logo{
+  width:52px;height:52px;border-radius:13px;
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-right:10px;vertical-align:middle;
+  background:#fff;
+  box-shadow:0 6px 16px rgba(0,0,0,.16);
+  overflow:hidden;
+  padding:5px;
+}
+.brand-logo img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+}
+.brand-text{display:inline-flex;flex-direction:column;vertical-align:middle;line-height:1.2}
+.brand-text b{font-size:11px;letter-spacing:.3px;color:#fff}
+.brand-text strong{font-size:8px;letter-spacing:1.2px;color:#b9d0e8;margin-top:3px}
+.brand-divider{height:1px;background:linear-gradient(90deg,#F5B82E,#1769D2,transparent);margin:18px 2px 15px}
+.brand-unit{font-size:17px;font-weight:900;letter-spacing:.2px;color:#fff;line-height:1.15}
+.brand small{display:block;color:#b9cee5 !important;font-size:10px !important;line-height:1.55;font-weight:400 !important;margin-top:5px}
+.nav{display:block !important;overflow:visible !important}
+.nav-label{display:block !important;font-size:9px !important;letter-spacing:1.5px !important;color:#7798bc !important;margin:15px 10px 8px !important;font-weight:800}
+.nav a{
+  display:flex !important;align-items:center;gap:10px;
+  position:relative;
+  padding:9px 10px !important;margin:4px 0 !important;
+  min-height:43px;
+  color:#dce8f5 !important;text-decoration:none;
+  border-radius:11px !important;
+  font-size:11.5px !important;font-weight:650;
+  transition:all .22s ease !important;
+}
+.nav a span:nth-child(2){flex:1;white-space:nowrap}
+.nav a i{font-style:normal;font-size:20px;line-height:1;color:#6f94ba;transition:.2s}
+.nav a:hover{
+  transform:translateX(3px) !important;padding-left:10px !important;
+  background:rgba(255,255,255,.075) !important;color:#fff !important;
+}
+.nav a:hover i{color:#fff;transform:translateX(2px)}
+.nav a.active{
+  transform:none !important;
+  background:linear-gradient(100deg,#1769D2,#2181E8) !important;
+  color:#fff !important;
+  border-left:0 !important;
+  box-shadow:0 7px 18px rgba(23,105,210,.28) !important;
+}
+.nav a.active:before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;
+  border-radius:0 5px 5px 0;background:#F5B82E;
+}
+.nav a.active i{color:#fff}
+.nav-icon{
+  flex:0 0 31px;width:31px;height:31px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:15px !important;font-weight:900;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+}
+.nav-icon.blue{background:#DCEBFF;color:#1769D2}
+.nav-icon.yellow{background:#FFF0C5;color:#D99A0A}
+.nav-icon.teal{background:#D9F7F1;color:#0C9B8E}
+.nav-icon.gold{background:#FFF2C9;color:#D99A0A}
+.nav-icon.purple{background:#EAE3FF;color:#725AD0}
+.nav-icon.coral{background:#FFE1DB;color:#D96049}
+.nav-icon.cyan{background:#D9F5FA;color:#168FA9}
+.nav a.active .nav-icon{background:rgba(255,255,255,.20);color:#fff;box-shadow:none}
+.sidebar-footer{
+  position:absolute;left:14px;right:14px;bottom:14px;
+  min-height:82px;border-radius:17px;overflow:hidden;
+  padding:18px 15px;display:flex;align-items:flex-end;justify-content:space-between;
+  background:linear-gradient(145deg,#0C4E9A,#082F5B);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 10px 24px rgba(0,0,0,.16);
+}
+.sidebar-footer b{font-size:12px;line-height:1.25;color:#fff;z-index:2}
+.sidebar-footer>span{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#1769D2;color:#fff;font-size:17px;z-index:2}
+.footer-orbit{position:absolute;border-radius:50%;border:2px solid rgba(23,150,255,.45);pointer-events:none}
+.footer-orbit.one{width:120px;height:120px;left:-45px;bottom:-72px}
+.footer-orbit.two{width:100px;height:100px;right:-35px;bottom:-70px;border-color:rgba(245,184,46,.75)}
+
+@media(max-width:700px){
+  .sidebar{position:static !important;width:auto !important;padding:10px !important;box-shadow:none}
+  .brand{padding:10px !important}
+  .brand-divider,.sidebar-footer{display:none}
+  .nav{display:flex !important;overflow:auto !important;gap:4px}
+  .nav-label{display:none !important}
+  .nav a{flex:0 0 auto !important;min-height:38px !important;padding:7px 9px !important}
+  .nav a i{display:none}
+  .nav-icon{width:27px;height:27px;flex-basis:27px}
+  .main{margin-left:0 !important}
+}
+
+
+/* =========================================================
+   SIDEBAR ORNAMEN BIRU-KUNING
+   Menghapus kartu "Inklusi Sosial untuk Semua" dan
+   menggantinya dengan ornamen dekoratif tanpa teks.
+   ========================================================= */
+
+.sidebar{
+  position:relative;
+  overflow:hidden;
+}
+
+/* Sembunyikan kartu/elemen inklusi sosial */
+.sidebar .sidebar-bottom,
+.sidebar .inclusion-card,
+.sidebar .sidebar-footer,
+.sidebar .inclusion,
+.sidebar [class*="inclusion"],
+.sidebar [class*="social"]{
+  display:none !important;
+}
+
+/* Ornamen gelombang utama */
+.sidebar::before{
+  content:"";
+  position:absolute;
+  left:-70px;
+  bottom:-85px;
+  width:300px;
+  height:185px;
+  border-radius:58% 42% 0 0 / 72% 72% 0 0;
+  background:
+    radial-gradient(ellipse at 52% 38%,
+      rgba(245,184,46,.98) 0 17%,
+      rgba(245,184,46,0) 18%),
+    linear-gradient(157deg,
+      transparent 0 25%,
+      #1769D2 26% 40%,
+      #0B4382 41% 54%,
+      #0A3565 55% 100%);
+  transform:rotate(-7deg);
+  opacity:.98;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Gelombang biru tambahan */
+.sidebar::after{
+  content:"";
+  position:absolute;
+  left:-45px;
+  bottom:-20px;
+  width:320px;
+  height:95px;
+  border-radius:50% 58% 0 0;
+  border-top:18px solid #1769D2;
+  border-right:18px solid transparent;
+  transform:rotate(-8deg);
+  box-shadow:
+    0 23px 0 -5px #0B4382,
+    0 43px 0 -9px #21A9C7;
+  opacity:.9;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Titik aksen */
+.sidebar .nav::after{
+  content:"";
+  position:absolute;
+  left:28px;
+  bottom:42px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#F5B82E;
+  box-shadow:
+    72px 24px 0 -2px #1769D2,
+    116px -10px 0 -3px #21A9C7,
+    28px 38px 0 -4px #F5B82E;
+  opacity:.95;
+  pointer-events:none;
+  z-index:2;
+}
+
+/* Konten sidebar tetap di atas ornamen */
+.sidebar > *{
+  position:relative;
+  z-index:3;
+}
+
+.sidebar .nav{
+  position:relative;
+  z-index:4;
+}
+
+
+/* =========================================================
+   FINAL CLEAN LAYOUT
+   Memastikan main/topbar kembali ke posisi paling atas.
+   ========================================================= */
+
+html, body{
+  margin:0 !important;
+  padding:0 !important;
+  min-height:100% !important;
+}
+
+body{
+  overflow-x:hidden !important;
+}
+
+/* Sidebar tetap fixed dan tidak memengaruhi alur dokumen */
+.sidebar{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  bottom:0 !important;
+  margin:0 !important;
+  transform:none !important;
+}
+
+/* Area utama dimulai tepat dari bagian atas viewport */
+.main{
+  position:relative !important;
+  display:block !important;
+  margin-top:0 !important;
+  padding-top:0 !important;
+  top:0 !important;
+  transform:none !important;
+  min-height:100vh;
+}
+
+/* Topbar harus menjadi elemen pertama di area utama */
+.main > .topbar{
+  position:relative !important;
+  top:0 !important;
+  left:auto !important;
+  right:auto !important;
+  margin:0 !important;
+  transform:none !important;
+  height:70px !important;
+  z-index:20 !important;
+}
+
+/* Jangan ada ruang kosong sebelum konten */
+.main > .content{
+  margin-top:0 !important;
+  padding-top:24px !important;
+}
+
+/* Ornamen sidebar tetap di dasar */
+.sidebar::before,
+.sidebar::after{
+  z-index:0 !important;
+}
+.sidebar > .brand,
+.sidebar > .nav{
+  position:relative !important;
+  z-index:5 !important;
+}
+
+/* Ornamen dibuat sedikit lebih elegan dan tidak menutupi menu */
+.sidebar::before{
+  left:-65px !important;
+  bottom:-78px !important;
+  width:300px !important;
+  height:175px !important;
+}
+.sidebar::after{
+  left:-38px !important;
+  bottom:-18px !important;
+  width:315px !important;
+  height:88px !important;
+}
+
+/* Hilangkan footer lama jika masih tersisa karena cache/struktur */
+.sidebar .sidebar-footer{
+  display:none !important;
+}
+
+/* Pada layar kecil, kembalikan sidebar ke alur normal */
+@media(max-width:700px){
+  .sidebar{
+    position:static !important;
+  }
+  .main{
+    margin-top:0 !important;
+  }
+  .main > .topbar{
+    position:relative !important;
+  }
+}
+
+
+
+/* =========================================================
+   SIDEBAR FINAL — SINGLE CLEAN WAVE
+   Ornamen hanya berada di bagian paling bawah sidebar.
+   ========================================================= */
+
+.sidebar{
+  position:fixed !important;
+  overflow:hidden !important;
+  isolation:isolate;
+}
+
+/* Area kosong di bawah menu tetap bersih */
+.sidebar .nav{
+  padding-bottom:118px !important;
+}
+
+/* Gelombang biru utama — satu bentuk lebar */
+.sidebar::before{
+  content:"";
+  position:absolute !important;
+  left:-35px !important;
+  right:-35px !important;
+  bottom:-2px !important;
+  height:112px !important;
+  z-index:1 !important;
+  pointer-events:none !important;
+
+  background:#1769D2;
+
+  clip-path:polygon(
+    0 62%,
+    10% 48%,
+    21% 43%,
+    32% 48%,
+    43% 61%,
+    54% 69%,
+    65% 65%,
+    76% 50%,
+    88% 39%,
+    100% 34%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* Gelombang navy/cyan sebagai lapisan depan yang lebih halus */
+.sidebar::after{
+  content:"";
+  position:absolute !important;
+  left:-35px !important;
+  right:-35px !important;
+  bottom:-2px !important;
+  height:78px !important;
+  z-index:2 !important;
+  pointer-events:none !important;
+
+  background:#0B4382;
+
+  clip-path:polygon(
+    0 48%,
+    12% 55%,
+    24% 66%,
+    36% 73%,
+    48% 69%,
+    60% 56%,
+    72% 43%,
+    84% 38%,
+    100% 44%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* Pita kuning tipis di antara gelombang */
+.sidebar .nav::after{
+  content:"";
+  position:absolute !important;
+  left:-30px !important;
+  right:-30px !important;
+  bottom:31px !important;
+  height:34px !important;
+  z-index:3 !important;
+  pointer-events:none !important;
+
+  background:#F5B82E;
+
+  clip-path:polygon(
+    0 62%,
+    10% 51%,
+    20% 48%,
+    30% 55%,
+    40% 69%,
+    50% 75%,
+    60% 69%,
+    70% 54%,
+    80% 43%,
+    90% 38%,
+    100% 42%,
+    100% 72%,
+    90% 67%,
+    80% 68%,
+    70% 77%,
+    60% 88%,
+    50% 93%,
+    40% 87%,
+    30% 72%,
+    20% 61%,
+    10% 60%,
+    0 72%
+  );
+}
+
+/* Semua isi sidebar tetap di atas ornamen */
+.sidebar > .brand,
+.sidebar > .nav,
+.sidebar .nav-label,
+.sidebar .nav a{
+  position:relative !important;
+  z-index:5 !important;
+}
+
+/* Responsif */
+@media(max-width:700px){
+  .sidebar .nav{
+    padding-bottom:105px !important;
+  }
+  .sidebar::before{
+    height:100px !important;
+  }
+  .sidebar::after{
+    height:68px !important;
+  }
+  .sidebar .nav::after{
+    bottom:27px !important;
+  }
+}
+
+</style></head><body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo" aria-hidden="true"><img src="./assets/Logo_of_the_Ministry_of_Social_Affairs_of_the_Republic_of_Indonesia.svg.webp" alt="Logo Kementerian Sosial"></div>
+    <div class="brand-text"><b>KEMENTERIAN SOSIAL</b><strong>REPUBLIK INDONESIA</strong></div>
+    <div class="brand-divider"></div>
+    <div class="brand-unit">DIREKTORAT RSPD</div>
+    <small>Rehabilitasi Sosial<br>Penyandang Disabilitas</small>
+  </div>
+  <nav class="nav">
+    <div class="nav-label">MENU UTAMA</div>
+    <a class="active" href="./index-v2.html" data-page="home"><span class="nav-icon blue">⌂</span><span>Beranda</span><i>›</i></a>
+    <a href="#arsip" data-page="archive"><span class="nav-icon yellow">▤</span><span>Arsip Digital</span><i>›</i></a>
+    <a href="#persuratan" data-page="mail"><span class="nav-icon teal">✉</span><span>Persuratan</span><i>›</i></a>
+    <a href="./monitoring-atensi.html"><span class="nav-icon gold">◉</span><span>Monitoring ATENSI</span><i>›</i></a>
+    <a href="./monitoring-bebas-pasung.html"><span class="nav-icon purple">◎</span><span>Monitoring Bebas Pasung</span><i>›</i></a>
+    <a href="#monitoring-dtsen" data-page="dtsen"><span class="nav-icon coral">▥</span><span>Monitoring DTSEN</span><i>›</i></a>
+    <a href="#lks-nasional" data-page="lks"><span class="nav-icon cyan">▦</span><span>LKS Nasional</span><i>›</i></a>
+  </nav>
+</aside>
+<div class="main"><header class="topbar"><span>RSPD / <b id="breadcrumb">Beranda</b></span></header><main class="content">
+<section id="homePage" class="home-page">
+  <div class="home-hero">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="eyebrow">DIREKTORAT REHABILITASI SOSIAL PENYANDANG DISABILITAS</div>
+    <h1>DASHBOARD TERINTEGRASI<br><span>DIREKTORAT RSPD</span></h1>
+    <p>Sistem Informasi Administrasi, Data, dan Arsip Digital</p>
+    <div class="hero-note">Satu pintu akses informasi untuk mendukung pengelolaan administrasi, data, arsip, dan pelaksanaan intervensi bagi penyandang disabilitas.</div>
+    <div class="hero-date" id="homeDate"></div>
+  </div>
+
+  <div class="mock-kpi-grid">
+    <div class="mock-kpi">
+      <div class="mock-kpi-icon blue">◉</div>
+      <div><small>TOTAL PENYANDANG DISABILITAS</small><strong>14.847.678</strong><span>Data DTSEN</span></div>
+    </div>
+    <div class="mock-kpi">
+      <div class="mock-kpi-icon green">▤</div>
+      <div><small>DOKUMEN ARSIP DIGITAL</small><strong>25</strong><span>7 naskah · 1 laporan · 16 paparan · 1 dokumentasi</span></div>
+    </div>
+    <div class="mock-kpi">
+      <div class="mock-kpi-icon yellow">✉</div>
+      <div><small>TOTAL PERSURATAN</small><strong>8</strong><span>Surat masuk + surat keluar</span></div>
+    </div>
+    <div class="mock-kpi">
+      <div class="mock-kpi-icon purple">▦</div>
+      <div><small>LKS TERDAFTAR</small><strong>13.329</strong><span>Data LKS Nasional</span></div>
+    </div>
+  </div>
+  <div class="home-section-title"><div><div class="eyebrow">NAVIGASI SISTEM</div><h2>Apa yang ingin Anda akses?</h2><p>Pilih salah satu layanan di bawah ini untuk melanjutkan.</p></div></div>
+  <div class="home-menu">
+    <a href="#arsip" class="home-tile primary" data-page="archive"><span class="tile-icon">▤</span><span><b>Pusat Arsip Digital</b><small>Naskah, laporan, paparan, dan dokumentasi. Persuratan dikelola pada menu terpisah.</small></span><i>→</i></a>
+    <a href="#persuratan" class="home-tile" data-page="mail"><span class="tile-icon">✉</span><span><b>Persuratan</b><small>Kelola surat masuk dan keluar, statistik, pencarian, serta unggah surat.</small></span><i>→</i></a>
+    <a href="./monitoring-atensi.html" class="home-tile"><span class="tile-icon">◉</span><span><b>Monitoring ATENSI</b><small>Akses halaman pemantauan data dan pelaksanaan ATENSI.</small></span><i>↗</i></a>
+    <a href="./monitoring-bebas-pasung.html" class="home-tile"><span class="tile-icon">◎</span><span><b>Monitoring Bebas Pasung</b><small>Akses halaman pemantauan data bebas pasung.</small></span><i>↗</i></a>
+     <a href="#monitoring-dtsen" class="home-tile" data-page="dtsen"><span class="tile-icon">▥</span><span><b>Monitoring DTSEN</b><small>Pemantauan data sosial ekonomi penyandang disabilitas.</small></span><i>→</i></a>
+     <a href="#lks-nasional" class="home-tile" data-page="lks"><span class="tile-icon">▦</span><span><b>LKS Nasional</b><small>Dashboard data LKS Nasional, sebaran wilayah, jenis layanan, akreditasi, dan kualitas data.</small></span><i>→</i></a>
+  </div>
+
+  <div class="mock-lower-grid">
+    <section class="mock-panel">
+      <div class="mock-panel-head">
+        <div><div class="eyebrow">RINGKASAN ARSIP</div><h3>Komposisi Arsip Digital</h3></div>
+        <span class="mock-badge">25 Dokumen</span>
+      </div>
+      <div class="mock-bars">
+        <div class="bar-row"><span>Naskah</span><div><i style="width:44%"></i></div><b>7</b></div>
+        <div class="bar-row"><span>Laporan</span><div><i class="green" style="width:12%"></i></div><b>1</b></div>
+        <div class="bar-row"><span>Paparan</span><div><i class="yellow" style="width:100%"></i></div><b>16</b></div>
+        <div class="bar-row"><span>Dokumentasi</span><div><i class="purple" style="width:12%"></i></div><b>1</b></div>
+      </div>
+    </section>
+
+    <section class="mock-panel mock-overview">
+      <div class="mock-panel-head">
+        <div><div class="eyebrow">PUSAT INFORMASI</div><h3>Ekosistem Digital RSPD</h3></div>
+        <span class="mock-dot">● Aktif</span>
+      </div>
+      <div class="overview-grid">
+        <div><b>6</b><span>Layanan terintegrasi</span></div>
+        <div><b>2</b><span>Dashboard data utama</span></div>
+        <div><b>25</b><span>Dokumen arsip</span></div>
+        <div><b>8</b><span>Data persuratan</span></div>
+      </div>
+      <div class="mock-notice"><strong>Informasi</strong><span>Satu pintu akses administrasi, data, arsip, dan monitoring Direktorat RSPD.</span></div>
+    </section>
+  </div>
+  <div class="home-footer">DASHBOARD TERINTEGRASI DIREKTORAT RSPD <span>•</span> Sistem Informasi Terintegrasi</div>
+</section>
+<div id="archiveDashboard" hidden>
+<div class="heading"><div><div class="eyebrow">PUSAT INFORMASI TERINTEGRASI</div><h1>ARSIP DIGITAL RSPD</h1><p>Sistem Informasi Administrasi, Data, dan Arsip Digital<br>Direktorat Rehabilitasi Sosial Penyandang Disabilitas</p></div><span id="today"></span></div>
+<section class="welcome"><h2>Selamat Datang di Dashboard Informasi RSPD</h2><p>Kelola dan telusuri arsip, pantau informasi administrasi, serta akses data pendukung pelaksanaan intervensi bagi penyandang disabilitas melalui satu pintu.</p></section>
+<section class="kpis"><div class="kpi"><div class="ico">▧</div><div><small>Dokumen Naskah</small><strong id="countNaskah">—</strong></div></div><div class="kpi"><div class="ico">▤</div><div><small>Dokumen Laporan</small><strong id="countLaporan">—</strong></div></div><div class="kpi"><div class="ico">▥</div><div><small>Dokumen Paparan</small><strong id="countPaparan">—</strong></div></div><div class="kpi"><div class="ico">▦</div><div><small>Dokumen Dokumentasi</small><strong id="countDokumentasi">—</strong></div></div></section>
+<section class="columns" id="statistik"><div class="panel"><h3>Komposisi Arsip per Kategori</h3><div id="categoryBars">Memuat data kategori...</div></div><div class="panel"><h3>Akses Cepat</h3><div class="quick"><a href="#arsip" onclick="document.getElementById('archiveSearch').focus()">Pencarian Arsip<span>Temukan dokumen</span></a><a href="#unggahArsip" id="quickUploadLink">Tambah Arsip<span>Unggah dokumen langsung di halaman arsip</span></a><a href="#arsip" data-category="Naskah">Naskah<span>Peraturan, naskah dinas, dan pedoman</span></a><a href="#arsip" data-category="Laporan">Laporan<span>Dokumen laporan kegiatan dan kinerja</span></a><a href="#arsip" data-category="Paparan">Paparan<span>Bahan paparan dan ringkasan</span></a><a href="#arsip" data-category="Dokumentasi">Dokumentasi<span>Foto dan video kegiatan</span></a></div></div></section>
+<section class="panel" id="arsip"><h3>Dokumen Terbaru</h3><div class="tools"><input id="archiveSearch" placeholder="Cari nama dokumen..."><select id="categoryFilter"><option value="">Semua kategori</option><option>Naskah</option><option>Laporan</option><option>Paparan</option><option>Dokumentasi</option></select><select id="subcategoryFilter" disabled><option value="">Pilih kategori terlebih dahulu</option></select><button id="resetSearch">Reset</button></div><div class="table-wrap"><table><thead><tr><th>NAMA DOKUMEN</th><th>KATEGORI</th><th>SUBKATEGORI</th><th>BULAN</th><th>AKSES</th></tr></thead><tbody id="archiveRows"><tr><td colspan="5">Menghubungkan ke Google Drive...</td></tr></tbody></table></div><div class="status" id="loadStatus">Mengambil data arsip...</div></section>
+
+<section class="panel" id="unggahArsip" style="margin-top:18px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div><h3 style="margin-bottom:5px">Unggah Arsip Digital</h3><p style="margin:0 0 16px;color:#64748B;font-size:12px;line-height:1.6">Tambahkan dokumen ke Google Drive berdasarkan kategori, bulan, dan subkategori. Khusus untuk Naskah, Laporan, Paparan, dan Dokumentasi.</p></div>
+    <span style="font-size:11px;font-weight:700;color:#1769D2;background:#EAF3FF;padding:7px 10px;border-radius:20px">Tahun penyimpanan 2026</span>
+  </div>
+  <form id="archiveUploadForm">
+    <div class="upload-grid">
+      <div class="upload-field"><label for="upKategori">Kategori Arsip *</label><select id="upKategori" required><option value="">Pilih kategori</option><option value="Naskah">Naskah</option><option value="Laporan">Laporan</option><option value="Paparan">Paparan</option><option value="Dokumentasi">Dokumentasi</option></select></div>
+      <div class="upload-field"><label for="upBulan">Bulan Arsip *</label><select id="upBulan" required><option value="">Pilih bulan</option><option value="01_Januari">Januari</option><option value="02_Februari">Februari</option><option value="03_Maret">Maret</option><option value="04_April">April</option><option value="05_Mei">Mei</option><option value="06_Juni">Juni</option><option value="07_Juli">Juli</option><option value="08_Agustus">Agustus</option><option value="09_September">September</option><option value="10_Oktober">Oktober</option><option value="11_November">November</option><option value="12_Desember">Desember</option></select></div>
+      <div class="upload-field full"><label for="upSubkategori">Subkategori *</label><select id="upSubkategori" required disabled><option value="">Pilih kategori terlebih dahulu</option></select></div>
+      <div class="upload-field full"><label for="upNamaFile">Nama Dokumen</label><input type="text" id="upNamaFile" placeholder="Otomatis mengikuti nama file yang dipilih"><small>Jika dikosongkan, nama asli file akan digunakan.</small></div>
+      <div class="upload-field full"><label for="upFile">Pilih File *</label><input type="file" id="upFile" required><small>PDF, Word, Excel, PowerPoint, JPG, PNG, atau TXT. Maksimal 5 MB.</small></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:17px"><button type="submit" id="upSubmitBtn">Unggah Arsip</button><span style="font-size:11px;color:#64748B">Pastikan lokasi penyimpanan sudah sesuai.</span></div>
+    <div id="upStatus" class="upload-status" role="status" aria-live="polite"></div>
+  </form>
+</section>
+
+</div>
+<div id="mailDashboard" hidden>
+  <div class="heading"><div><div class="eyebrow">PENGELOLAAN ADMINISTRASI</div><h1>PERSURATAN RSPD</h1><p>Pengelolaan Surat Masuk dan Surat Keluar<br>Direktorat Rehabilitasi Sosial Penyandang Disabilitas</p></div><span>TA 2026</span></div>
+  <section class="welcome"><h2>Manajemen Persuratan RSPD</h2><p>Kelola, telusuri, dan pantau dokumen surat masuk maupun surat keluar berdasarkan bulan dan jenis surat.</p></section>
+
+  <section class="mail-kpis">
+    <div class="mail-kpi incoming"><div class="mail-kpi-icon">📥</div><div><small>Total Surat Masuk</small><strong id="mailTotalIn">—</strong><span>Dokumen tahun 2026</span></div></div>
+    <div class="mail-kpi outgoing"><div class="mail-kpi-icon">📤</div><div><small>Total Surat Keluar</small><strong id="mailTotalOut">—</strong><span>Dokumen tahun 2026</span></div></div>
+    <div class="mail-kpi neutral"><div class="mail-kpi-icon">✉</div><div><small>Total Persuratan</small><strong id="mailTotalAll">—</strong><span>Surat masuk + surat keluar</span></div></div>
+  </section>
+  <section class="mail-insights" aria-label="Ringkasan komposisi persuratan">
+    <div class="mail-insight"><span class="mail-insight-label">Komposisi Surat Masuk</span><strong id="mailPctIn">—</strong></div>
+    <div class="mail-insight"><span class="mail-insight-label">Komposisi Surat Keluar</span><strong id="mailPctOut">—</strong></div>
+    <div class="mail-insight peak"><span class="mail-insight-label">Bulan Aktivitas Tertinggi</span><strong id="mailPeakMonth">—</strong></div>
+  </section>
+
+  <section class="panel">
+    <div class="mail-section-head"><h3>Statistik Persuratan Bulanan</h3><span class="mail-year-tag">2026</span></div>
+    <div class="mail-legend"><span><i class="mail-dot in"></i> Surat Masuk</span><span><i class="mail-dot out"></i> Surat Keluar</span></div>
+    <div id="mailMonthlyChart" class="mail-monthly-chart"><div class="status">Memuat statistik persuratan...</div></div>
+    <div id="mailDataStatus" class="status">Mengambil data persuratan dari Google Drive...</div>
+  </section>
+
+  <section class="panel" id="mailListPanel">
+    <div class="mail-section-head"><h3>Daftar Surat</h3><span class="mail-year-tag">Tahun 2026</span></div>
+    <div id="mailSelectionNote" class="mail-selection-note"></div>
+    <div class="mail-tools">
+      <input id="mailSearch" type="search" placeholder="Cari nama atau subkategori surat...">
+      <select id="mailSubcategoryFilter"><option value="">Semua subkategori</option></select>
+      <select id="mailMonthFilter"><option value="">Semua bulan</option><option value="01_Januari">Januari</option><option value="02_Februari">Februari</option><option value="03_Maret">Maret</option><option value="04_April">April</option><option value="05_Mei">Mei</option><option value="06_Juni">Juni</option><option value="07_Juli">Juli</option><option value="08_Agustus">Agustus</option><option value="09_September">September</option><option value="10_Oktober">Oktober</option><option value="11_November">November</option><option value="12_Desember">Desember</option></select>
+      <select id="mailTypeFilter"><option value="">Semua jenis surat</option><option value="Surat Masuk">Surat Masuk</option><option value="Surat Keluar">Surat Keluar</option></select>
+      <button type="button" id="mailReset">Reset</button>
+    </div>
+    <div class="mail-table-wrap"><table class="mail-table"><thead><tr><th>Nama Dokumen</th><th>Jenis Surat</th><th>Subkategori</th><th>Bulan</th><th>Akses</th></tr></thead><tbody id="mailRows"><tr><td colspan="5">Memuat data surat...</td></tr></tbody></table></div>
+    <div id="mailResultCount" class="mail-result-count"></div>
+  </section>
+
+  <section class="panel" id="mailUploadPanel">
+    <div class="mail-section-head"><div><h3>Tambah Surat Masuk / Keluar</h3><p>Unggah dokumen surat langsung ke struktur Google Drive yang sesuai.</p></div><span class="mail-year-tag">Unggah Surat</span></div>
+    <form id="mailUploadForm">
+      <div class="mail-form-grid">
+        <div class="mail-field"><label for="mailType">Jenis Surat *</label><select id="mailType" required><option value="">Pilih jenis surat</option><option value="Surat Masuk">Surat Masuk</option><option value="Surat Keluar">Surat Keluar</option></select></div>
+        <div class="mail-field"><label for="mailMonth">Bulan Surat *</label><select id="mailMonth" required><option value="">Pilih bulan</option><option value="01_Januari">Januari</option><option value="02_Februari">Februari</option><option value="03_Maret">Maret</option><option value="04_April">April</option><option value="05_Mei">Mei</option><option value="06_Juni">Juni</option><option value="07_Juli">Juli</option><option value="08_Agustus">Agustus</option><option value="09_September">September</option><option value="10_Oktober">Oktober</option><option value="11_November">November</option><option value="12_Desember">Desember</option></select></div>
+        <div class="mail-field full"><label for="mailSubcategory">Subkategori Surat *</label><select id="mailSubcategory" required><option value="">Pilih subkategori</option><option value="01_Surat Tugas">Surat Tugas</option><option value="02_Surat Keputusan">Surat Keputusan</option><option value="03_Surat Pengumuman">Surat Pengumuman</option><option value="04_Nota Dinas">Nota Dinas</option><option value="05_Surat Edaran">Surat Edaran</option><option value="06_Surat Undangan">Surat Undangan</option><option value="07_Surat Permohonan">Surat Permohonan</option><option value="99_Lainnya">Lainnya</option></select></div>
+        <div class="mail-field full"><label for="mailFileName">Nama Dokumen</label><input type="text" id="mailFileName" placeholder="Otomatis mengikuti nama file yang dipilih"><small>Jika dikosongkan, nama file asli digunakan.</small></div>
+        <div class="mail-field full"><label for="mailFile">Pilih File Surat *</label><input type="file" id="mailFile" required><small>PDF, Word, Excel, PowerPoint, JPG, PNG, atau TXT. Maksimal 5 MB.</small></div>
+      </div>
+      <div class="mail-form-actions"><button type="submit" id="mailSubmit">Unggah Surat</button><span>Surat akan disimpan pada folder tahun 2026 sesuai jenis, bulan, dan subkategori.</span></div>
+      <div id="mailUploadStatus" class="mail-upload-status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+  <div class="footer">DASHBOARD TERINTEGRASI DIREKTORAT RSPD · Persuratan</div>
+</div>
+<div id="lksDashboard" hidden style="margin:-28px -32px 0;">
+  <iframe id="lksFrame" title="Dashboard LKS Nasional" src="./lks-nasional.html" loading="lazy" style="display:block;width:100%;height:calc(100vh - 70px);min-height:760px;border:0;background:#fff"></iframe>
+</div>
+<div id="dtsenDashboard" hidden style="margin:-28px -32px 0;">
+  <iframe id="dtsenFrame" title="MONITORING DTSEN PENYANDANG DISABILITAS" src="./monitoring-dtsen.html" loading="lazy" style="display:block;width:100%;height:calc(100vh - 70px);min-height:760px;border:0;background:#F4F7FB"></iframe>
+</div>
+<div class="footer">DASHBOARD TERINTEGRASI DIREKTORAT RSPD · Direktorat Rehabilitasi Sosial Penyandang Disabilitas</div></main></div>
+<script>
+/* Navigasi sidebar utama */
+document.getElementById("homeDate").textContent=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+function showPage(page){
+  const home=page==="home";
+  const archive=page==="archive";
+  const mail=page==="mail";
+  const lks=page==="lks";
+  const dtsen=page==="dtsen";
+  document.getElementById("homePage").hidden=!home;
+  document.getElementById("archiveDashboard").hidden=!archive;
+  document.getElementById("mailDashboard").hidden=!mail;
+  document.getElementById("lksDashboard").hidden=!lks;
+  document.getElementById("dtsenDashboard").hidden=!dtsen;
+  document.getElementById("breadcrumb").textContent=home?"Beranda":archive?"ARSIP DIGITAL RSPD":mail?"PERSURATAN RSPD":dtsen?"MONITORING DTSEN PENYANDANG DISABILITAS":"LKS NASIONAL";
+  if(page!=="home"){window.scrollTo({top:0,behavior:"smooth"});}
+  if(page==="archive"||page==="mail")load();
+}
+document.querySelectorAll(".nav a").forEach(link=>{
+  link.addEventListener("click",e=>{
+    const page=link.dataset.page;
+    if(page==="home"||page==="archive"||page==="mail"||page==="lks"||page==="dtsen"){
+      e.preventDefault();
+      showPage(page);
+    }
+    document.querySelectorAll(".nav a").forEach(item=>item.classList.remove("active"));
+    link.classList.add("active");
+  });
+});
+document.querySelectorAll('[data-page="archive"],[data-page="mail"],[data-page="lks"],[data-page="dtsen"]').forEach(link=>{
+  link.addEventListener("click",e=>{
+    e.preventDefault();
+    showPage(link.dataset.page);
+    document.querySelectorAll(".nav a").forEach(item=>item.classList.toggle("active",item.dataset.page===link.dataset.page));
+  });
+});
+document.querySelectorAll("[data-upcoming]").forEach(link=>link.addEventListener("click",e=>{e.preventDefault();}));
+const API_URL="https://script.google.com/macros/s/AKfycbz9c-KrRryKrUrRCRl5fYO7vsFPTIe5KLhigDx4FadTLx6TkmkQP3kOpX60BDwhTgZRsA/exec";
+const categories=["Naskah","Laporan","Paparan","Dokumentasi"];
+let archives=[];
+document.getElementById("today").textContent=new Date().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+function clean(v){return String(v||"").replace(/^\\d+_/,"")}
+function draw(){
+  const counts=Object.fromEntries(categories.map(c=>[c,0]));
+  archives.forEach(a=>{if(Object.prototype.hasOwnProperty.call(counts,a.kategori))counts[a.kategori]++;});
+  document.getElementById("countNaskah").textContent=counts.Naskah;
+  document.getElementById("countLaporan").textContent=counts.Laporan;
+  document.getElementById("countPaparan").textContent=counts.Paparan;
+  document.getElementById("countDokumentasi").textContent=counts.Dokumentasi;
+  const max=Math.max(1,...Object.values(counts));
+  document.getElementById("categoryBars").innerHTML=categories.map(c=>`<div class="cat"><span>${c}</span><div class="track"><div class="fill" style="width:${counts[c]/max*100}%"></div></div><b>${counts[c]}</b></div>`).join("");
+  filterRows();
+}
+function filterRows(){
+  const q=document.getElementById("archiveSearch").value.toLowerCase().trim();
+  const cat=document.getElementById("categoryFilter").value.toLowerCase();
+  const sub=document.getElementById("subcategoryFilter").value.toLowerCase();
+  const found=archives.filter(a=>(!q||[a.judul,a.kategori,a.subkategori,a.jenis].join(" ").toLowerCase().includes(q))&&(!cat||String(a.kategori).toLowerCase()===cat)&&(!sub||String(a.subkategori).toLowerCase()===sub)).slice(0,12);
+  const body=document.getElementById("archiveRows");
+  body.replaceChildren();
+  if(!found.length){body.innerHTML='<tr><td colspan="5">Tidak ada dokumen yang sesuai.</td></tr>';return;}
+  found.forEach(a=>{
+    const tr=document.createElement("tr");
+    const title=document.createElement("td"),ln=document.createElement("a");
+    ln.href=a.url||"#";ln.target="_blank";ln.rel="noopener noreferrer";ln.textContent=a.judul||"Tanpa judul";title.append(ln);
+    const c=document.createElement("td"),pill=document.createElement("span");pill.className="pill";pill.textContent=a.kategori||"—";c.append(pill);
+    [title,c,clean(a.subkategori||a.folder||"—"),clean(a.bulan||"—")].forEach((v,i)=>{const td=i<2?v:document.createElement("td");if(i>=2)td.textContent=v;tr.append(td);});
+    const ac=document.createElement("td"),open=document.createElement("a");open.href=a.url||"#";open.target="_blank";open.rel="noopener noreferrer";open.textContent="Buka ↗";ac.append(open);tr.append(ac);body.append(tr);
+  });
+}
+const BRANCH_CACHE_KEY="RSPD_BRANCH_DATA_V2";
+let loadStarted=false;
+function applyBranchData(data,fromCache=false){
+  if(!data||data.status==="error"||!Array.isArray(data.data))throw Error("Format data tidak sesuai");
+  archives=[];
+  suratFiles=[];
+  data.data.filter(k=>categories.includes(k.kategori)).forEach(k=>(k.subkategori||[]).forEach(sub=>(sub.files||[]).forEach(f=>archives.push({judul:f.judul,url:f.url,jenis:f.jenis,kategori:k.kategori,subkategori:f.subkategori||sub.nama,bulan:f.bulan,folder:f.folder}))));
+  const suratCategory=data.data.find(k=>k.kategori==="Surat");
+  if(suratCategory)(suratCategory.subkategori||[]).forEach(sub=>(sub.files||[]).forEach(f=>{if(String(f.tahun||"")==="2026")suratFiles.push({judul:f.judul,url:f.url,jenis:f.jenis,jenisSurat:f.jenisSurat,subkategori:f.subkategori||"",bulan:f.bulan,tahun:f.tahun});}));
+  draw();
+  renderMail();
+  document.getElementById("loadStatus").textContent=fromCache
+    ?"Menampilkan data tersimpan · memperbarui data terbaru..."
+    :"Data arsip berhasil dimuat · "+archives.length+" dokumen · 4 kategori.";
+}
+function load(forceRefresh=false){
+  if(loadStarted&&!forceRefresh)return;
+  loadStarted=true;
+  let cachedAt=0;
+  if(!forceRefresh){
+    try{
+      const cached=JSON.parse(localStorage.getItem(BRANCH_CACHE_KEY)||"null");
+      if(cached&&cached.data){
+        cachedAt=Number(cached.savedAt)||0;
+        applyBranchData(cached.data,true);
+      }
+    }catch(e){console.warn("Cache arsip tidak dapat dibaca:",e);}
+  }
+  if(cachedAt&&Date.now()-cachedAt<120000&&!forceRefresh){
+    document.getElementById("loadStatus").textContent="Data tersimpan ditampilkan · diperbarui "+new Date(cachedAt).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})+".";
+    return;
+  }
+  if(!archives.length&&!suratFiles.length){
+    document.getElementById("loadStatus").textContent="Mengambil data arsip dari Google Drive...";
+    document.getElementById("mailDataStatus").textContent="Mengambil data persuratan dari Google Drive...";
+  }
+  const cb="receiveRSPD_"+Date.now()+"_"+Math.random().toString(36).slice(2,7);
+  let finished=false;
+  let timeout;
+  const script=document.createElement("script");
+  const cleanup=()=>{
+    if(finished)return;
+    finished=true;
+    clearTimeout(timeout);
+    delete window[cb];
+    if(script.parentNode)script.parentNode.removeChild(script);
+  };
+  window[cb]=data=>{
+    try{
+      applyBranchData(data,false);
+      try{localStorage.setItem(BRANCH_CACHE_KEY,JSON.stringify({savedAt:Date.now(),data}));}
+      catch(e){console.warn("Cache lokal penuh/tidak tersedia:",e);}
+    }catch(e){
+      document.getElementById("loadStatus").textContent="Data belum dapat ditampilkan: "+e.message;
+      document.getElementById("mailDataStatus").textContent="Data persuratan belum dapat ditampilkan.";
+    }finally{cleanup();}
+  };
+  script.src=API_URL+"?page=branch&callback="+cb;
+  script.onerror=()=>{
+    if(!archives.length&&!suratFiles.length){
+      document.getElementById("loadStatus").textContent="Gagal menghubungi layanan arsip. Periksa koneksi internet atau layanan Apps Script.";
+      document.getElementById("mailDataStatus").textContent="Gagal menghubungi layanan persuratan.";
+    }else{
+      document.getElementById("loadStatus").textContent="Data tersimpan ditampilkan; pembaruan dari server gagal.";
+    }
+    cleanup();
+  };
+  timeout=setTimeout(()=>{
+    if(!archives.length&&!suratFiles.length){
+      document.getElementById("loadStatus").textContent="Server membutuhkan waktu lebih lama. Data akan dicoba kembali saat halaman dibuka ulang.";
+      document.getElementById("mailDataStatus").textContent="Server membutuhkan waktu lebih lama untuk memuat persuratan.";
+    }
+    cleanup();
+  },25000);
+  document.head.append(script);
+}
+document.getElementById("archiveSearch").addEventListener("input",filterRows);
+document.getElementById("categoryFilter").addEventListener("change",()=>{updateArchiveSubcategoryFilter();filterRows();});
+document.getElementById("subcategoryFilter").addEventListener("change",filterRows);
+document.getElementById("resetSearch").addEventListener("click",()=>{document.getElementById("archiveSearch").value="";document.getElementById("categoryFilter").value="";updateArchiveSubcategoryFilter();filterRows();});
+document.querySelectorAll("[data-category]").forEach(link=>link.addEventListener("click",()=>{document.getElementById("categoryFilter").value=link.dataset.category;updateArchiveSubcategoryFilter();filterRows();}));
+
+/* Form unggah arsip terintegrasi di halaman Pusat Arsip Digital */
+const UPLOAD_SUBCATEGORIES={
+  Naskah:["01_Peraturan","02_Naskah Dinas","03_Pedoman","04_Petunjuk Pelaksanaan","05_Petunjuk Teknis","99_Lainnya"],
+  Laporan:["01_Laporan Perjalanan Dinas","02_Laporan Kegiatan","03_Laporan Keuangan","04_Laporan Kinerja","05_BAST","99_Lainnya"],
+  Paparan:["01_Bahan Paparan","02_Summary","99_Lainnya"],
+  Dokumentasi:["01_Foto","02_Video","99_Lainnya"]
+};
+function updateArchiveSubcategoryFilter(){
+  const category=document.getElementById("categoryFilter").value;
+  const select=document.getElementById("subcategoryFilter");
+  const previous=select.value;
+  const options=UPLOAD_SUBCATEGORIES[category]||[];
+  if(!category){
+    select.innerHTML='<option value="">Pilih kategori terlebih dahulu</option>';
+    select.disabled=true;
+    return;
+  }
+  select.innerHTML='<option value="">Semua subkategori</option>'+options.map(v=>`<option value="${v}">${v.replace(/^\d+_/,"").trim().trim()}</option>`).join("");
+  select.disabled=!options.length;
+  if(options.includes(previous))select.value=previous;
+}
+const upCategory=document.getElementById("upKategori");
+const upSubcategory=document.getElementById("upSubkategori");
+const upFile=document.getElementById("upFile");
+const upName=document.getElementById("upNamaFile");
+const upForm=document.getElementById("archiveUploadForm");
+const upButton=document.getElementById("upSubmitBtn");
+const upStatus=document.getElementById("upStatus");
+upCategory.addEventListener("change",()=>{
+  const opts=UPLOAD_SUBCATEGORIES[upCategory.value]||[];
+  upSubcategory.innerHTML='<option value="">Pilih subkategori</option>'+opts.map(v=>`<option value="${v}">${v.replace(/^\d+_/,"")}</option>`).join("");
+  upSubcategory.disabled=!opts.length;
+});
+upFile.addEventListener("change",()=>{if(upFile.files[0]&&!upName.value.trim())upName.value=upFile.files[0].name;});
+function uploadMessage(type,msg){upStatus.className="upload-status "+type;upStatus.textContent=msg;}
+function uploadToBase64(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(",")[1]);reader.onerror=()=>reject(new Error("File tidak dapat dibaca."));reader.readAsDataURL(file);});}
+upForm.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const file=upFile.files[0];
+  if(!file){uploadMessage("error","Silakan pilih file yang akan diunggah.");return;}
+  if(file.size>5*1024*1024){uploadMessage("error","Ukuran file melebihi batas 5 MB.");return;}
+  const allowed=["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation","image/jpeg","image/png","text/plain"];
+  if(!allowed.includes(file.type)){uploadMessage("error","Format file belum didukung. Gunakan PDF, Office, JPG, PNG, atau TXT.");return;}
+  upButton.disabled=true;upButton.textContent="Mengunggah...";
+  uploadMessage("info","Sedang mengirim dokumen ke Google Drive. Mohon tunggu dan jangan tutup halaman.");
+  try{
+    const payload={kategori:upCategory.value,bulan:document.getElementById("upBulan").value,subkategori:upSubcategory.value,namaFile:(upName.value.trim()||file.name),mimeType:file.type,fileBase64:await uploadToBase64(file)};
+    const response=await fetch(API_URL,{method:"POST",body:JSON.stringify(payload)});
+    const raw=await response.text();
+    let result;try{result=JSON.parse(raw);}catch(_){throw new Error("Respons server tidak dapat dibaca. Periksa konfigurasi layanan Apps Script.");}
+    if(!response.ok||result.status!=="success")throw new Error(result.pesan||result.message||"Unggah gagal.");
+    uploadMessage("success","Berhasil! Dokumen tersimpan. Memperbarui daftar arsip dan statistik...");
+    upForm.reset();upSubcategory.innerHTML='<option value="">Pilih kategori terlebih dahulu</option>';upSubcategory.disabled=true;
+    load(true);
+    const statusEl=document.getElementById("loadStatus");
+    const selesaiRefresh=()=>{
+      if(statusEl)statusEl.textContent="Data arsip dan statistik telah diperbarui.";
+    };
+    // Beri waktu singkat untuk callback pemuatan data menyelesaikan render.
+    setTimeout(selesaiRefresh,1200);
+  }catch(err){uploadMessage("error","Belum berhasil mengunggah: "+(err.message||err)+". Jika berlanjut, minta administrator memeriksa layanan Apps Script.");}
+  finally{upButton.disabled=false;upButton.textContent="Unggah Arsip";}
+});
+document.getElementById("quickUploadLink").addEventListener("click",e=>{
+  e.preventDefault();
+  document.getElementById("unggahArsip").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+/* =========================
+   MODUL PERSURATAN
+========================= */
+let suratFiles=[];
+const MAIL_MONTHS=["01_Januari","02_Februari","03_Maret","04_April","05_Mei","06_Juni","07_Juli","08_Agustus","09_September","10_Oktober","11_November","12_Desember"];
+const MAIL_MONTH_LABELS=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+function monthLabel(v){return String(v||"").replace(/^\d+_/,"");}
+function renderMail(){
+  const incoming=suratFiles.filter(f=>f.jenisSurat==="Surat Masuk");
+  const outgoing=suratFiles.filter(f=>f.jenisSurat==="Surat Keluar");
+  document.getElementById("mailTotalIn").textContent=incoming.length;
+  document.getElementById("mailTotalOut").textContent=outgoing.length;
+  document.getElementById("mailTotalAll").textContent=suratFiles.length;
+  const counts=MAIL_MONTHS.map(m=>({
+    month:m,
+    in:incoming.filter(f=>f.bulan===m).length,
+    out:outgoing.filter(f=>f.bulan===m).length
+  }));
+  const total=suratFiles.length;
+  document.getElementById("mailPctIn").textContent=(total?Math.round(incoming.length/total*100):0)+"%";
+  document.getElementById("mailPctOut").textContent=(total?Math.round(outgoing.length/total*100):0)+"%";
+  const peak=counts.reduce((best,item)=>item.in+item.out>best.in+best.out?item:best,{month:"",in:0,out:0});
+  document.getElementById("mailPeakMonth").textContent=peak.in+peak.out?monthLabel(peak.month):"Belum ada data";
+  const max=Math.max(1,...counts.map(x=>Math.max(x.in,x.out)));
+  document.getElementById("mailMonthlyChart").innerHTML=counts.map((x,i)=>{
+    const hi=x.in?Math.max(4,x.in/max*145):3,ho=x.out?Math.max(4,x.out/max*145):3;
+    return `<div class="mail-month-col"><div class="mail-month-total">${x.in+x.out?x.in+x.out+" surat":""}</div><div class="mail-month-bars"><div class="mail-month-bar-wrap"><span class="mail-month-bar-value">${x.in||""}</span><button type="button" class="mail-month-bar in" data-month="${x.month}" data-kind="Surat Masuk" style="height:${hi}px" title="Tampilkan ${x.in} Surat Masuk bulan ${monthLabel(x.month)}" aria-label="Surat Masuk ${monthLabel(x.month)}: ${x.in}"></button></div><div class="mail-month-bar-wrap"><span class="mail-month-bar-value">${x.out||""}</span><button type="button" class="mail-month-bar out" data-month="${x.month}" data-kind="Surat Keluar" style="height:${ho}px" title="Tampilkan ${x.out} Surat Keluar bulan ${monthLabel(x.month)}" aria-label="Surat Keluar ${monthLabel(x.month)}: ${x.out}"></button></div></div><div class="mail-month-label">${MAIL_MONTH_LABELS[i]}</div></div>`;
+  }).join("");
+  document.getElementById("mailDataStatus").textContent="Statistik dihitung dari "+suratFiles.length+" dokumen surat yang terdata pada Google Drive.";
+  filterMailRows();
+}
+function populateMailSubcategoryFilter(){
+  const source=document.getElementById("mailSubcategory");
+  const target=document.getElementById("mailSubcategoryFilter");
+  const values=[...source.options].filter(option=>option.value);
+  target.innerHTML='<option value="">Semua subkategori</option>'+values.map(option=>`<option value="${option.value}">${option.textContent}</option>`).join("");
+}
+populateMailSubcategoryFilter();
+function filterMailRows(){
+  const q=document.getElementById("mailSearch").value.toLowerCase().trim();
+  const subcategory=document.getElementById("mailSubcategoryFilter").value;
+  const month=document.getElementById("mailMonthFilter").value;
+  const type=document.getElementById("mailTypeFilter").value;
+  const filtered=suratFiles.filter(f=>(!q||[f.judul,f.subkategori,f.jenisSurat].join(" ").toLowerCase().includes(q))&&(!subcategory||f.subkategori===subcategory)&&(!month||f.bulan===month)&&(!type||f.jenisSurat===type)).sort((a,b)=>String(b.bulan||"").localeCompare(String(a.bulan||""))||String(a.judul).localeCompare(String(b.judul)));
+  const body=document.getElementById("mailRows");body.replaceChildren();
+  if(!filtered.length){body.innerHTML='<tr><td colspan="5">Belum ada surat atau tidak ada hasil yang sesuai.</td></tr>';}
+  filtered.slice(0,100).forEach(f=>{
+    const tr=document.createElement("tr");
+    const vals=[f.judul,f.jenisSurat,monthLabel(f.subkategori),monthLabel(f.bulan)];
+    vals.forEach((v,i)=>{const td=document.createElement("td");if(i===0){const a=document.createElement("a");a.href=f.url||"#";a.target="_blank";a.rel="noopener noreferrer";a.textContent=v||"Tanpa nama";td.append(a);}else td.textContent=v||"—";tr.append(td);});
+    const action=document.createElement("td"),a=document.createElement("a");a.href=f.url||"#";a.target="_blank";a.rel="noopener noreferrer";a.textContent="Buka ↗";action.append(a);tr.append(action);body.append(tr);
+  });
+  document.getElementById("mailResultCount").textContent=`Menampilkan ${Math.min(filtered.length,100)} dari ${filtered.length} surat.`;
+}
+document.getElementById("mailMonthlyChart").addEventListener("click",e=>{
+  const target=e.target.closest("button[data-month][data-kind]");
+  if(!target)return;
+  const month=target.dataset.month,kind=target.dataset.kind;
+  document.getElementById("mailSubcategoryFilter").value="";
+  document.getElementById("mailMonthFilter").value=month;
+  document.getElementById("mailTypeFilter").value=kind;
+  document.getElementById("mailSearch").value="";
+  filterMailRows();
+  const note=document.getElementById("mailSelectionNote");
+  note.textContent="Menampilkan seluruh "+kind+" bulan "+monthLabel(month)+". Gunakan Reset untuk kembali melihat semua surat.";
+  note.classList.add("show");
+  document.querySelectorAll(".mail-month-actions button").forEach(b=>b.classList.toggle("active",b.dataset.month===month&&b.dataset.kind===kind));
+  document.getElementById("mailListPanel").classList.add("mail-highlight");
+  document.getElementById("mailListPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
+["mailSearch","mailSubcategoryFilter","mailMonthFilter","mailTypeFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="mailSearch"?"input":"change",filterMailRows));
+document.getElementById("mailReset").addEventListener("click",()=>{document.getElementById("mailSearch").value="";document.getElementById("mailSubcategoryFilter").value="";document.getElementById("mailMonthFilter").value="";document.getElementById("mailTypeFilter").value="";document.getElementById("mailSelectionNote").classList.remove("show");document.getElementById("mailListPanel").classList.remove("mail-highlight");document.querySelectorAll(".mail-month-actions button").forEach(b=>b.classList.remove("active"));filterMailRows();});
+document.getElementById("mailUploadForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const file=document.getElementById("mailFile").files[0];
+  const type=document.getElementById("mailType").value;
+  const month=document.getElementById("mailMonth").value;
+  const sub=document.getElementById("mailSubcategory").value;
+  if(!file){mailUploadMessage("error","Silakan pilih file surat.");return;}
+  if(file.size>5*1024*1024){mailUploadMessage("error","Ukuran file maksimal 5 MB.");return;}
+  const allowed=["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-excel","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","application/vnd.ms-powerpoint","application/vnd.openxmlformats-officedocument.presentationml.presentation","image/jpeg","image/png","text/plain"];
+  if(!allowed.includes(file.type)){mailUploadMessage("error","Format file belum didukung. Gunakan PDF, Office, JPG, PNG, atau TXT.");return;}
+  const btn=document.getElementById("mailSubmit");btn.disabled=true;btn.textContent="Mengunggah...";
+  mailUploadMessage("info","Sedang mengirim surat ke Google Drive. Mohon tunggu.");
+  try{
+    const base64=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(",")[1]);reader.onerror=()=>reject(new Error("File tidak dapat dibaca."));reader.readAsDataURL(file);});
+    const payload={kategori:"Surat",jenisSurat:type,bulan:month,subkategori:sub,namaFile:document.getElementById("mailFileName").value.trim()||file.name,mimeType:file.type,fileBase64:base64};
+    const response=await fetch(API_URL,{method:"POST",body:JSON.stringify(payload)});
+    const raw=await response.text();let result;try{result=JSON.parse(raw);}catch(_){throw new Error("Respons server tidak dapat dibaca. Periksa konfigurasi Apps Script.");}
+    if(!response.ok||result.status!=="success")throw new Error(result.pesan||"Unggah surat gagal.");
+    mailUploadMessage("success","Berhasil! Surat telah disimpan ke folder "+type+" pada Google Drive.");
+    e.target.reset();
+    load(true);
+  }catch(err){mailUploadMessage("error","Belum berhasil mengunggah: "+(err.message||err)+". Jika berlanjut, periksa layanan Apps Script.");}
+  finally{btn.disabled=false;btn.textContent="Unggah Surat";}
+});
+function mailUploadMessage(type,msg){const el=document.getElementById("mailUploadStatus");el.className="mail-upload-status "+type;el.textContent=msg;}
+document.querySelectorAll('[data-page="mail"]').forEach(link=>link.addEventListener("click",e=>{e.preventDefault();showPage("mail");}));
+</script></body></html>
