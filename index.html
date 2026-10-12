@@ -1483,6 +1483,121 @@ body{
   }
 }
 
+
+
+/* =========================================================
+   SIDEBAR POLISH — RSPD
+   Penyegaran visual saja; struktur menu, href, data-page,
+   dan seluruh JavaScript tetap dipertahankan.
+   ========================================================= */
+.sidebar{
+  width:264px !important;
+  padding:0 14px 14px !important;
+  background:
+    radial-gradient(ellipse at 15% 8%, rgba(35,125,218,.18), transparent 36%),
+    linear-gradient(180deg,#092b52 0%,#08294f 52%,#071f3e 100%) !important;
+  border-right:1px solid rgba(255,255,255,.07);
+  box-shadow:8px 0 28px rgba(5,28,55,.13) !important;
+  overflow:hidden !important;
+  isolation:isolate;
+}
+.main{margin-left:264px !important}
+.sidebar .brand{
+  padding:20px 10px 19px !important;
+  margin-bottom:8px !important;
+  border-bottom:1px solid rgba(194,220,248,.13) !important;
+}
+.brand-logo{
+  width:50px !important;height:50px !important;
+  border-radius:14px !important;
+  margin-right:10px !important;
+  padding:5px !important;
+  box-shadow:0 7px 18px rgba(0,0,0,.17), inset 0 0 0 1px rgba(8,47,91,.05) !important;
+}
+.brand-text b{font-size:10.5px !important;letter-spacing:.35px !important}
+.brand-text strong{font-size:8px !important;letter-spacing:1.15px !important;color:#b9d5f3 !important}
+.brand-divider{margin:17px 2px 15px !important;opacity:.8}
+.brand-unit{font-size:17px !important;letter-spacing:.15px !important}
+.brand small{font-size:10px !important;line-height:1.55 !important;color:#c0d3e8 !important}
+.sidebar .nav-label{
+  margin:16px 10px 10px !important;
+  color:#86a8cd !important;
+  font-size:9px !important;
+  letter-spacing:1.65px !important;
+}
+.sidebar .nav{padding:0 0 112px !important}
+.sidebar .nav a{
+  min-height:46px !important;
+  padding:7px 10px !important;
+  margin:5px 0 !important;
+  gap:10px !important;
+  border:1px solid transparent !important;
+  border-radius:12px !important;
+  font-size:11.5px !important;
+  font-weight:650 !important;
+  letter-spacing:-.05px;
+  color:#d8e7f8 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
+.sidebar .nav a span:nth-child(2){flex:1;white-space:nowrap}
+.sidebar .nav a i{
+  font-size:17px !important;
+  color:#86a9cf !important;
+  transition:transform .2s ease,color .2s ease !important;
+}
+.sidebar .nav a:hover{
+  padding-left:10px !important;
+  transform:translateX(2px) !important;
+  background:rgba(255,255,255,.075) !important;
+  border-color:rgba(255,255,255,.055) !important;
+  color:#fff !important;
+}
+.sidebar .nav a:hover i{color:#fff !important;transform:translateX(2px)}
+.sidebar .nav a.active{
+  padding-left:10px !important;
+  background:linear-gradient(105deg,#1971d7 0%,#2585e8 100%) !important;
+  border-color:rgba(126,190,255,.18) !important;
+  box-shadow:0 8px 19px rgba(0,93,190,.26),inset 0 1px 0 rgba(255,255,255,.12) !important;
+  color:#fff !important;
+}
+.sidebar .nav a.active:before{
+  left:0 !important;top:9px !important;bottom:9px !important;width:3px !important;
+  background:#ffd15a !important;border-radius:0 4px 4px 0 !important;
+}
+.sidebar .nav-icon{
+  flex:0 0 32px !important;width:32px !important;height:32px !important;
+  border-radius:10px !important;font-size:14px !important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10) !important;
+  transition:transform .2s ease,box-shadow .2s ease !important;
+}
+.sidebar .nav a:hover .nav-icon{transform:translateY(-1px);box-shadow:0 4px 9px rgba(0,0,0,.12) !important}
+.sidebar .nav a.active .nav-icon{background:rgba(255,255,255,.19) !important;color:#fff !important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14) !important}
+/* Gelombang dekoratif lebih halus, tanpa kartu atau teks tambahan. */
+.sidebar::before{
+  left:-24px !important;right:-24px !important;bottom:-3px !important;
+  width:auto !important;height:94px !important;
+  background:linear-gradient(160deg,#2487e8 0%,#1769d2 65%,#1457a0 100%) !important;
+  clip-path:polygon(0 66%,12% 53%,24% 56%,37% 69%,49% 76%,61% 65%,73% 47%,86% 32%,100% 28%,100% 100%,0 100%) !important;
+  border-radius:0 !important;opacity:.96 !important;transform:none !important;
+}
+.sidebar::after{
+  left:-24px !important;right:-24px !important;bottom:-3px !important;
+  width:auto !important;height:63px !important;
+  background:linear-gradient(110deg,#0c477f,#0a3768 72%,#0b2f59) !important;
+  clip-path:polygon(0 40%,14% 48%,28% 63%,42% 72%,56% 66%,70% 48%,84% 39%,100% 45%,100% 100%,0 100%) !important;
+  border:0 !important;border-radius:0 !important;box-shadow:none !important;transform:none !important;opacity:1 !important;
+}
+.sidebar .nav::after{display:none !important}
+.sidebar > .brand,.sidebar > .nav{position:relative !important;z-index:5 !important}
+@media(max-width:700px){
+  .sidebar{width:auto !important;padding:10px !important}
+  .main{margin-left:0 !important}
+  .sidebar .nav{padding:0 0 8px !important}
+  .sidebar::before,.sidebar::after{display:none !important}
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
