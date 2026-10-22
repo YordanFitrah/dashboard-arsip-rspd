@@ -1721,26 +1721,26 @@ body{
 }
 
 
-/* Ikon gambar milik pengguna pada menu sidebar */
-.sidebar .nav a .nav-icon{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  flex:0 0 32px !important;
-  width:32px !important;
-  height:32px !important;
-  padding:5px !important;
-  overflow:hidden !important;
+/* IKON SIDEBAR: gambar aset tanpa bingkai/kotak warna */
+.sidebar .nav a{gap:12px !important;min-height:48px !important}
+.sidebar .nav-icon{
+  display:inline-flex !important;align-items:center !important;justify-content:center !important;
+  flex:0 0 40px !important;width:40px !important;height:40px !important;
+  padding:0 !important;margin:0 !important;border:0 !important;border-radius:0 !important;
+  background:transparent !important;box-shadow:none !important;
+  overflow:visible !important;transition:transform .2s ease !important;
 }
-.sidebar .nav a .nav-icon img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:contain !important;
-  object-position:center !important;
+.sidebar .nav-icon img{
+  display:block !important;width:36px !important;height:36px !important;
+  max-width:none !important;max-height:none !important;object-fit:contain !important;
+  border:0 !important;border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;filter:none !important;
 }
-.sidebar .nav a.active .nav-icon{
-  background:rgba(255,255,255,.18) !important;
+.sidebar .nav a:hover .nav-icon{transform:scale(1.08) !important;box-shadow:none !important}
+.sidebar .nav a.active .nav-icon{background:transparent !important;box-shadow:none !important}
+@media(max-width:700px){
+ .sidebar .nav-icon{flex-basis:36px !important;width:36px !important;height:36px !important}
+ .sidebar .nav-icon img{width:32px !important;height:32px !important}
 }
 
 </style></head><body>
@@ -1754,13 +1754,13 @@ body{
   </div>
   <nav class="nav">
     <div class="nav-label">MENU UTAMA</div>
-    <a class="active" href="./index-v2.html" data-page="home"><span class="nav-icon blue"><img src="./assets/icon-beranda.png" alt="" aria-hidden="true"></span><span>Beranda</span><i>›</i></a>
-    <a href="#arsip" data-page="archive"><span class="nav-icon yellow"><img src="./assets/icon-arsip.png" alt="" aria-hidden="true"></span><span>Arsip Digital</span><i>›</i></a>
-    <a href="#persuratan" data-page="mail"><span class="nav-icon teal"><img src="./assets/icon-persuratan.png" alt="" aria-hidden="true"></span><span>Persuratan</span><i>›</i></a>
-    <a href="#monitoring-atensi" data-page="atensi"><span class="nav-icon gold"><img src="./assets/icon-atensi.png" alt="" aria-hidden="true"></span><span>Monitoring ATENSI</span><i>›</i></a>
-    <a href="#monitoring-bebas-pasung" data-page="bebaspasung"><span class="nav-icon purple"><img src="./assets/icon-bebas-pasung.png" alt="" aria-hidden="true"></span><span>Monitoring Bebas Pasung</span><i>›</i></a>
-    <a href="#monitoring-dtsen" data-page="dtsen"><span class="nav-icon coral"><img src="./assets/icon-dtsen.png" alt="" aria-hidden="true"></span><span>Monitoring DTSEN</span><i>›</i></a>
-    <a href="#lks-nasional" data-page="lks"><span class="nav-icon cyan"><img src="./assets/icon-lks.png" alt="" aria-hidden="true"></span><span>LKS Nasional</span><i>›</i></a>
+    <a class="active" href="./index-v2.html" data-page="home"><span class="nav-icon blue"><img src="./assets/icon-beranda.png" alt="Beranda" loading="eager"></span><span>Beranda</span><i>›</i></a>
+    <a href="#arsip" data-page="archive"><span class="nav-icon yellow"><img src="./assets/icon-arsip.png" alt="Arsip Digital" loading="eager"></span><span>Arsip Digital</span><i>›</i></a>
+    <a href="#persuratan" data-page="mail"><span class="nav-icon teal"><img src="./assets/icon-persuratan.png" alt="Persuratan" loading="eager"></span><span>Persuratan</span><i>›</i></a>
+    <a href="#monitoring-atensi" data-page="atensi"><span class="nav-icon gold"><img src="./assets/icon-atensi.png" alt="Monitoring ATENSI" loading="eager"></span><span>Monitoring ATENSI</span><i>›</i></a>
+    <a href="#monitoring-bebas-pasung" data-page="bebaspasung"><span class="nav-icon purple"><img src="./assets/icon-bebas-pasung.png" alt="Monitoring Bebas Pasung" loading="eager"></span><span>Monitoring Bebas Pasung</span><i>›</i></a>
+    <a href="#monitoring-dtsen" data-page="dtsen"><span class="nav-icon coral"><img src="./assets/icon-dtsen.png" alt="Monitoring DTSEN" loading="eager"></span><span>Monitoring DTSEN</span><i>›</i></a>
+    <a href="#lks-nasional" data-page="lks"><span class="nav-icon cyan"><img src="./assets/icon-lks.png" alt="LKS Nasional" loading="eager"></span><span>LKS Nasional</span><i>›</i></a>
   </nav>
 </aside>
 <div class="main"><header class="topbar"><span>RSPD / <b id="breadcrumb">Beranda</b></span></header><main class="content">
