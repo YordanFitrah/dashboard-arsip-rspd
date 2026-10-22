@@ -1810,6 +1810,40 @@ body{
   line-height:1.22 !important;
   overflow-wrap:normal !important;
 }
+
+
+/* ORNAMEN MOTIF HEADER — tampil pada semua halaman dashboard */
+.main > .topbar{
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+  background:linear-gradient(100deg,rgba(255,255,255,.97),rgba(246,250,255,.91)) !important;
+  border-bottom:1px solid #d8e5f5 !important;
+}
+.main > .topbar::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  background-image:url("./assets/sidebar-pattern.png") !important;
+  background-repeat:repeat !important;
+  background-position:right center !important;
+  background-size:150px auto !important;
+  opacity:.12 !important;
+  pointer-events:none !important;
+  z-index:0 !important;
+}
+.main > .topbar > *{
+  position:relative !important;
+  z-index:2 !important;
+}
+.main > .topbar:after{
+  z-index:3 !important;
+  pointer-events:none !important;
+}
+@media(max-width:700px){
+  .main > .topbar::before{background-size:112px auto !important;opacity:.09 !important}
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
