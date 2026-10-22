@@ -1844,6 +1844,63 @@ body{
   .main > .topbar::before{background-size:112px auto !important;opacity:.09 !important}
 }
 
+
+
+/* ===== IDENTITAS SIDEBAR: LOGO TANPA FRAME + TEKS LEBIH BESAR ===== */
+.sidebar .brand-logo{
+  width:68px !important;
+  height:68px !important;
+  padding:0 !important;
+  margin-right:12px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  vertical-align:middle !important;
+}
+.sidebar .brand-logo img{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.sidebar .brand-text{
+  max-width:calc(100% - 80px) !important;
+  min-width:0 !important;
+  vertical-align:middle !important;
+}
+.sidebar .brand-text b{
+  display:block !important;
+  white-space:nowrap !important;
+  font-size:11px !important;
+  line-height:1.25 !important;
+  letter-spacing:0 !important;
+}
+.sidebar .brand-text strong{
+  font-size:10px !important;
+  line-height:1.35 !important;
+  letter-spacing:.8px !important;
+  margin-top:4px !important;
+}
+.sidebar .brand-unit{
+  font-size:19px !important;
+  line-height:1.2 !important;
+}
+.sidebar .brand small{
+  font-size:11px !important;
+  line-height:1.6 !important;
+}
+@media(max-width:700px){
+  .sidebar .brand-logo{width:58px !important;height:58px !important;margin-right:9px !important}
+  .sidebar .brand-text b{font-size:10px !important;white-space:nowrap !important}
+  .sidebar .brand-text strong{font-size:9px !important}
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
