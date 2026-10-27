@@ -19,10 +19,9 @@
  position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;
  justify-content:space-between;min-height:560px;padding:clamp(26px,4vw,48px);
  color:#fff;background:
- linear-gradient(145deg,rgba(8,42,105,.94) 0%,rgba(14,67,145,.78) 48%,rgba(10,48,105,.88) 100%),
+ linear-gradient(145deg,rgba(8,42,105,.10) 0%,rgba(14,67,145,.08) 48%,rgba(10,48,105,.16) 100%),
  url('./assets/bebas-pasung-hero.png') center/cover no-repeat;
 }
-.bp-login-visual:before{content:"";position:absolute;inset:0;z-index:-1;background:url('./assets/sidebar-pattern.png') center/260px repeat;opacity:.20}
 .bp-login-visual:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-2px;height:125px;z-index:-1;background:url('./assets/sidebar-wave.png') center bottom/100% 100% no-repeat;opacity:.95}
 .bp-login-brand{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
 .bp-login-brand img{width:68px;height:68px;object-fit:contain;flex:none}
@@ -32,7 +31,6 @@
 .bp-login-message .mini-label{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#b9d4ff}
 .bp-login-message h2{font-size:clamp(27px,3vw,42px);line-height:1.12;margin:14px 0;color:#fff}
 .bp-login-message p{font-size:15px;line-height:1.75;margin:0;color:rgba(255,255,255,.88);max-width:390px}
-.bp-login-decoration{position:absolute;right:28px;bottom:150px;width:110px;height:110px;border:1px solid rgba(255,255,255,.16);border-radius:50%;box-shadow:0 0 0 18px rgba(255,255,255,.04),0 0 0 38px rgba(255,255,255,.035)}
 .bp-login-form{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4vw,58px);position:relative;background:linear-gradient(145deg,#fff 0%,#fbfdff 75%,#f1f6ff 100%)}
 .bp-login-form:before{content:"";position:absolute;right:-65px;top:-90px;width:220px;height:220px;border-radius:50%;border:22px solid rgba(55,115,220,.055);pointer-events:none}
 .bp-login-form:after{content:"";position:absolute;right:25px;top:28px;width:80px;height:80px;background:radial-gradient(#b9d0ff 1.8px,transparent 2px);background-size:15px 15px;opacity:.7;pointer-events:none}
@@ -62,7 +60,6 @@
  .bp-login-message{margin:28px 0 20px;max-width:100%}
  .bp-login-message h2{font-size:25px;margin:8px 0}
  .bp-login-message p{font-size:13px;line-height:1.55}
- .bp-login-decoration{width:70px;height:70px;right:18px;bottom:30px}
  .bp-login-form{padding:28px 24px}
  .bp-login-form h3{font-size:28px}
  .bp-login-form p{font-size:14px;margin-bottom:20px}
@@ -77,18 +74,7 @@
 
 </style></head><body><header class="top"><div class="top-inner"><div><div class="eyebrow">DIREKTORAT REHABILITASI SOSIAL PENYANDANG DISABILITAS</div><h1>MONITORING BEBAS PASUNG</h1><p>Dashboard monitoring data PM Bebas Pasung</p><nav style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a href="./index.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🗂️ ARSIP DIGITAL</a><a href="./monitoring-atensi.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🔒 Monitoring ATENSI</a><a href="./monitoring-bebas-pasung.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🔒 Monitoring Bebas Pasung</a></nav></div><span class="monitoring-lock-badge">AKSES TERLINDUNGI PIN</span></div></header><main class="monitoring-page"><section class="monitoring-modal" id="monitoringGate" aria-label="Akses Monitoring Bebas Pasung">
 <div class="monitoring-modal-card">
-  <div class="bp-login-visual">
-    <div class="bp-login-brand">
-      <img src="./assets/Logo_of_the_Ministry_of_Social_Affairs_of_the_Republic_of_Indonesia.svg.webp" alt="Logo Kementerian Sosial Republik Indonesia">
-      <div class="bp-login-brand-text">KEMENTERIAN SOSIAL<span>REPUBLIK INDONESIA</span></div>
-    </div>
-    <div class="bp-login-decoration" aria-hidden="true"></div>
-    <div class="bp-login-message">
-      <div class="mini-label">Direktorat RSPD</div>
-      <h2>Monitoring dengan Kepedulian, Data untuk Aksi.</h2>
-      <p>Mendukung pemantauan program Bebas Pasung melalui informasi yang terstruktur dan mudah ditelusuri.</p>
-    </div>
-  </div>
+  <div class="bp-login-visual" aria-label="Foto gedung sebagai latar halaman akses" role="img"></div>
   <div class="bp-login-form">
     <div class="bp-login-form-inner">
       <div class="eyebrow">MONITORING PROGRAM</div>
