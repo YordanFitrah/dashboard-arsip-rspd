@@ -39,6 +39,35 @@
 #gate .atensi-info-icon{flex:0 0 32px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:#0875e5;color:#fff;font-weight:800;font-size:20px;font-family:Georgia,serif}
 @media(max-width:850px){#gate .atensi-login-card{grid-template-columns:1fr;min-height:0;width:min(580px,100%)}#gate .atensi-login-visual{min-height:clamp(180px,35vw,270px)}#gate .atensi-login-form{padding:clamp(26px,6vw,44px)}#gate .atensi-login-form h3{font-size:clamp(29px,6vw,40px)}}
 @media(max-width:480px){#gate.monitoring-modal{padding:12px}#gate .atensi-login-card{border-radius:20px}#gate .atensi-login-visual{min-height:155px}#gate .atensi-login-form{padding:25px 22px}#gate .atensi-login-form>p{font-size:14px;margin-bottom:20px}#gate .atensi-login-note{font-size:12px;padding:13px}}
+/* Penyesuaian ukuran login ATENSI agar setara dengan halaman Bebas Pasung */
+#gate.monitoring-modal{padding:24px}
+#gate .atensi-login-card{width:min(1010px,100%);min-height:min(515px,calc(100vh - 48px));grid-template-columns:1fr 1fr;border-radius:24px}
+#gate .atensi-login-visual{min-height:515px}
+#gate .atensi-login-form{padding:clamp(28px,3vw,46px)}
+#gate .atensi-login-eyebrow{font-size:10px;letter-spacing:.20em;margin-bottom:12px}
+#gate .atensi-login-accent{margin-bottom:18px}
+#gate .atensi-login-form h3{font-size:clamp(29px,2.5vw,35px);line-height:1.12;letter-spacing:-.03em;margin-bottom:12px}
+#gate .atensi-login-form h3 strong{font-size:1em}
+#gate .atensi-login-form>p{font-size:14px;line-height:1.55;margin-bottom:20px}
+#gate .atensi-pin-row{gap:10px;padding:5px 10px;border-radius:12px}
+#gate .atensi-pin-icon{width:38px;height:38px;flex-basis:38px;font-size:23px;border-radius:10px}
+#gate .atensi-pin-row input{font-size:14px;padding:10px 3px}
+#gate .atensi-login-button{margin-top:12px;padding:14px 18px;border-radius:12px;font-size:14px}
+#gate .atensi-login-note{padding:13px 14px;margin-top:18px;border-radius:12px;font-size:12px;line-height:1.5}
+#gate .atensi-info-icon{width:29px;height:29px;flex-basis:29px;font-size:18px}
+@media(max-width:850px){
+ #gate.monitoring-modal{padding:16px}
+ #gate .atensi-login-card{width:min(580px,100%);min-height:0;grid-template-columns:1fr}
+ #gate .atensi-login-visual{min-height:clamp(180px,32vw,245px)}
+ #gate .atensi-login-form{padding:clamp(25px,5vw,38px)}
+ #gate .atensi-login-form h3{font-size:clamp(28px,5vw,34px)}
+}
+@media(max-width:480px){
+ #gate.monitoring-modal{padding:12px}
+ #gate .atensi-login-card{border-radius:20px}
+ #gate .atensi-login-visual{min-height:155px}
+ #gate .atensi-login-form{padding:24px 22px}
+}
 </style>
 </head><body><header class="top"><div class="top-inner"><div><div class="eyebrow">DIREKTORAT REHABILITASI SOSIAL PENYANDANG DISABILITAS</div><h1>MONITORING ATENSI RSPD</h1><p>Dashboard monitoring program ATENSI</p><nav style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><a href="./index.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🗂️ ARSIP DIGITAL</a><a href="./monitoring-atensi.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🔒 Monitoring ATENSI</a><a href="./monitoring-bebas-pasung.html" style="text-decoration:none;padding:8px 11px;border-radius:9px;background:#eef4fa;color:#123b68;font-size:12px;font-weight:700">🔒 Monitoring Bebas Pasung</a></nav></div><span class="monitoring-lock-badge">AKSES TERLINDUNGI PIN</span></div></header><main class="monitoring-page"><section class="monitoring-modal" id="gate"><div class="monitoring-modal-card atensi-login-card"><div class="atensi-login-visual" aria-label="Area gambar utama ATENSI"></div><div class="atensi-login-form"><div class="atensi-login-eyebrow">MONITORING PROGRAM</div><div class="atensi-login-accent"><span></span><span></span></div><h3>Akses Monitoring <strong>ATENSI</strong></h3><p>Masukkan PIN Monitoring RSPD untuk membuka dashboard.</p><div class="monitoring-pin-row atensi-pin-row"><span class="atensi-pin-icon" aria-hidden="true">⌑</span><input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Masukkan PIN" aria-label="Masukkan PIN"></div><button class="monitoring-btn atensi-login-button" id="btn">Buka Dashboard <span aria-hidden="true">→</span></button><div class="monitoring-error" id="err" role="status" aria-live="polite"></div><div class="atensi-login-note"><span class="atensi-info-icon" aria-hidden="true">i</span><span>Akses ini khusus untuk monitoring program ATENSI di lingkungan Direktorat RSPD.</span></div></div></div></section><section id="content" style="display:none">
 <div class="monitoring-panel-header"><div><h2>📊 Monitoring ATENSI</h2><p>Pemantauan usulan, penanganan kasus, dan realisasi bantuan ATENSI berdasarkan spreadsheet yang diperbarui secara berkala.</p></div><span class="monitoring-lock-badge">✓ PIN TERVERIFIKASI</span></div>
