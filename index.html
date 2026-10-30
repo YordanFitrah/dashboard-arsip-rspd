@@ -2065,6 +2065,76 @@ body{
   }
 }
 
+
+
+/* =========================================================
+   SIDEBAR LAPTOP: SELURUH MENU BERADA DI ATAS ORNAMEN GELOMBANG
+   Memadatkan jarak vertikal tanpa mengubah urutan/fungsi menu.
+   ========================================================= */
+@media (min-width:701px) and (max-width:1440px){
+  .sidebar{
+    padding-bottom:132px !important; /* ruang aman untuk gelombang */
+  }
+  .sidebar > .nav{
+    padding-bottom:126px !important;
+  }
+  .sidebar .nav-label{
+    margin-top:12px !important;
+    margin-bottom:5px !important;
+    line-height:1.2 !important;
+  }
+  .sidebar .nav a{
+    min-height:45px !important;
+    height:auto !important;
+    margin:2px 0 !important;
+    padding:4px 7px !important;
+    gap:7px !important;
+    line-height:1.15 !important;
+    box-sizing:border-box !important;
+  }
+  .sidebar .nav a > .nav-icon{
+    flex:0 0 32px !important;
+    width:32px !important;
+    height:32px !important;
+    min-width:32px !important;
+    min-height:32px !important;
+  }
+  .sidebar .nav a > .nav-icon img{
+    width:32px !important;
+    height:32px !important;
+  }
+  .sidebar .nav a > span:not(.nav-icon){
+    font-size:10.5px !important;
+    line-height:1.15 !important;
+  }
+  .sidebar .nav a > i{
+    font-size:15px !important;
+    flex:0 0 9px !important;
+  }
+}
+@media (min-width:701px) and (max-width:1100px){
+  .sidebar .nav a{
+    min-height:42px !important;
+    margin:1px 0 !important;
+    padding:3px 5px !important;
+    gap:5px !important;
+  }
+  .sidebar .nav a > .nav-icon{
+    flex-basis:29px !important;
+    width:29px !important;
+    height:29px !important;
+    min-width:29px !important;
+    min-height:29px !important;
+  }
+  .sidebar .nav a > .nav-icon img{
+    width:29px !important;
+    height:29px !important;
+  }
+  .sidebar .nav a > span:not(.nav-icon){
+    font-size:10px !important;
+  }
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
