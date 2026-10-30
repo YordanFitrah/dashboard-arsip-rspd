@@ -2484,6 +2484,147 @@ body{
   .columns{grid-template-columns:1fr !important}
 }
 
+
+
+/* =========================================================
+   DESKTOP/LAPTOP: HAMBURGER COLLAPSE SIDEBAR MENJADI IKON
+   Mode mobile tetap memakai drawer yang sudah tersedia.
+   ========================================================= */
+@media (min-width:701px){
+  .mobile-menu-toggle{
+    display:inline-flex !important;
+    flex:0 0 36px !important;
+    width:36px !important;
+    height:36px !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:1px solid #d9e6f5 !important;
+    border-radius:9px !important;
+    background:#edf5ff !important;
+    color:#0b4d91 !important;
+    font-size:20px !important;
+    font-weight:700 !important;
+    cursor:pointer !important;
+    padding:0 !important;
+    margin-right:12px !important;
+  }
+  .main > .topbar{
+    justify-content:flex-start !important;
+    gap:0 !important;
+  }
+  .sidebar,.main{
+    transition:width .25s ease, margin-left .25s ease !important;
+  }
+  body.sidebar-collapsed .sidebar{
+    width:76px !important;
+    padding:16px 8px 110px !important;
+    overflow-x:hidden !important;
+  }
+  body.sidebar-collapsed .main{
+    margin-left:76px !important;
+  }
+  body.sidebar-collapsed .sidebar .brand{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    padding:8px 0 14px !important;
+  }
+  body.sidebar-collapsed .sidebar .brand-logo{
+    width:48px !important;
+    height:48px !important;
+    min-width:48px !important;
+    margin:0 auto !important;
+  }
+  body.sidebar-collapsed .sidebar .brand-text,
+  body.sidebar-collapsed .sidebar .brand-divider,
+  body.sidebar-collapsed .sidebar .brand-unit,
+  body.sidebar-collapsed .sidebar .brand small,
+  body.sidebar-collapsed .sidebar .nav-label,
+  body.sidebar-collapsed .sidebar .nav a > span:not(.nav-icon),
+  body.sidebar-collapsed .sidebar .nav a > i{
+    display:none !important;
+  }
+  body.sidebar-collapsed .sidebar .nav{
+    width:100% !important;
+  }
+  body.sidebar-collapsed .sidebar .nav a{
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center !important;
+    width:100% !important;
+    min-height:52px !important;
+    height:52px !important;
+    margin:5px 0 !important;
+    padding:5px !important;
+    gap:0 !important;
+    border-left:0 !important;
+    box-sizing:border-box !important;
+    transform:none !important;
+  }
+  body.sidebar-collapsed .sidebar .nav a.active{
+    border-left:3px solid var(--yellow) !important;
+  }
+  body.sidebar-collapsed .sidebar .nav a > .nav-icon{
+    display:flex !important;
+    flex:0 0 42px !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+    margin:0 !important;
+  }
+  body.sidebar-collapsed .sidebar .nav a > .nav-icon img{
+    width:40px !important;
+    height:40px !important;
+    object-fit:contain !important;
+  }
+}
+
+
+
+/* FIX: PASTIKAN HAMBURGER TERLIHAT DI HEADER DESKTOP/LAPTOP */
+@media (min-width:701px){
+  header.topbar{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:12px !important;
+    position:relative !important;
+    min-height:70px !important;
+    box-sizing:border-box !important;
+    padding-left:24px !important;
+  }
+  header.topbar #mobileMenuToggle{
+    display:inline-flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    position:relative !important;
+    z-index:20 !important;
+    flex:0 0 38px !important;
+    width:38px !important;
+    min-width:38px !important;
+    height:38px !important;
+    min-height:38px !important;
+    margin:0 2px 0 0 !important;
+    padding:0 !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:1px solid #c9dced !important;
+    border-radius:9px !important;
+    background:#edf5ff !important;
+    color:#0b4d91 !important;
+    font-size:21px !important;
+    line-height:1 !important;
+    font-weight:700 !important;
+    cursor:pointer !important;
+  }
+  header.topbar > span{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
@@ -2999,29 +3140,57 @@ document.querySelectorAll('[data-page="mail"]').forEach(link=>link.addEventListe
   const sidebar = document.querySelector('.sidebar');
   if(!toggle || !backdrop || !sidebar) return;
 
-  function closeMenu(){
+  const isMobile = () => window.innerWidth <= 700;
+
+  function closeMobileMenu(){
     document.body.classList.remove('mobile-menu-open');
     toggle.setAttribute('aria-expanded','false');
     toggle.setAttribute('aria-label','Buka menu navigasi');
   }
-  function openMenu(){
+  function openMobileMenu(){
     document.body.classList.add('mobile-menu-open');
     toggle.setAttribute('aria-expanded','true');
     toggle.setAttribute('aria-label','Tutup menu navigasi');
   }
+  function toggleDesktopSidebar(){
+    const collapsed = document.body.classList.toggle('sidebar-collapsed');
+    toggle.setAttribute('aria-expanded',String(!collapsed));
+    toggle.setAttribute('aria-label',collapsed ? 'Perbesar sidebar' : 'Perkecil sidebar');
+  }
+
   toggle.addEventListener('click',function(){
-    if(document.body.classList.contains('mobile-menu-open')) closeMenu();
-    else openMenu();
+    if(isMobile()){
+      if(document.body.classList.contains('mobile-menu-open')) closeMobileMenu();
+      else openMobileMenu();
+    }else{
+      toggleDesktopSidebar();
+    }
   });
-  backdrop.addEventListener('click',closeMenu);
+
+  backdrop.addEventListener('click',closeMobileMenu);
+
   sidebar.querySelectorAll('.nav a').forEach(function(link){
-    link.addEventListener('click',closeMenu);
+    const label = link.querySelector('span:not(.nav-icon)');
+    if(label) link.setAttribute('title',label.textContent.trim().replace(/\s+/g,' '));
+    link.addEventListener('click',function(){
+      if(isMobile()) closeMobileMenu();
+    });
   });
+
   document.addEventListener('keydown',function(event){
-    if(event.key === 'Escape') closeMenu();
+    if(event.key === 'Escape'){
+      closeMobileMenu();
+    }
   });
+
   window.addEventListener('resize',function(){
-    if(window.innerWidth > 700) closeMenu();
+    if(!isMobile()){
+      closeMobileMenu();
+    }else{
+      document.body.classList.remove('sidebar-collapsed');
+      toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-label','Buka menu navigasi');
+    }
   });
 })();
 </script>
