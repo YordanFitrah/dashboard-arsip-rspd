@@ -2135,6 +2135,82 @@ body{
   }
 }
 
+
+
+/* IDENTITAS KEMENSOS: LOGO DI KIRI, TULISAN DI KANAN (MODE LAPTOP) */
+@media (min-width:701px) and (max-width:1920px){
+  .sidebar .brand{
+    display:grid !important;
+    grid-template-columns:58px minmax(0,1fr) !important;
+    grid-template-rows:auto auto auto !important;
+    align-items:center !important;
+    column-gap:9px !important;
+    row-gap:0 !important;
+    padding:18px 8px 17px !important;
+  }
+  .sidebar .brand-logo{
+    grid-column:1 !important;
+    grid-row:1 !important;
+    display:flex !important;
+    width:58px !important;
+    height:58px !important;
+    min-width:58px !important;
+    margin:0 !important;
+    padding:3px !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    overflow:visible !important;
+  }
+  .sidebar .brand-logo img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+  }
+  .sidebar .brand-text{
+    grid-column:2 !important;
+    grid-row:1 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    line-height:1.25 !important;
+    white-space:normal !important;
+  }
+  .sidebar .brand-text b{
+    display:block !important;
+    font-size:10px !important;
+    line-height:1.25 !important;
+    letter-spacing:.15px !important;
+    white-space:normal !important;
+  }
+  .sidebar .brand-text strong{
+    display:block !important;
+    margin-top:3px !important;
+    font-size:8px !important;
+    line-height:1.25 !important;
+    letter-spacing:.7px !important;
+    white-space:normal !important;
+  }
+  .sidebar .brand-divider{
+    grid-column:1 / -1 !important;
+    grid-row:2 !important;
+    width:100% !important;
+    margin:13px 0 13px !important;
+  }
+  .sidebar .brand-unit{
+    grid-column:1 / -1 !important;
+    grid-row:3 !important;
+    margin-top:0 !important;
+  }
+  .sidebar .brand > small{
+    grid-column:1 / -1 !important;
+    grid-row:4 !important;
+  }
+}
+
 </style></head><body>
 <aside class="sidebar">
   <div class="brand">
